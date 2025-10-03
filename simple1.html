@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <button onclick="testApproach()">Test Different Approach</button>
+
+  <script>
+    function testApproach() {
+      // Approach 1: about:blank
+      const win1 = window.open("about:blank", "_blank");
+      win1.document.write("<h1>Approach 1: about:blank - SUCCESS</h1>");
+      win1.document.close();
+      
+      // Approach 2: data URL  
+      const win2 = window.open("data:text/html,<h1>Approach 2: data URL</h1>", "_blank");
+      
+      // Approach 3: Empty window then write
+      const win3 = window.open("", "_blank");
+      win3.document.write("<h1>Approach 3: Empty window</h1>");
+      win3.document.close();
+    }
+  </script>
+</body>
+</html>
