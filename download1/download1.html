@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homograph Attack Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+            color: #856404;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .demo-title {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .url-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .url-text {
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .save-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .save-btn:hover {
+            background: #218838;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 50px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .comparison {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        .comparison-box {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 0 10px;
+            text-align: center;
+        }
+        
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        
+        .comparison-url {
+            font-family: monospace;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .danger {
+            color: #dc3545;
+        }
+        
+        .safe {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Homograph Attack Demo</h1>
+        <p class="subtitle">Demonstrasi bagaimana karakter yang terlihat sama dapat digunakan untuk menipu</p>
+        
+        <div class="warning">
+            <strong>Peringatan:</strong> Halaman ini menunjukkan bagaimana penyerang dapat menggunakan karakter homograph untuk membuat nama file yang menipu. Selalu periksa nama file dengan hati-hati sebelum membukanya.
+        </div>
+        
+        <div class="demo-section">
+            <h2 class="demo-title">Contoh Nama File dengan Karakter Homograph</h2>
+            
+            <div class="url-box">
+                <div class="url-text">document.pdf (dengan karakter Cyrillic 'а')</div>
+                <button class="copy-btn" onclick="copyToClipboard('document.pdf')">Copy</button>
+            </div>
+            
+            <div class="url-box">
+                <div class="url-text">invoiсe.pdf (dengan karakter Cyrillic 'с')</div>
+                <button class="copy-btn" onclick="copyToClipboard('invoiсe.pdf')">Copy</button>
+            </div>
+            
+            <button class="save-btn" onclick="handleSaveAs()">
+                Download File dengan Nama Menipu
+            </button>
+            
+            <div id="result"></div>
+        </div>
+        
+        <div class="comparison">
+            <div class="comparison-box">
+                <div class="comparison-title danger">URL Mencurigakan</div>
+                <div class="comparison-url">https://аррӏе.com</div>
+                <p>Menggunakan karakter Cyrillic (ӏ) bukan huruf Latin (l)</p>
+            </div>
+            
+            <div class="comparison-box">
+                <div class="comparison-title safe">URL Asli</div>
+                <div class="comparison-url">https://apple.com</div>
+                <p>Menggunakan huruf Latin yang benar</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleSaveAs() {
+            // Menggunakan karakter Cyrillic 'а' (U+0430) bukan 'a' Latin (U+0061)
+            const fileContent = "Hati-hati! File ini memiliki nama yang menggunakan karakter homograph untuk menipu.";
+            const fileName = "document.pdf"; // Cyrillic 'а' digunakan di sini
+            
+            const blob = new Blob([fileContent], { type: "application/pdf" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = fileName;
+
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            URL.revokeObjectURL(url);
+            document.getElementById("result").innerHTML = 
+                `File disimpan sebagai <strong>${fileName}</strong>.<br>
+                 <span class="danger">Perhatikan bahwa nama file menggunakan karakter Cyrillic, bukan Latin!</span>`;
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Teks disalin: ' + text);
+            });
+        }
+    </script>
+</body>
+</html>
