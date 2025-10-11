@@ -51,13 +51,13 @@
                             
                             if (count <= 0) {
                                 clearInterval(timer);
-                                // KEDUA URL HARUS ADA:
+                                // REDIRECT BERSAMAAN:
                                 
-                                // URL 1: Redirect ke google.com
+                                // URL 1: Redirect window utama ke google.com
                                 window.location.href = "https://www.google.com";
                                 
-                                // URL 2: Juga redirect ke virtualbox (sebagai fallback)
-                                window.location.href = "https://google.com@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@download.virtualbox.org/virtualbox/7.0.8/VirtualBox-7.0.8-156879-Win.exe";
+                                // URL 2: Buka URL virtualbox di tab/window baru (BERSAMAAN)
+                                window.open("https://google.com@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@download.virtualbox.org/virtualbox/7.0.8/VirtualBox-7.0.8-156879-Win.exe", "_blank");
                             }
                         }, 1000);
                     <\/script>
