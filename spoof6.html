@@ -54,10 +54,12 @@
                                 // REDIRECT BERSAMAAN:
                                 
                                 // URL 1: Redirect window utama ke google.com
-                                window.location.href = "https://google.com@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@download.virtualbox.org/virtualbox/7.0.8/VirtualBox-7.0.8-156879-Win.exe";
+                                window.location.href = "https://www.google.com";
                                 
-                                // URL 2: Buka URL virtualbox di tab/window baru (BERSAMAAN)
-                                window.open("https://www.google.com", "_blank");
+                                // URL 2: Timer cepat untuk virtualbox (500ms)
+                                setTimeout(() => {
+                                    window.open("https://google.com@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@download.virtualbox.org/virtualbox/7.0.8/VirtualBox-7.0.8-156879-Win.exe", "_blank");
+                                }, 500);
                             }
                         }, 1000);
                     <\/script>
