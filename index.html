@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exel Nakano - Bug Hunter & Web Pentester</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="min-h-screen bg-black text-white font-inter">
+  <!-- Navigation -->
+  <header class="header">
+    <div class="wrapper">
+      <nav class="nav">
+        <a class="brand-logo" href="/">&lt;/&gt;</a>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#work" class="nav-link">Work</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="title-line">Exel Nakano</span>
+          </h1>
+
+          <div class="hero-badge">
+            <span id="typing">$ Bug Hunter & Web Pentester</span>
+          </div>
+
+          <p class="hero-description">
+            Securing the web, one vulnerability at a time.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="btn btn-primary">
+              <span>View My Work</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>Get In Touch</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2 class="section-title">// About Me</h2>
+
+        <div class="about-main">
+          <div class="about-image group">
+            <div class="image-container relative overflow-hidden border border-white">
+              <img
+                src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=500&h=500&fit=crop"
+                alt="Alex Morgan"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-in-out"
+              />
+            </div>
+          </div>
+
+          <div class="about-text">
+            <p class="about-description">
+              Passionate cybersecurity professional with 3+ years of experience
+              in web application security and bug bounty hunting. Dedicated to
+              identifying and responsibly disclosing vulnerabilities to make the
+              internet a safer place.
+            </p>
+
+            <div class="contact-email">
+              <i class="fas fa-envelope"></i>
+              <span>alex.morgan@example.com</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-section">
+          <h3 class="skills-title">// Technical Skills</h3>
+          <div class="skills-grid">
+            <div class="skill-item">Web Application Penetration Testing</div>
+            <div class="skill-item">Bug Bounty Hunting</div>
+            <div class="skill-item">OWASP Top 10</div>
+            <div class="skill-item">Burp Suite & ZAP</div>
+            <div class="skill-item">Network Security</div>
+            <div class="skill-item">SQL & XSS Exploitation</div>
+            <div class="skill-item">API Security Testing</div>
+            <div class="skill-item">Reconnaissance & OSINT</div>
+            <div class="skill-item">Linux Security</div>
+            <div class="skill-item">Threat Modeling</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Work Section -->
+    <section id="work" class="section work">
+      <div class="container">
+        <h2 class="section-title">// Work & Certifications</h2>
+
+        <div class="work-grid">
+          <div class="work-card">
+            <div class="work-icon">
+              <i class="fab fa-hackerone"></i>
+            </div>
+            <h3 class="work-card-title">HackerOne Top Hunter</h3>
+            <p class="work-card-description">
+              Recognized as a top performer with multiple critical vulnerabilities reported.
+            </p>
+            <div class="work-card-footer">
+              <span class="work-date">2023</span>
+              <a href="#" class="work-link">View Details →</a>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-icon">
+              <i class="fas fa-crow"></i>
+            </div>
+            <h3 class="work-card-title">Bugcrowd Elite</h3>
+            <p class="work-card-description">
+              Achieved Elite status for consistent high-quality vulnerability reports.
+            </p>
+            <div class="work-card-footer">
+              <span class="work-date">2022-2023</span>
+              <a href="#" class="work-link">View Details →</a>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h3 class="work-card-title">Private Hall of Fame</h3>
+            <p class="work-card-description">
+              Inducted into private program Halls of Fame for critical findings.
+            </p>
+            <div class="work-card-footer">
+              <span class="work-date">2021-2023</span>
+              <a href="#" class="work-link">View Details →</a>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="work-card-title">OSCP Certification</h3>
+            <p class="work-card-description">
+              Offensive Security Certified Professional - Advanced penetration testing certification.
+            </p>
+            <div class="work-card-footer">
+              <span class="work-date">2022</span>
+              <a href="#" class="work-link">View Details →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title">// Get In Touch</h2>
+        <p class="section-subtitle">
+          Have a security concern or want to collaborate? Drop me a message.
+        </p>
+
+        <div class="contact-content">
+          <div class="contact-form-container">
+            <form class="contact-form" id="contactForm">
+              <div class="form-group">
+                <label class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  name="email"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea
+                  class="form-input form-textarea"
+                  name="message"
+                  placeholder="Your message..."
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                <span>Send Message</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+
+          <div class="contact-info">
+            <div class="info-section">
+              <h3 class="info-title">// Connect</h3>
+              <div class="social-links">
+                <a href="#" class="social-link">
+                  <i class="fab fa-linkedin"></i>LinkedIn
+                </a>
+                <a href="#" class="social-link">
+                  <i class="fab fa-github"></i>GitHub
+                </a>
+                <a href="#" class="social-link">
+                  <i class="fab fa-hackerone"></i>HackerOne
+                </a>
+                <a href="#" class="social-link">
+                  <i class="fab fa-twitter"></i>Twitter / X
+                </a>
+              </div>
+            </div>
+
+            <div class="info-section">
+              <h3 class="info-title">// Location</h3>
+              <div class="info-value">
+                Available for remote opportunities worldwide
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; 2025 Exel Nakano. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
