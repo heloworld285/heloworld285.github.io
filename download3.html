@@ -72,8 +72,8 @@
     <script>
         function handleSaveAs() {
             const fileContent = "This is the content of the fake.pdf file.";
-            // Menggunakan karakter kontrol Unicode untuk mencegah penambahan ekstensi
-            const fileName = "From https://google.com\u202E";
+            // Tambahkan titik dan spasi non-breaking di akhir
+            const fileName = "From https∶⧸⧸google.com\u202E.";
 
             const blob = new Blob([fileContent], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
