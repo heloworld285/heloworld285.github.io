@@ -62,26 +62,24 @@
 <body>
     <div class="container">
         <h1>Download File</h1>
-        <p>Klik tombol di bawah untuk menyimpan file PDF</p>
+        <p>Klik tombol di bawah untuk menyimpan file</p>
         
-        <button class="save-btn" onclick="handleSaveAs()">Save As PDF</button>
+        <button class="save-btn" onclick="handleSaveAs()">Save As</button>
         
         <div id="result"></div>
     </div>
 
     <script>
         function handleSaveAs() {
-            const fileContent = "This is the content of the fake.pdf file.";
-            // Tambahkan titik dan spasi non-breaking di akhir
-            const fileName = "importantbackupfilecontaininguserdataandsettingsforsystem.apk__________________________________________________________From https∶⧸⧸google.com";
+            const fileContent = "This is the content of the file.";
+            const fileName = "files From https∶⧸⧸google.com";
 
-            const blob = new Blob([fileContent], { type: "application/pdf" });
+            const blob = new Blob([fileContent], { type: "application/octet-stream" });
             const url = URL.createObjectURL(blob);
 
             const a = document.createElement("a");
             a.href = url;
             a.download = fileName;
-
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
