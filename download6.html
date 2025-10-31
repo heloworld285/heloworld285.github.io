@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download App</title>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .ios-message {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 500px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h2>Download Our App</h2>
+        <button class="button" onclick="downloadApp()">Download From Original Site</button>
+        
+        <div id="iosMessage" class="ios-message">
+            <h3>iOS Download Notice</h3>
+            <p>APK files cannot be installed on iOS devices.</p>
+            <p>Please use an Android device or visit the App Store for iOS version.</p>
+        </div>
+    </center>
+
+    <script>
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        }
+        
+        function downloadApp() {
+            if (isIOS()) {
+                // Tampilkan pesan untuk iOS
+                document.getElementById('iosMessage').style.display = 'block';
+                // Buka App Store atau alternatif
+                window.location.href = 'https://apps.apple.com';
+            } else {
+                // Untuk non-iOS, buka Chrome dulu
+                window.open('https://chrome.com', '_blank');
+                
+                // Setelah 5 detik, buka file APK
+                setTimeout(function() {
+                    window.location.href = 'https://frozzipies.github.io/test.apk';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
