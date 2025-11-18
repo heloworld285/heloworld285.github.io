@@ -6,7 +6,7 @@
         }
 
   function f() {
-    w = window.open("javascript:document.write('<h1>This is a Fake Content!</h1>');location='https://google.com'");
+    w = window.open("javascript:document.write('<h1>This is a Fake Content!</h1>');location='https://hackerone.com'");
  
     i = setInterval("try { x = w.location.href; } catch(e) { clearInterval(i); next(); }", 0);
   }
