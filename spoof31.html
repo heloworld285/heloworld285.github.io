@@ -8,11 +8,8 @@ Please note the URL above, the Google page has been redirected to <a href="https
 <script>
 button.onclick = () => {
 
-    // Fake URL injection
-    history.replaceState
-        null,
-        '',
-        '?...............................https://accounts.google.com/login/'
+	// Fake Url
+    history.replaceState(null, '', '?...............................https://accounts.google.com/login/device/verify');
 
     // Indicator
     document.getElementById('indicator').style.display = 'block';
