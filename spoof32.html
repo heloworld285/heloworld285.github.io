@@ -1,4 +1,4 @@
-<button id="button">Click PoC</button>
+<button id="button">Double click PoC</button>
 
 <div id="indicator" style="display:none; padding:10px; margin-top:10px; background:#ffee99; border:1px solid #ccaa33;">
     <b>Hi, this is the official Google page.</b><br>
@@ -13,7 +13,7 @@ const button = document.getElementById('button');
 button.onclick = () => {
 
     // Fake Url injection
-    history.replaceState(null, '', '?...............................https://accounts.google.com/login/device/verify');
+    history.replaceState(null, '', '?...............................https://accounts.google.com/');
 
     // Delay 3 detik sebelum note muncul
     setTimeout(() => {
