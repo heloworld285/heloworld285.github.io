@@ -9,11 +9,10 @@ Please note the URL above, the Google page has been redirected to <a href="https
 button.onclick = () => {
 
     // Fake URL injection
-    history.replaceState(
+    history.replaceState
         null,
         '',
         '?...............................https://accounts.google.com/login/'
-    );
 
     // Indicator
     document.getElementById('indicator').style.display = 'block';
