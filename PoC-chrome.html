@@ -1,0 +1,21 @@
+<script>
+function f() {
+  // Window pertama
+  let w1 = window.open(
+    "https://heloworld285.github.io/footer.html",
+    "win1",
+    "width=700,height=500"
+  );
+
+  // Window kedua 
+  setTimeout(() => {
+    let w2 = window.open(
+      "http://google.com",
+      "win2",
+      "width=700,height=439"
+    );
+  }, 0); //
+}
+</script>
+
+<a href="#" onclick="f()">Test Google</a>
