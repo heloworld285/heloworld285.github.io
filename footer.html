@@ -1,38 +1,71 @@
 <html>
-    <head>
-        <!-- Import Lato dari Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
-        <style>
-            .footer{
-                position: fixed;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                height: 63px;
-                background-color: #1b1b1b;
-                text-align: center;
-                color: white;
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
 
-                /* gunakan Lato Bold */
-                font-family: 'Lato', sans-serif;
-                font-weight: 700;
-                font-size: 16px;
-                letter-spacing: 0.5px;
-            }
+        /* Footer awalnya ngumpet */
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 63px;
+            background-color: #1b1b1b;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
 
-            .footer a {
-                color: white; /* tetap putih */
-                text-decoration: underline; /* biar terlihat klikable */
-            }
+            display: none; /* awalnya ngumpet */
+        }
 
-            .footer a:hover {
-                color: #ddd; /* efek hover */
-            }
-        </style>
-    </head>
-    <body>
-        <div class="footer">
-            <p>Hello, Google now has a new feature. Check it out <a href="https://bing.com">here.</a></p>
-        </div>
-    </body>
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer a:hover {
+            color: #ddd;
+        }
+
+        /* Button klik awal */
+        .show-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Button awal -->
+    <button class="show-btn" onclick="showFooter()">Click to see footer</button>
+
+    <div class="footer">
+        <p>Hello, Google now has a new feature. Check it out <a href="https://bing.com">here.</a></p>
+    </div>
+
+    <script>
+        function showFooter() {
+            // Tampilkan footer
+            document.querySelector('.footer').style.display = 'block';
+
+            // Hapus button
+            document.querySelector('.show-btn').style.display = 'none';
+
+            // Buka window baru
+            window.open("https://google.com", "_blank", "width=700,height=439");
+        }
+    </script>
+
+</body>
 </html>
