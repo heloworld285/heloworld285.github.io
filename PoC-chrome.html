@@ -1,19 +1,22 @@
-<script>
-function f() {
-  // Window pertama
-  let w1 = window.open(
-    "https://heloworld285.github.io/footer.html",
-    "win1",
-    "width=700,height=500"
-  );
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Window Example</title>
+</head>
+<body>
 
-  // Window kedua langsung dari klik user
-  let w2 = window.open(
-    "https://google.com",
-    "win2",
-    "width=700,height=439"
-  );
-}
+<button onclick="openWindow()">Click here</button>
+
+<script>
+    function openWindow() {
+        window.open(
+            "http://heloworld285.github.io/footer.html",
+            "_blank", // buka di tab/window baru
+            "width=700,height=500" // ukuran window
+        );
+    }
 </script>
 
-<a href="#" onclick="f()">Test Google</a>
+</body>
+</html>
