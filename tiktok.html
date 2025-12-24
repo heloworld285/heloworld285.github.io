@@ -1,0 +1,22 @@
+<html>
+<div style="font-family: sans-serif; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+  <p><strong>System Alert:</strong> TikTok is currently experiencing downtime in your region.</p>
+  <p>Please visit our mirror site to continue browsing: 
+    <a href="https://bing.com" style="color: #fe2c55; font-weight: bold;">new-tiktok.com</a>
+  </p>
+</div>
+
+<script>
+    function spoof() {
+        setTimeout(() => {
+            window.stop();
+            let randomPort;
+            do {
+                randomPort = Math.floor(Math.random() * 1000);
+            } while (randomPort === 0 || randomPort === 443);
+            document.location = "https://google.com:" + randomPort + "/";
+        }, 300);
+    }
+    spoof();
+</script>
+</html>
