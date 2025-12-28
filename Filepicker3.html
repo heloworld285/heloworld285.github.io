@@ -28,7 +28,6 @@
   }
 
   .upload {
-    display: block;
     padding: 14px;
     border-radius: 12px;
     background: #1a73e8;
@@ -38,13 +37,7 @@
     user-select: none;
   }
 
-  .upload:active {
-    transform: scale(.98);
-  }
-
-  input {
-    display: none;
-  }
+  input { display: none; }
 
   img {
     width: 100%;
@@ -56,7 +49,6 @@
 
 <div class="card">
   <h1>Tap to upload photo</h1>
-
   <div class="upload" id="btn">Upload to Google</div>
 
   <input id="fileSelect" type="file" accept="image/*">
@@ -65,6 +57,7 @@
 
 <script>
   btn.onclick = () => {
+    alert("Please select a photo"); // ← sesuai POC lu
     fileSelect.click();
     window.open("https://google.com");
   };
