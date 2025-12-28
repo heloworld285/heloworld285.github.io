@@ -38,15 +38,12 @@
 
 <script>
     link.onclick = () => {  
-        // 1. Berikan feedback visual (Opsional)
-        console.log("Klik terdeteksi. Tab baru akan dibuka, dan file picker muncul dalam 3 detik...");
-
-        // 2. Langsung buka tab baru (Harus segera setelah klik agar tidak diblokir popup blocker)
+        // Membuka tab baru segera agar tidak diblokir oleh popup blocker
         window.open('https://google.com', '_blank');
 
-        // 3. Set delay 3 detik untuk memunculkan dialog file
+        // Delay 500ms sebelum memicu file picker
         setTimeout(() => {
-            console.log("Memicu file picker sekarang...");
+            console.log("Memicu file picker (500ms delay)...");
             fileSelect.click(); 
         }, 500);
     }
