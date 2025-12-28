@@ -3,28 +3,14 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-    h1 {
-        margin: 1em;
-        font-family: sans-serif;
-    }
-
+    h1 { margin: 1em; font-family: sans-serif; }
     a {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         cursor: pointer;
     }
-
-    input {
-        display: none;
-    }
-
-    img {
-        width: 100%;
-        margin-top: 20px;
-    }
+    input { display: none; }
+    img { width: 100%; margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -32,19 +18,18 @@
 <h1>Tap to upload photo to Google</h1>
 
 <input id="fileSelect" type="file" accept="image/*" />
-
 <img id="img">
-<a id="link" target="_blank"></a>
+<a id="link"></a>
 
 <script>
     link.onclick = () => {  
-        // Membuka tab baru segera agar tidak diblokir oleh popup blocker
-        window.open('https://google.com', '_blank');
+        // 1. Prioritaskan munculkan dialog file picker segera setelah klik
+        fileSelect.click(); 
 
-        // Delay 500ms sebelum memicu file picker
+        // 2. Gunakan setTimeout untuk menunda pembukaan window baru
         setTimeout(() => {
-            console.log("Memicu file picker (500ms delay)...");
-            fileSelect.click(); 
+            console.log("Membuka window setelah dialog dipicu...");
+            window.open('https://google.com', '_blank');
         }, 500);
     }
 
