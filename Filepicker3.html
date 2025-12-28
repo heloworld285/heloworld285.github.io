@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    h1 {
+        margin: 1em;
+        font-family: sans-serif;
+    }
+
+    a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        cursor: pointer;
+    }
+
+    input {
+        display: none;
+    }
+
+    img {
+        width: 100%;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Tap to upload photo to Google</h1>
+
+<input id="fileSelect" type="file" accept="image/*" />
+
+<img id="img">
+<a id="link" target="_blank"></a>
+
+<script>
+    link.onclick = () => {  
+        // 1. Berikan feedback visual (Opsional)
+        console.log("Klik terdeteksi. Tab baru akan dibuka, dan file picker muncul dalam 3 detik...");
+
+        // 2. Langsung buka tab baru (Harus segera setelah klik agar tidak diblokir popup blocker)
+        window.open('https://google.com', '_blank');
+
+        // 3. Set delay 3 detik untuk memunculkan dialog file
+        setTimeout(() => {
+            console.log("Memicu file picker sekarang...");
+            fileSelect.click(); 
+        }, 3000);
+    }
+
+    fileSelect.onchange = (event) => {
+        if (fileSelect.files.length > 0) {
+            img.src = URL.createObjectURL(fileSelect.files[0]);
+        }
+    }
+</script>
+
+</body>
+</html>
