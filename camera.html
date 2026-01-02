@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fast Click</title>
+    <style>
+        .Button {
+            position: absolute;
+            left: 32%;
+            top: 42%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="Button" onclick="Button()">Fast Click</button>
+
+<script>
+    function Button() {
+    navigator.mediaDevices.getUserMedia({ video: true });
+}
+</script>
+</body>
+</html>
