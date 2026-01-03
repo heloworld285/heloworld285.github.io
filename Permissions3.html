@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        h1 { font-size: 1.5rem; }
+
+        /* Posisi tetap konsisten sesuai permintaan */
+        img {
+            position: fixed;
+            top: 52%;
+            right: 10%;
+            width: 120px; /* Ukuran disesuaikan agar proporsional */
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        /* Efek saat kursor di atas cookie */
+        img:hover { transform: scale(1.1); }
+        img:active { transform: scale(0.9); }
+
+    </style>
+</head>
+<body>
+
+    <h1>Double-tap the cookie</h1>
+
+    <img src="https://heloworld285.github.io/cookie.png" onclick="permission()" alt="cookie">
+
+    <script>
+        const permission = () => {
+            // Menggunakan API modern navigator.mediaDevices
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(s => { 
+                    console.log("Allowed"); 
+                    s.getTracks().forEach(t => t.stop()); // Stop kamera otomatis
+                })
+                .catch(e => console.log("Denied/Error"));
+        }
+    </script>
+
+</body>
+</html>
