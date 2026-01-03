@@ -1,26 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fast Click</title>
+    <style>
+    button {
+        position: fixed;
+        top: 60%;
+        right: 16%;
 
-<h1>Click as fast as you can</h1>
-
-<style>
-  button {
-    position: fixed;
-    top: 60%;
-    right: 16%;
-    width: 50px;
-    height: 50px;
+        /* SIZE */
+        padding: 18px 36px;
+        font-size: 18px;
+        border-radius: 6px;
+        cursor: pointer;
   }
-</style>
+    </style>
+</head>
 
-<button onclick="Permission()">Click Fast</button>
+<body>
+    <button class="Button" onclick="Button()">Fast Click</button>
 
 <script>
-  function Permission() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        console.log("Camera access granted");
-      })
-      .catch(err => {
-        console.error("Camera access denied", err);
-      });
-  }
+    function Button() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(() => console.log("Camera permission requested"))
+            .catch(err => console.error(err));
+    }
 </script>
+</body>
+</html>
