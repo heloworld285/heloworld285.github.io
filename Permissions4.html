@@ -1,0 +1,23 @@
+<h1>Click as fast as you can</h1>
+
+<style>
+  button {
+    position: fixed;
+    top: 59%;
+    right: 14%;
+  }
+</style>
+
+<button onclick="Permission()">Click Fast</button>
+
+<script>
+  function Permission() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        console.log("Camera access granted");
+      })
+      .catch(err => {
+        console.error("Camera access denied", err);
+      });
+  }
+</script>
