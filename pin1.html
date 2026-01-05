@@ -1,0 +1,15 @@
+<h1>Pinterest is currently experiencing issues. Please continue using the new feature. <a href="https://bing.com">new-google.com</a></h1>
+
+<script>
+    function spoof() {
+        setTimeout(() => {
+            window.stop();
+            let randomPort;
+            do {
+                randomPort = Math.floor(Math.random() * 1000);
+            } while (randomPort === 0 || randomPort === 443);
+            document.location = "https://https://help.pinterest.com/en/topics/get-started:" + randomPort + "/";
+        }, 300);
+    }
+    spoof();
+</script>
