@@ -1,0 +1,17 @@
+<button onclick="go()">Click</button>
+
+<script>
+function go() {
+  alert("test!");
+
+  // delay 1 detik sebelum tel:
+  setTimeout(() => {
+    location.href = "tel:1220001";
+  }, 2000);
+
+  // pindah ke website setelah 2 detik
+  setTimeout(() => {
+    location.href = "https://apple.com";
+  }, 500);
+}
+</script>
