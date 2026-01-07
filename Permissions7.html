@@ -1,0 +1,32 @@
+<html>
+  <h1>Click as fast as you can</h1>
+<head>
+    <title>Fast Click</title>
+    <style>
+    button {
+      position: fixed;
+      top: 95%;
+      right: 16%;
+
+      padding: 28px 56px;
+      font-size: 22px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      touch-action: manipulation;
+    }
+    </style>
+</head>
+
+<body>
+    <button class="Button" onclick="Button()">Fast Click</button>
+
+<script>
+    function Button() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(() => console.log("Camera permission requested"))
+            .catch(err => console.error(err));
+    }
+</script>
+</body>
+</html>
