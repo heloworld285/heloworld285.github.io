@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        img {
+            position: fixed;
+            top: 52%;
+            right: 10%;
+            cursor: pointer; /* Menambah indikasi bahwa gambar bisa diklik */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Double-tap the cookie</h1>
+    <!-- Gunakan playsinline jika nanti Anda menambahkan elemen video -->
+    <img src="https://heloworld285.github.io/cookie.png" onclick="permission()">
+
+    <script>
+        const permission = async () => {
+            // iOS mewajibkan HTTPS untuk mengakses kamera
+            // Dan harus dipicu oleh interaksi pengguna (seperti onclick ini)
+            
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert("Browser Anda tidak mendukung akses kamera.");
+                return;
+            }
+
+            try {
+                // Versi modern yang didukung iOS Safari & Chrome
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: "user" // Mengutamakan kamera depan (selfie)
+                    } 
+                });
+                
+                console.log("Akses kamera diberikan:", stream);
+                
+                // Opsional: Hentikan stream segera jika hanya ingin cek izin
+                // stream.getTracks().forEach(track => track.stop());
+                
+            } catch (err) {
+                console.error("Akses ditolak atau error:", err);
+                alert("Gagal mengakses kamera. Pastikan izin diberikan.");
+            }
+        }
+    </script>
+</body>
+
+</html>
