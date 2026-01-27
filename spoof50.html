@@ -1,0 +1,24 @@
+<button onclick="spoof()">Click to spoof</button>
+
+<script>
+  function spoof() {
+    let win = window.open(
+      "https://www.google.com/csi",
+      "_blank"
+    );
+
+    setTimeout(() => {
+      try {
+        win.document.write(`
+          <h1>Google redirected to <a href="https://bing.com">bing.com</h1>
+        `);
+        win.document.close();
+      } catch (e) {
+        console.warn(
+          "Blocked by browser protections:",
+          e
+        );
+      }
+    }, 50);
+  }
+</script>
