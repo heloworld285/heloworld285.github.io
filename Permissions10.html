@@ -1,0 +1,27 @@
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        img {
+            position: fixed;
+            top:4%;
+            right: 68%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Click as fast as you can</h1>
+    <img src="https://heloworld285.github.io/cookie.png" onclick="permission()">
+    <script>
+        const permission = () => {
+            
+            // Notification.requestPermission();
+            navigator.getUserMedia({ video: true }, console.log, console.error);
+        }
+    </script>
+</body>
+
+</html>
