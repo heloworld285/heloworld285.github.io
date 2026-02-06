@@ -1,0 +1,11 @@
+<h1 id="title">Click the button To Google.com</h1>
+<button onclick="test()">Click</button>
+
+<script>
+function test() {
+    document.body.innerHTML =
+        '<h1>Google is redirected to <a href="https://bing.com">bing.com</a></h1>';
+
+    window.location.href = "https://google.com:80";
+}
+</script>
