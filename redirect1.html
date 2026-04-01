@@ -1,0 +1,10 @@
+<h1>you're address bar has been spoofed</h1>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const redirectUrl = params.get("redirect");
+
+  if (redirectUrl) {
+    window.location.href = redirectUrl;
+  }
+</script>
