@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Auto Full Screen</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Overlay sebelum masuk ke konten utama */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #entry-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        #entry-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Konten Utama */
+        #content {
+            display: none;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <h1>Selamat Datang di Website Kami</h1>
+        <p>Klik tombol di bawah untuk pengalaman layar penuh</p>
+        <button id="entry-button">Masuk ke Website</button>
+    </div>
+
+    <div id="content">
+        <div>
+            <h1>Mode Full-Screen Aktif!</h1>
+            <p>Tekan <b>ESC</b> pada keyboard untuk keluar dari mode layar penuh.</p>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const content = document.getElementById('content');
+        const btn = document.getElementById('entry-button');
+
+        btn.addEventListener('click', () => {
+            // Meminta izin Full Screen ke browser
+            const docEl = document.documentElement;
+            
+            if (docEl.requestFullscreen) {
+                docEl.requestFullscreen();
+            } else if (docEl.mozRequestFullScreen) { // Firefox
+                docEl.mozRequestFullScreen();
+            } else if (docEl.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                docEl.webkitRequestFullscreen();
+            } else if (docEl.msRequestFullscreen) { // IE/Edge
+                docEl.msRequestFullscreen();
+            }
+
+            // Sembunyikan overlay dan tampilkan konten
+            overlay.style.display = 'none';
+            content.style.display = 'flex';
+        });
+
+        // Deteksi jika user keluar dari full screen secara manual (tekan ESC)
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                alert("Anda telah keluar dari mode Full-Screen.");
+            }
+        });
+    </script>
+</body>
+</html>
