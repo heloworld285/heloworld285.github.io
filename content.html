@@ -1,14 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warning</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        color: #fff;
+    }
+
+    h1 {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 1s ease;
+        text-align: center;
+        font-size: 28px;
+        color: #ff4c4c;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+
+    h1.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+</style>
+</head>
+
 <body>
 
-<h1 id="text" style="display:none;">
-    you're address bar has been spoof this is not google.com
+<h1 id="text">
+    You're address bar has been spoofed<br>
+    This is not google.com
 </h1>
 
 <script>
-    setTimeout(function() {
-        document.getElementById("text").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("text").classList.add("show");
     }, 4000);
 </script>
 
