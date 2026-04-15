@@ -1,0 +1,12 @@
+<h1>test hide</h1>
+
+<button onclick="a()">click</button>
+<input type="text" name="" id="">
+
+<script>
+async function a() {
+  if (!document.fullscreenElement) {
+    await document.documentElement.requestFullscreen();
+  }
+}
+</script>
