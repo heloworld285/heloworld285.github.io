@@ -18,7 +18,10 @@
 <script>
 function getLoc() {
     navigator.geolocation.getCurrentPosition(pos => {
-        alert(pos.coords.latitude + ", " + pos.coords.longitude);
+
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+
     });
 }
 </script>
