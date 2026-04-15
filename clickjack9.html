@@ -1,0 +1,24 @@
+<h1>ClickJack</h1>
+
+<button onclick="getLoc()" style="
+      position: fixed;
+      top: 57%;
+      right: 12%;
+
+      padding: 28px 56px;
+      font-size: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      touch-action: manipulation;
+">
+    Click
+</button>
+
+<script>
+function getLoc() {
+    navigator.geolocation.getCurrentPosition(pos => {
+        alert(pos.coords.latitude + ", " + pos.coords.longitude);
+    });
+}
+</script>
