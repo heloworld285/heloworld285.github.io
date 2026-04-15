@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<button onclick="runAll()">Click me</button>
+
+<input type="file" id="fileInput" style="display:none" />
+
+<script>
+async function runAll() {
+  // Masuk fullscreen
+  if (!document.fullscreenElement) {
+    await document.documentElement.requestFullscreen();
+  }
+
+  // Trigger file picker
+  document.getElementById("fileInput").click();
+}
+</script>
+
+</body>
+</html>
