@@ -7,12 +7,17 @@
         name="cc-number"
         type="text" 
         autocomplete="cc-number" 
-        placeholder="Click Fast"
+        placeholder="Click"
         class="btn-look"
     >
 
     <p id="output"></p>
 </form>
+
+<!-- BUTTON TERPISAH -->
+<div class="fullscreen-btn" onclick="goFullscreen()">
+    FULLSCREEN
+</div>
 
 <style>
 .btn-look {
@@ -27,9 +32,25 @@
     position: fixed;
     top: 52%;
     right: 75%;
-
     border: none;
     caret-color: transparent;
+}
+
+.fullscreen-btn {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    padding: 12px 20px;
+    background: red;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 9999;
+}
+
+.fullscreen-btn:hover {
+    background: darkred;
 }
 
 .btn-look:focus {
@@ -47,4 +68,10 @@ const output = document.getElementById("output");
 document.getElementById("cc").addEventListener("input", function() {
     output.innerText = "CC: " + this.value;
 });
+
+function goFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    }
+}
 </script>
