@@ -1,0 +1,67 @@
+<form>
+    <h1>AUTOFILL TAPJACK</h1>
+
+    <input 
+        name="firstName" 
+        id="firstName" 
+        type="text" 
+        autocomplete="given-name" 
+        placeholder="Fast click"
+        class="btn-look"
+    >
+
+    <input class="hidden" name="lastName" type="text" autocomplete="family-name">
+    <input class="hidden" name="email" type="email" autocomplete="email">
+
+    <p id="output"></p>
+</form>
+
+<style>
+.hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+/* Looks like button */
+.btn-look {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    top: 52%;
+    right: 75%;
+    position: fixed;
+
+    /*  */
+    caret-color: transparent;
+}
+
+/* hilangin outline biar clean */
+.btn-look:focus {
+    outline: none;
+}
+
+/* hover effect */
+.btn-look:hover {
+    background: #0056b3;
+}
+</style>
+
+<script>
+const output = document.getElementById("output");
+
+function showData() {
+    const first = document.getElementById("firstName").value;
+    const last = document.querySelector('[name="lastName"]').value;
+    const email = document.querySelector('[name="email"]').value;
+
+    output.innerText = `Name: ${first} ${last} | Email: ${email}`;
+}
+
+document.getElementById("firstName").addEventListener("input", showData);
+</script>
