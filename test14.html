@@ -1,0 +1,48 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    function spoof() {
+       location.href = "https://permission.site"
+    }
+
+    setTimeout(spoof, 5000)
+  </script>
+
+  <style>
+    :root {
+    --scale-int: 1
+    }
+
+    html {
+      transform: scale(var(--scale-int));
+    }
+
+    * {
+      border-right: 49ex dotted peru;
+      border-end-end-radius: 892534784em;
+    }
+
+    dl {
+      font: 633861333311872627674592vmax/8885 Ahem;
+    }
+  </style>
+
+</head>
+
+<body>
+  <dl>KeCK~h</dl>
+</body>
+
+<script>
+  let root = document.documentElement;
+
+  // Periodically re-scale the page to re-render the page
+  setInterval(function() {
+  root.style.setProperty('--scale-int', Math.random()*10);
+ }, 2300)
+</script>
+
+</html>
