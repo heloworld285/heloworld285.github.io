@@ -1,0 +1,10 @@
+<h1>Click "Fullscreen" + Click Guest</h1>
+<button onclick="trigger()">Fullscreen</button>
+
+<script>
+  function trigger() {
+    setTimeout(function() {
+      document.documentElement.requestFullscreen();
+    }, 3000);
+  }
+</script>
