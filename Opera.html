@@ -1,10 +1,11 @@
 <h1>Click "Fullscreen" + Click Guest</h1>
-<button onclick="trigger()">Fullscreen</button>
+<img src="https://heloworld285.github.io/Screenshot_20260608_221527.jpg" id="targetGambar" style="width:300px; cursor:pointer;" onclick="trigger()">
 
 <script>
   function trigger() {
     setTimeout(function() {
-      document.documentElement.requestFullscreen();
+      document.getElementById('targetGambar').requestFullscreen();
     }, 3000);
   }
 </script>
+
