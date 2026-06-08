@@ -1,11 +1,23 @@
 <h1>Click "Fullscreen" + Click Guest</h1>
-<img src="https://heloworld285.github.io/Screenshot_20260608_221527.jpg" id="targetGambar" style="width:300px; cursor:pointer;" onclick="trigger()">
+
+<div id="konten">
+  <h1>Konten Website</h1>
+</div>
+
+<img src="https://heloworld285.github.io/Screenshot_20260608_222750.jpg" id="targetGambar" style="display: none; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; z-index: 9999;">
 
 <script>
   function trigger() {
     setTimeout(function() {
-      document.getElementById('targetGambar').requestFullscreen();
+      document.documentElement.requestFullscreen();
+      document.getElementById('targetGambar').style.display = "block";
     }, 3000);
   }
+
+  document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement) {
+      document.getElementById('targetGambar').style.display = "none";
+    }
+  });
 </script>
 
