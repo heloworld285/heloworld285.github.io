@@ -1,23 +1,39 @@
-<h1>Click "Fullscreen" + Click Guest</h1>
-<button onclick="trigger()">Fullscreen</button>
+<h1 id="awal">Click "Fullscreen" + Click Guest To Open Google.com</h1>
+<button id="btn" onclick="trigger()">Fullscreen</button>
 
+<h1 id="pesanBaru" style="display:none;">
+    this is not google.com
+</h1>
 
-
-<img src="https://heloworld285.github.io/address_bar.jpeg" id="targetGambar" style="display: none; position: fixed; bottom: 0px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; z-index: 9999;">
+<img src="https://heloworld285.github.io/address_bar.jpeg"
+     id="targetGambar"
+     style="display:none; position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:500px; z-index:9999;">
 
 <script>
-  function trigger() {
+function trigger() {
     setTimeout(function() {
-      document.documentElement.requestFullscreen();
-      document.getElementById('targetGambar').style.display = "block";
+        document.documentElement.requestFullscreen();
+
+        // Sembunyikan konten awal
+        document.getElementById("awal").style.display = "none";
+        document.getElementById("btn").style.display = "none";
+
+        // Tampilkan konten baru
+        document.getElementById("pesanBaru").style.display = "block";
+
+        // Tampilkan gambar
+        document.getElementById("targetGambar").style.display = "block";
     }, 3000);
-  }
+}
 
-  document.addEventListener('fullscreenchange', function() {
+document.addEventListener('fullscreenchange', function() {
     if (!document.fullscreenElement) {
-      document.getElementById('targetGambar').style.display = "none";
-    }
-  });
-</script>
+        document.getElementById('targetGambar').style.display = "none";
+        document.getElementById('pesanBaru').style.display = "none";
 
-```
+        // Tampilkan lagi konten awal saat keluar fullscreen
+        document.getElementById("awal").style.display = "block";
+        document.getElementById("btn").style.display = "inline-block";
+    }
+});
+</script>
