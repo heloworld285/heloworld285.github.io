@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Request Simpel</title>
+    <style>
+        body {
+            margin: 0;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            margin-bottom: 15vh;
+        }
+
+        #buy-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s;
+        }
+
+        #buy-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <button onclick="spoof()" id="buy-btn">Bayar Sekarang</button>
+    </div>
+
+    <script>
+        document.getElementById('buy-btn').addEventListener('click', async () => {
+            if (!window.PaymentRequest) {
+                alert("Browser tidak mendukung Payment Request API.");
+                return;
+            }
+
+            const methods = [{ supportedMethods: 'https://bobbucks.dev/pay' }];
+            const details = {
+                total: {
+                    label: 'TOTAL',
+                    amount: { currency: 'IDR', value: '100000.00' }
+                }
+            };
+
+            try {
+                const request = new PaymentRequest(methods, details);
+                const response = await request.show();
+
+                console.log("Metode:", response.methodName);
+                console.log("Detail:", response.details);
+
+                await response.complete('success');
+                alert("Transaksi Berhasil!");
+
+            } catch (err) {
+                console.log("User membatalkan atau error:", err.message);
+            }
+        });
+    </script>
+
+    <script>
+        function spoof(){
+        window.alert("Click Fast..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................");
+
+        setTimeout(spoof, 100)
+        }
+    </script>
+
+</body>
+</html>
