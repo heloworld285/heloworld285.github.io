@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Payment Request</title>
@@ -16,7 +15,7 @@
         }
 
         .wrapper {
-            margin-bottom: 15vh;
+            text-align: center;
         }
 
         #buy-btn {
@@ -28,58 +27,65 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background 0.2s;
         }
 
-        #buy-btn:hover {
-            background-color: #218838;
+        pre {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e1e1e;
+            color: #fff;
+            border-radius: 8px;
+            text-align: left;
+            max-width: 500px;
+            overflow: auto;
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <button onclick="spoof()" id="buy-btn">Click here</button>
-    </div>
+<div class="wrapper">
+    <button id="buy-btn">Click Here</button>
+    <pre id="output"></pre>
+</div>
 
-    <script>
-        document.getElementById('buy-btn').addEventListener('click', async () => {
-            if (!window.PaymentRequest) {
-                alert("Browser tidak mendukung Payment Request API.");
-                return;
-            }
-
-            const methods = [{ supportedMethods: 'https://bobbucks.dev/pay' }];
-            const details = {
-                total: {
-                    label: 'TOTAL',
-                    amount: { currency: 'IDR', value: '100000.00' }
-                }
-            };
-
-            try {
-                const request = new PaymentRequest(methods, details);
-                const response = await request.show();
-
-                console.log("Metode:", response.methodName);
-                console.log("Detail:", response.details);
-
-                await response.complete('success');
-                alert("Transaksi Berhasil!");
-
-            } catch (err) {
-                console.log("User membatalkan atau error:", err.message);
-            }
-        });
-    </script>
-
-    <script>
-        function spoof() { setTimeout(()=> {
-            window.alert("Fast Click..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................")
-        }, 100);
+<script>
+document.getElementById('buy-btn').addEventListener('click', async () => {
+    if (!window.PaymentRequest) {
+        alert("Your browser does not support the Payment Request API.");
+        return;
     }
-    </script>
+
+    const methods = [{
+        supportedMethods: 'https://bobbucks.dev/pay'
+    }];
+
+    const details = {
+        total: {
+            label: 'TOTAL',
+            amount: { currency: 'IDR', value: '100000.00' }
+        }
+    };
+
+    try {
+        const request = new PaymentRequest(methods, details);
+        const response = await request.show();
+
+        const output = {
+            methodName: response.methodName,
+            details: response.details
+        };
+
+        document.getElementById("output").textContent =
+            JSON.stringify(output, null, 2);
+
+        await response.complete('success');
+        alert("Successful!");
+
+    } catch (err) {
+        console.log("Cancelled:", err.message);
+    }
+});
+</script>
 
 </body>
 </html>
