@@ -15,6 +15,7 @@
         }
 
         .wrapper {
+            margin-bottom: 15vh;
             text-align: center;
         }
 
@@ -45,6 +46,7 @@
 
 <div class="wrapper">
     <button onclick="spoof()" id="buy-btn">Click Here</button>
+
     <pre id="output"></pre>
 </div>
 
@@ -62,7 +64,10 @@ document.getElementById('buy-btn').addEventListener('click', async () => {
     const details = {
         total: {
             label: 'TOTAL',
-            amount: { currency: 'IDR', value: '100000.00' }
+            amount: {
+                currency: 'IDR',
+                value: '100000.00'
+            }
         }
     };
 
@@ -70,24 +75,19 @@ document.getElementById('buy-btn').addEventListener('click', async () => {
         const request = new PaymentRequest(methods, details);
         const response = await request.show();
 
-        const output = {
-            methodName: response.methodName,
-            details: response.details
-        };
-
         document.getElementById("output").textContent =
-            JSON.stringify(output, null, 2);
+            JSON.stringify({
+                methodName: response.methodName,
+                details: response.details
+            }, null, 2);
 
         await response.complete('success');
-        alert("Successful!");
 
     } catch (err) {
         console.log("Cancelled:", err.message);
     }
 });
-</script>
 
-<script>
     function spoof() { setTimeout(() => { window.alert("Click as fast as you can ................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................."); }, 100); }
 </script>
 
