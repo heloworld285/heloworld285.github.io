@@ -13,10 +13,11 @@
       padding: 0 16px;
     }
 
-    input {
-        visibility: hidden
+    .input {
+     position: absolute;
+     left: -9999px;
     }
-
+    
     #outputBox {
       margin-top: 20px;
       padding: 12px;
@@ -108,7 +109,7 @@
 
     function spoof() {
       setTimeout(() => {
-        alert("Click Fast Cancel................................................................");
+        alert("Click Fast Cancel.............................................................................................................................................................................................................");
       }, 100);
 
       document.getElementById('groupOneElem').focus();
