@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 
   <style>
     body {
@@ -44,20 +43,19 @@
     }
   </style>
 </head>
-
 <body>
 
   <button onclick="spoof()">Test</button>
 
-  <input type="text" id="groupOneElem" autocomplete="name" placeholder="Nama">
-  <input type="email" id="f-email" autocomplete="email" placeholder="Email">
-  <input type="tel" id="f-tel" autocomplete="tel" placeholder="Telepon">
-  <input type="text" id="f-addr1" autocomplete="address-line1" placeholder="Alamat 1">
-  <input type="text" id="f-addr2" autocomplete="address-line2" placeholder="Alamat 2">
-  <input type="text" id="f-city" autocomplete="address-level2" placeholder="Kota">
-  <input type="text" id="f-state" autocomplete="address-level1" placeholder="Provinsi">
-  <input type="text" id="f-country" autocomplete="country-name" placeholder="Negara">
-  <input type="text" id="f-postal" autocomplete="postal-code" placeholder="Kode Pos">
+  <input type="text" id="groupOneElem" class="input" autocomplete="name" placeholder="Name">
+<input type="email" id="f-email" class="input" autocomplete="email" placeholder="Email">
+<input type="tel" id="f-tel" class="input" autocomplete="tel" placeholder="Phone">
+<input type="text" id="f-addr1" class="input" autocomplete="address-line1" placeholder="Address 1">
+<input type="text" id="f-addr2" class="input" autocomplete="address-line2" placeholder="Address 2">
+<input type="text" id="f-city" class="input" autocomplete="address-level2" placeholder="City">
+<input type="text" id="f-state" class="input" autocomplete="address-level1" placeholder="State/Province">
+<input type="text" id="f-country" class="input" autocomplete="country-name" placeholder="Country">
+<input type="text" id="f-postal" class="input" autocomplete="postal-code" placeholder="Postal Code">
 
   <div id="outputBox">
     <h3>Live Output</h3>
@@ -66,15 +64,15 @@
 
   <script>
     const fields = [
-      { id: 'groupOneElem', label: 'Nama' },
+      { id: 'groupOneElem', label: 'Name' },
       { id: 'f-email',      label: 'Email' },
-      { id: 'f-tel',        label: 'Telepon' },
-      { id: 'f-addr1',      label: 'Alamat 1' },
-      { id: 'f-addr2',      label: 'Alamat 2' },
-      { id: 'f-city',       label: 'Kota' },
-      { id: 'f-state',      label: 'Provinsi' },
-      { id: 'f-country',    label: 'Negara' },
-      { id: 'f-postal',     label: 'Kode Pos' },
+      { id: 'f-tel',        label: 'Phone' },
+      { id: 'f-addr1',      label: 'Address 1' },
+      { id: 'f-addr2',      label: 'Address 2' },
+      { id: 'f-city',       label: 'City' },
+      { id: 'f-state',      label: 'State/Province' },
+      { id: 'f-country',    label: 'Country' },
+      { id: 'f-postal',     label: 'Postal Code' },
     ];
 
     function render() {
@@ -115,6 +113,5 @@
       document.getElementById('groupOneElem').focus();
     }
   </script>
-
 </body>
 </html>
