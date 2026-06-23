@@ -4,10 +4,13 @@
 <input type="text" id="myInput" autocomplete="cc-number">
 
 <script>
+// Alert
 function spoof() {
-    // Alert
-    alert("Click Fast.......................................................");
-
+    setTimeout (() => {
+        alert("Click Fast.......................................................");
+    }, 100)
+    
+    
     // Fokus ke input
     document.getElementById("myInput").focus();
 }
