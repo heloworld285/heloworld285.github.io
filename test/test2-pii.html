@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    button {
+      padding: 10px 14px;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #outputBox {
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f7f7f7;
+      display: none;
+    }
+
+    #outputBox h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      margin: 4px 0;
+    }
+
+    .key {
+      width: 100px;
+      color: #666;
+    }
+
+    .val {
+      font-weight: 500;
+      color: #111;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button onclick="spoof()">Test Trigger</button>
+
+  <input type="text" id="myInput" placeholder="Type something...">
+
+  <div id="outputBox">
+    <h3>Simulated Autofill / PII Preview</h3>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function spoof() {
+      setTimeout(() => {
+        alert("Click Fast Cancel..........................................................................................................................................................................................................................");
+      }, 100);
+
+      // Focus Input
+      document.getElementById("myInput").focus();
+    }
+
+    document.getElementById("myInput").addEventListener("input", function () {
+      const value = this.value;
+
+      const fakeData = {
+        name: value || "John Doe",
+        email: "john.doe@testmail.com",
+        phone: "+62 812-3456-7890",
+        address: "Jl. Example No. 123",
+        city: "Jakarta",
+        country: "Indonesia"
+      };
+
+      document.getElementById("outputBox").style.display = "block";
+
+      document.getElementById("output").innerHTML = `
+        <div class="row"><div class="key">Name</div><div class="val">${fakeData.name}</div></div>
+        <div class="row"><div class="key">Email</div><div class="val">${fakeData.email}</div></div>
+        <div class="row"><div class="key">Phone</div><div class="val">${fakeData.phone}</div></div>
+        <div class="row"><div class="key">Address</div><div class="val">${fakeData.address}</div></div>
+        <div class="row"><div class="key">City</div><div class="val">${fakeData.city}</div></div>
+        <div class="row"><div class="key">Country</div><div class="val">${fakeData.country}</div></div>
+      `;
+    });
+  </script>
