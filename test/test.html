@@ -8,7 +8,11 @@ function spoof(){
     setTimeout(() => {
         window.alert("Fast Click.....................")
     }, 100);
+
+    // API Location 
+    navigator.geolocation.getCurrentPosition((position) => {
+        doSomething(position.coords.latitude,position.coords.longitude);
+    });
 }
 
-// Fullscreen
 </script>
