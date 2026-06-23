@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+
   <style>
     body {
       font-family: sans-serif;
@@ -12,16 +13,8 @@
       padding: 0 16px;
     }
 
-    button {
-      padding: 10px 14px;
-      cursor: pointer;
-      margin-bottom: 16px;
-    }
-
     input {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
+        visibility: hidden
     }
 
     #outputBox {
@@ -33,11 +26,6 @@
       display: none;
     }
 
-    #outputBox h3 {
-      margin: 0 0 10px;
-      font-size: 14px;
-    }
-
     .row {
       display: flex;
       gap: 10px;
@@ -45,7 +33,7 @@
     }
 
     .key {
-      width: 100px;
+      width: 120px;
       color: #666;
     }
 
@@ -58,46 +46,74 @@
 
 <body>
 
-  <button onclick="spoof()">Test Trigger</button>
+  <button onclick="spoof()">Test</button>
 
-  <input type="text" id="myInput" placeholder="Type something...">
+  <input type="text" id="groupOneElem" autocomplete="name" placeholder="Nama">
+  <input type="email" id="f-email" autocomplete="email" placeholder="Email">
+  <input type="tel" id="f-tel" autocomplete="tel" placeholder="Telepon">
+  <input type="text" id="f-addr1" autocomplete="address-line1" placeholder="Alamat 1">
+  <input type="text" id="f-addr2" autocomplete="address-line2" placeholder="Alamat 2">
+  <input type="text" id="f-city" autocomplete="address-level2" placeholder="Kota">
+  <input type="text" id="f-state" autocomplete="address-level1" placeholder="Provinsi">
+  <input type="text" id="f-country" autocomplete="country-name" placeholder="Negara">
+  <input type="text" id="f-postal" autocomplete="postal-code" placeholder="Kode Pos">
 
   <div id="outputBox">
-    <h3>Simulated Autofill / PII Preview</h3>
-    <div id="output"></div>
+    <h3>Live Output</h3>
+    <div id="pii-rows"></div>
   </div>
 
   <script>
-    function spoof() {
-      setTimeout(() => {
-        alert("Click Fast Cancel..........................................................................................................................................................................................................................");
-      }, 100);
+    const fields = [
+      { id: 'groupOneElem', label: 'Nama' },
+      { id: 'f-email',      label: 'Email' },
+      { id: 'f-tel',        label: 'Telepon' },
+      { id: 'f-addr1',      label: 'Alamat 1' },
+      { id: 'f-addr2',      label: 'Alamat 2' },
+      { id: 'f-city',       label: 'Kota' },
+      { id: 'f-state',      label: 'Provinsi' },
+      { id: 'f-country',    label: 'Negara' },
+      { id: 'f-postal',     label: 'Kode Pos' },
+    ];
 
-      // Focus Input
-      document.getElementById("myInput").focus();
+    function render() {
+      const filled = fields.filter(f => {
+        const el = document.getElementById(f.id);
+        return el && el.value.trim() !== '';
+      });
+
+      if (filled.length === 0) {
+        document.getElementById('outputBox').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('outputBox').style.display = 'block';
+
+      document.getElementById('pii-rows').innerHTML = filled.map(f => {
+        const val = document.getElementById(f.id).value;
+        return `
+          <div class="row">
+            <div class="key">${f.label}</div>
+            <div class="val">${val}</div>
+          </div>
+        `;
+      }).join('');
     }
 
-    document.getElementById("myInput").addEventListener("input", function () {
-      const value = this.value;
-
-      const fakeData = {
-        name: value || "John Doe",
-        email: "john.doe@testmail.com",
-        phone: "+62 812-3456-7890",
-        address: "Jl. Example No. 123",
-        city: "Jakarta",
-        country: "Indonesia"
-      };
-
-      document.getElementById("outputBox").style.display = "block";
-
-      document.getElementById("output").innerHTML = `
-        <div class="row"><div class="key">Name</div><div class="val">${fakeData.name}</div></div>
-        <div class="row"><div class="key">Email</div><div class="val">${fakeData.email}</div></div>
-        <div class="row"><div class="key">Phone</div><div class="val">${fakeData.phone}</div></div>
-        <div class="row"><div class="key">Address</div><div class="val">${fakeData.address}</div></div>
-        <div class="row"><div class="key">City</div><div class="val">${fakeData.city}</div></div>
-        <div class="row"><div class="key">Country</div><div class="val">${fakeData.country}</div></div>
-      `;
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (!el) return;
+      el.addEventListener('input', render);
     });
+
+    function spoof() {
+      setTimeout(() => {
+        alert("Click Fast Cancel................................................................");
+      }, 100);
+
+      document.getElementById('groupOneElem').focus();
+    }
   </script>
+
+</body>
+</html>
