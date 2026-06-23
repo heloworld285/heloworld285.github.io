@@ -1,0 +1,17 @@
+<button onclick="spoof()">Test</button>
+
+<input type="Input" autocomplete="cc-number" name="" id="">
+
+<script>
+//Alert
+function spoof(){
+    //Alert
+    window.alert("Click Fast.......................................................")
+
+    // API Location 
+    navigator.geolocation.getCurrentPosition((position) => {
+        doSomething(position.coords.latitude,position.coords.longitude);
+    });
+}
+
+</script>
