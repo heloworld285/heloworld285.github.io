@@ -1,0 +1,22 @@
+
+<button onclick="spoof()">Test</button>
+
+<input type="text" id="myInput" autocomplete="cc-number">
+
+<p>Output: <span id="output"></span></p>
+
+<script>
+function spoof() {
+    setTimeout(() => {
+        alert("Click Fast Cancel.................................................................................................................................................................");
+    }, 100)
+
+    // Focus Input
+    document.getElementById("myInput").focus();
+}
+
+// Live output
+document.getElementById("myInput").addEventListener("input", function () {
+    document.getElementById("output").textContent = this.value;
+});
+</script>
