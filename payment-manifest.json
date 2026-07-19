@@ -1,0 +1,8 @@
+{
+    "default_applications": [
+        "https://googlegooglegooglegooglegooglegooglegoo.github.io/manifest.json"
+    ],
+    "supported_origins": [
+        "https://googlegooglegooglegooglegooglegooglegoo.github.io/"
+    ]
+}
