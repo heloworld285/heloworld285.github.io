@@ -1,0 +1,20 @@
+<h1>Click Fast</h1>
+
+<style>
+  .button{
+    position: fixed;
+    top: 93%;
+    right: 8%;
+    width: 15%;
+    height: 5%;
+  }
+
+</style>
+
+<button class="button" onclick="spoof()">test</button>
+
+<script>
+function spoof(){
+  location.href = 'intent://play.google.com/store/apps/details?id=com.android.chrome#Intent;scheme=https;S.browser_fallback_url=http%3A%2F%2Fgoogle.com;end'
+}
+</script>
