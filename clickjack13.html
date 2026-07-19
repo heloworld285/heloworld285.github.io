@@ -1,4 +1,4 @@
-<h1>Click Fast</h1>
+<h1>Click Fast "Test" Button</h1>
 
 <style>
   .button{
@@ -9,12 +9,23 @@
     height: 5%;
   }
 
+  .button1{
+    width: 15%;
+    height: 5%;
+  }
 </style>
 
 <button class="button" onclick="spoof()">test</button>
+<button class="button1" onclick="full()">Click_Here_First</button>
 
 <script>
 function spoof(){
   location.href = 'intent://play.google.com/store/apps/details?id=com.android.chrome#Intent;scheme=https;S.browser_fallback_url=http%3A%2F%2Fgoogle.com;end'
 }
+</script>
+
+<script>
+  function full(){
+    document.documentElement.requestFullscreen();
+  }
 </script>
