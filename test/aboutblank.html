@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo About Blank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .btn-open {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-open:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-open" onclick="openBlank()">Open about:blank</button>
+
+    <script>
+    function openBlank() {
+        const win = window.open("about:blank", "_blank");
+
+        if (!win) {
+            alert("Popup diblokir oleh browser.");
+            return;
+        }
+
+        const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 20px;
+        }
+
+        .permissions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .permissions button {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            transition: .2s;
+            font-size: 14px;
+        }
+
+        .permissions button:hover {
+            background: #f0f0f0;
+        }
+
+        .permissions button.success {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+
+        .permissions button.error {
+            background: #ef4444;
+            color: #fff;
+            border-color: #ef4444;
+        }
+
+        .permissions button.default {
+            background: #facc15;
+            color: #000;
+            border-color: #facc15;
+        }
+        </style>
+        </head>
+        <body>
+
+        <div class="permissions">
+            <button id="notifications">Notifications</button>
+            <button id="location">Location</button>
+            <button id="approximate-location">Approximate Location</button>
+            <button id="camera">Camera</button>
+            <button id="microphone">Microphone</button>
+            <button id="camera+microphone">Camera + Microphone</button>
+            <button id="pan-tilt-zoom">Pan Tilt Zoom</button>
+            <button id="pan-tilt-zoom+microphone">PTZ + Microphone</button>
+            <button id="screenshare">Screen Share</button>
+            <button id="midi">MIDI</button>
+            <button id="midi+sysex">MIDI + SysEx</button>
+            <button id="bluetooth">Bluetooth</button>
+            <button id="usb">USB</button>
+            <button id="serial">Serial</button>
+            <button id="hid">HID</button>
+            <button id="eme">EME</button>
+            <button id="idle-detection">Idle Detection</button>
+            <button id="copy">Copy</button>
+            <button id="popup">Popup</button>
+            <button id="popup-delayed">Popup Delayed</button>
+            <button id="fullscreen">Fullscreen</button>
+            <button id="pointerlock">Pointer Lock</button>
+            <button id="keyboardlock">Keyboard Lock</button>
+            <button id="download">Download</button>
+            <button id="keygen">Keygen</button>
+            <button id="persistent-storage">Persistent Storage</button>
+            <button id="show-open-file-picker">Open File Picker</button>
+            <button id="show-directory-picker">Directory Picker</button>
+            <button id="protocol-handler">Protocol Handler</button>
+            <button id="read-text">Read Clipboard</button>
+            <button id="write-text">Write Clipboard</button>
+            <button id="read-text-delayed">Read Clipboard (Delayed)</button>
+            <button id="write-text-delayed">Write Clipboard (Delayed)</button>
+            <button id="webauthn-attestation">WebAuthn</button>
+            <button id="nfc">NFC</button>
+            <button id="vr">VR</button>
+            <button id="ar">AR</button>
+            <button id="orientation">Orientation</button>
+            <button id="motion">Motion</button>
+        </div>
+
+        <div id="keygen-container"></div>
+
+        <script>
+        (function init() {
+          var toggle = document.querySelector("#toggle");
+          if (toggle) {
+            toggle.classList.add("instant");
+            if (window.location.protocol === "https:") {
+              toggle.classList.add("https");
+              toggle.protocol = "http:";
+            } else if (window.location.protocol === "http:") {
+              toggle.classList.add("http");
+              toggle.protocol = "https:";
+            }
+            setTimeout(() => {
+              toggle.classList.remove("instant");
+            }, 10);
+          }
+
+          function displayOutcome(type, outcome) {
+            return (...args) => {
+              var argList = [outcome, type].concat(...args);
+              switch (outcome) {
+                case "success":
+                  console.info(...argList);
+                  break;
+                case "error":
+                  console.error(...argList);
+                  break;
+                default:
+                  console.log(...argList);
+              }
+              document
+                .getElementById(type)
+                .classList.remove("success", "error", "default");
+              document.getElementById(type).classList.add(outcome);
+            };
+          }
+
+          function displayOutcomeForNotifications(outcome) {
+            switch (outcome) {
+              case "granted":
+                console.info(outcome, "notifications");
+                document.getElementById("notifications").classList.add("success");
+                break;
+              case "denied":
+              case "default":
+                console.error(outcome, "notifications");
+                document.getElementById("notifications").classList.add("error");
+                break;
+              default:
+                throw "Unknown notification API response.";
+            }
+          }
+
+          function triggerDownload() {
+            var a = document.createElement("a");
+            a.download = "test-image.png";
+            a.href =
+              "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAABC0lEQVQYlTXPPUsCYQDA8b/e04tdQR5ZBpE3NAR6S0SDVDZKDQ2BY9TUy1foE0TQ1Edo6hOEkyUG0QuBRtQgl0hnenVdnZD5eLbU7xv8Avy5X16KhrQBg47EtpziXO6qBhAEeNEm0qr7VdBcLxt2mlnNbhVu0NMAgdj1wvjOoX2xdSt0L7MGgx2GGid8yLrJvJMUkbKfOF8N68bUIqcz2wQR7GUcYvJIr1dFQijvkh89xGV6BPPMwvMF/nQXJMgWiM+KLPX2tc0HNa/HUxDv2owpx7xV+023Hiwpdt7yhmcjj9/NdrIhn8LrPVmotctWVd01Nt27wH9T3YhHU5O+sT/6SuVZKa4cNGoAv/ZMas7pC/KaAAAAAElFTkSuQmCC";
+            a.click();
+          }
+
+          function isFullscreen() {
+            return (
+              document.fullscreenElement ||
+              document.webkitFullscreenElement ||
+              document.mozFullScreenElement ||
+              document.msFullscreenElement
+            );
+          }
+
+          function isPointerLocked() {
+            return (
+              document.pointerLockElement ||
+              document.webkitPointerLockElement ||
+              document.mozPointerLockElement ||
+              document.msPointerLockElement
+            );
+          }
+
+          var register = {
+            notifications: () => {
+              Notification.requestPermission(displayOutcomeForNotifications);
+            },
+            location: () => {
+              navigator.geolocation.getCurrentPosition(
+                displayOutcome("location", "success"),
+                displayOutcome("location", "error")
+              );
+            },
+            "approximate-location": () => {
+              navigator.geolocation.getCurrentPosition(
+                displayOutcome("approximate-location", "success"),
+                displayOutcome("approximate-location", "error"),
+                { accuracyMode: "approximate" }
+              );
+            },
+            camera: () => {
+              (navigator.mediaDevices ?? navigator)
+                .getUserMedia({ video: true })
+                .then(
+                  displayOutcome("camera", "success"),
+                  displayOutcome("camera", "error")
+                );
+            },
+            microphone: () => {
+              (navigator.mediaDevices ?? navigator)
+                .getUserMedia({ audio: true })
+                .then(
+                  displayOutcome("microphone", "success"),
+                  displayOutcome("microphone", "error")
+                );
+            },
+            "camera+microphone": () => {
+              (navigator.mediaDevices ?? navigator)
+                .getUserMedia({ audio: true, video: true })
+                .then(
+                  displayOutcome("camera+microphone", "success"),
+                  displayOutcome("camera+microphone", "error")
+                );
+            },
+            "pan-tilt-zoom": () => {
+              (navigator.mediaDevices ?? navigator)
+                .getUserMedia({ video: { pan: true, tilt: true, zoom: true } })
+                .then(
+                  displayOutcome("pan-tilt-zoom", "success"),
+                  displayOutcome("pan-tilt-zoom", "error")
+                );
+            },
+            "pan-tilt-zoom+microphone": () => {
+              (navigator.mediaDevices ?? navigator)
+                .getUserMedia({
+                  video: { pan: true, tilt: true, zoom: true },
+                  audio: true,
+                })
+                .then(
+                  displayOutcome("pan-tilt-zoom+microphone", "success"),
+                  displayOutcome("pan-tilt-zoom+microphone", "error")
+                );
+            },
+            screenshare: () => {
+              (navigator.mediaDevices ?? navigator)
+                .getDisplayMedia()
+                .then(
+                  displayOutcome("screenshare", "success"),
+                  displayOutcome("screenshare", "error")
+                );
+            },
+            midi: () => {
+              navigator
+                .requestMIDIAccess({ sysex: false })
+                .then(
+                  displayOutcome("midi", "success"),
+                  displayOutcome("midi", "error")
+                );
+            },
+            "midi+sysex": () => {
+              navigator
+                .requestMIDIAccess({ sysex: true })
+                .then(
+                  displayOutcome("midi+sysex", "success"),
+                  displayOutcome("midi+sysex", "error")
+                );
+            },
+            bluetooth: () => {
+              navigator.bluetooth
+                .requestDevice({ acceptAllDevices: true })
+                .then((device) => device.gatt.connect())
+                .then(
+                  displayOutcome("bluetooth", "success"),
+                  displayOutcome("bluetooth", "error")
+                );
+            },
+            usb: () => {
+              navigator.usb
+                .requestDevice({ filters: [{}] })
+                .then(displayOutcome("usb", "success"), displayOutcome("usb", "error"));
+            },
+            serial: () => {
+              navigator.serial
+                .requestPort({ filters: [] })
+                .then(
+                  displayOutcome("serial", "success"),
+                  displayOutcome("serial", "error")
+                );
+            },
+            hid: () => {
+              navigator.hid.requestDevice({ filters: [] }).then(
+                (devices) => {
+                  displayOutcome("hid", devices.length > 0 ? "success" : "error")();
+                },
+                displayOutcome("hid", "error")
+              );
+            },
+            eme: () => {
+              var knownKeySystems = ["com.widevine.alpha", "com.microsoft.playready"];
+              var tryKeySystem = (keySystem) => {
+                var capabilities = [{ contentType: 'audio/mp4; codecs="mp4a.40.2"' }];
+                navigator
+                  .requestMediaKeySystemAccess(keySystem, [{ audioCapabilities: capabilities }])
+                  .then(
+                    (mediaKeySystemAccess) => {
+                      displayOutcome("eme", "success")("Key System: " + keySystem);
+                    },
+                    (error) => {
+                      if (knownKeySystems.length > 0) return tryKeySystem(knownKeySystems.shift());
+                      displayOutcome("eme", "error")(error);
+                    }
+                  );
+              };
+              tryKeySystem(knownKeySystems.shift());
+            },
+            "idle-detection": async () => {
+              try {
+                const status = await IdleDetector.requestPermission();
+                if (status !== "granted") {
+                  displayOutcome("idle-detection", "error")(\`Status: \${status}\`);
+                  return;
+                }
+                const detector = new IdleDetector();
+                await detector.start();
+                displayOutcome("idle-detection", "success")();
+              } catch (e) {
+                displayOutcome("idle-detection", "error")(e);
+              }
+            },
+            copy: () => {
+              document.execCommand("copy");
+            },
+            popup: () => {
+              var w = window.open(location.href, "Popup", "resizable,scrollbars,status");
+              displayOutcome("popup", w ? "success" : "error")(w);
+            },
+            "popup-delayed": () => {
+              setTimeout(() => {
+                var w = window.open(location.href, "Popup", "resizable,scrollbars,status");
+                displayOutcome("popup-delayed", w ? "success" : "error")(w);
+              }, 5000);
+            },
+            fullscreen: () => {
+              try {
+                if (!isFullscreen()) {
+                  document.documentElement.requestFullscreen().then(
+                    displayOutcome("fullscreen", "success")("enter"),
+                    displayOutcome("fullscreen", "error")
+                  );
+                } else {
+                  document.exitFullscreen().then(
+                    displayOutcome("fullscreen", "default")("exit"),
+                    displayOutcome("fullscreen", "error")
+                  );
+                }
+              } catch (e) {
+                displayOutcome("fullscreen", "error")(e);
+              }
+            },
+            pointerlock: () => {
+              try {
+                if (!isPointerLocked()) {
+                  document.body.requestPointerLock();
+                  displayOutcome("pointerlock", "success")("locked");
+                } else {
+                  document.exitPointerLock();
+                  displayOutcome("pointerlock", "default")("unlocked");
+                }
+              } catch (e) {
+                displayOutcome("pointerlock", "error")(e);
+              }
+            },
+            keyboardlock: () => {
+              try {
+                navigator.keyboard.lock().then(
+                  displayOutcome("keyboardlock", "success")("locked"),
+                  displayOutcome("keyboardlock", "error")
+                );
+              } catch (e) {
+                displayOutcome("keyboardlock", "error")(e);
+              }
+            },
+            download: () => {
+              triggerDownload();
+            },
+            keygen: () => {
+              var keygen = document.createElement("keygen");
+              document.getElementById("keygen-container").appendChild(keygen);
+            },
+            "persistent-storage": () => {
+              navigator.storage.persist().then(
+                (persisted) => {
+                  displayOutcome("persistent-storage", persisted ? "success" : "default")(persisted);
+                },
+                displayOutcome("persistent-storage", "error")
+              );
+            },
+            "show-open-file-picker": () => {
+              if ("showOpenFilePicker" in window) {
+                window.showOpenFilePicker().then(
+                  displayOutcome("show-open-file-picker", "success"),
+                  displayOutcome("show-open-file-picker", "error")
+                );
+              } else {
+                displayOutcome("show-open-file-picker", "error")("Not supported");
+              }
+            },
+            "show-directory-picker": () => {
+              if ("showDirectoryPicker" in window) {
+                window.showDirectoryPicker().then(
+                  displayOutcome("show-directory-picker", "success"),
+                  displayOutcome("show-directory-picker", "error")
+                );
+              } else {
+                displayOutcome("show-directory-picker", "error")("Not supported");
+              }
+            },
+            "protocol-handler": () => {
+              try {
+                navigator.registerProtocolHandler("web+permissionsite", window.location + "%s", "title");
+              } catch (e) {
+                displayOutcome("protocol-handler", "error")(e);
+              }
+            },
+            "read-text": () => {
+              if (navigator.clipboard) {
+                navigator.clipboard.readText().then(
+                  (data) => displayOutcome("read-text", "success")(data),
+                  () => displayOutcome("read-text", "error")("Failed")
+                );
+              }
+            },
+            "write-text": () => {
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText("test data").then(
+                  () => displayOutcome("write-text", "success")("Wrote"),
+                  () => displayOutcome("write-text", "error")("Failed")
+                );
+              }
+            },
+            "read-text-delayed": () => {
+              setTimeout(() => {
+                if (navigator.clipboard) {
+                  navigator.clipboard.readText().then(
+                    (data) => displayOutcome("read-text-delayed", "success")(data),
+                    () => displayOutcome("read-text-delayed", "error")("Failed")
+                  );
+                }
+              }, 5000);
+            },
+            "write-text-delayed": () => {
+              setTimeout(() => {
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText("delayed data").then(
+                    () => displayOutcome("write-text-delayed", "success")("Wrote"),
+                    () => displayOutcome("write-text-delayed", "error")("Failed")
+                  );
+                }
+              }, 5000);
+            },
+            "webauthn-attestation": () => {
+              displayOutcome("webauthn-attestation", "default")("WebAuthn triggered");
+            },
+            nfc: () => {
+              if ("NDEFReader" in window) {
+                new NDEFReader().scan().then(
+                  () => displayOutcome("nfc", "success")(),
+                  (err) => displayOutcome("nfc", "error")(err)
+                );
+              } else {
+                displayOutcome("nfc", "error")("NDEFReader not available");
+              }
+            },
+            vr: () => {
+              if ("xr" in navigator) {
+                navigator.xr.requestSession("immersive-vr").then(
+                  () => displayOutcome("vr", "success")(),
+                  (err) => displayOutcome("vr", "error")(err)
+                );
+              } else {
+                displayOutcome("vr", "error")("XR not available");
+              }
+            },
+            ar: () => {
+              if ("xr" in navigator) {
+                navigator.xr.requestSession("immersive-ar").then(
+                  () => displayOutcome("ar", "success")(),
+                  (err) => displayOutcome("ar", "error")(err)
+                );
+              } else {
+                displayOutcome("ar", "error")("XR not available");
+              }
+            },
+            orientation: () => {
+              if ("ondeviceorientation" in window) {
+                displayOutcome("orientation", "success")("Supported");
+              } else {
+                displayOutcome("orientation", "error")("Not supported");
+              }
+            },
+            motion: () => {
+              if ("ondevicemotion" in window) {
+                displayOutcome("motion", "success")("Supported");
+              } else {
+                displayOutcome("motion", "error")("Not supported");
+              }
+            }
+          };
+
+          for (var type in register) {
+            var btn = document.getElementById(type);
+            if (btn) {
+              btn.addEventListener("click", register[type]);
+            }
+          }
+        })();
+        <\/script>
+        </body>
+        </html>
+        `;
+
+        win.document.open();
+        win.document.write(htmlContent);
+        win.document.close();
+    }
+    </script>
+
+</body>
+</html>
