@@ -1,0 +1,29 @@
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<h1>Prepare your Phone and Desktop</h1>
+
+<button id="ok" onclick="spoof()">Continue</button>
+
+<img
+    id="picture"
+    class="hidden"
+    src="https://heloworld285.github.io/qr.jpeg"
+    alt="Chrome"
+>
+
+<script>
+    function spoof() {
+        document.getElementById("picture").classList.remove("hidden");
+        document.getElementById("ok").classList.add("hidden");
+
+        setTimeout(() => {
+            document.body.innerHTML = `
+                <h1>Address bar spoofed this is not google.com</h1>
+            `;
+        }, 4000);
+    }
+</script>
