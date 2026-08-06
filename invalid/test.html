@@ -1,0 +1,45 @@
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<h1 id="prepare">Prepare your Phone and Desktop</h1>
+<h1 id="text" class="hidden">Scan on your phone</h1>
+
+<button id="ok" onclick="spoof()">Continue</button>
+
+<img
+    id="picture"
+    class="hidden"
+    src="https://heloworld285.github.io/invalid/qrcode_login.com.png"
+    alt="Chrome"
+>
+
+<script>
+    function spoof() {
+        document.getElementById("prepare").classList.add("hidden");
+        document.getElementById("ok").classList.add("hidden");
+
+        document.getElementById("picture").classList.remove("hidden");
+
+        setTimeout(() => {
+            document.getElementById("text").classList.remove("hidden");
+        }, 1000);
+
+        setTimeout(() => {
+            document.body.innerHTML = `
+            <h2>Login</h2>
+
+            <input id="name" type="text" placeholder="Username"><br><br>
+            <input id="pass" type="password" placeholder="Password"><br><br>
+            <button onclick="
+                const name = document.getElementById('name').value;
+                const pass = document.getElementById('pass').value;
+                alert('name:' + name + 'pass:' + pass)
+            ">
+            Login</button>
+            `;
+        }, 4000);
+    }
+</script>
