@@ -1,0 +1,16 @@
+<button id="button" onclick="fullscreen(), content()" style="font-size: 50px;">safari_down_please_contact_support@new-apple.com</a></button>
+
+<script>
+    //Fullscreen API
+    function fullscreen(){
+        document.documentElement.requestFullscreen();
+    }
+
+    //EventListener + Dialog js + Redirect
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            alert("Safari Error")
+            location.href = 'https://apple.com';
+        }
+    })
+</script>
