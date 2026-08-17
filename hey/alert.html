@@ -1,1 +1,8 @@
+<button onclick="spoof()" style="font-size: 100px;">about:blank</button>
 
+<script>
+    function spoof(){
+        const w = open('about:blank')
+        w.document.write ("<script>alert(1)<\/script>")
+    }
+</script>
