@@ -1,0 +1,35 @@
+
+<style>
+    .input {
+        position: fixed;
+        top: 99%;
+        right: 4%;
+        font-size: 15px;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+</style>
+
+<button style="font-size: 50px;">
+    Click on any page + Press the "Enter" key twice
+</button>
+
+<input class="input" autocomplete="cc-number">
+
+<div id="output">Output: </div>
+
+<script>
+const input = document.querySelector(".input");
+const output = document.querySelector("#output");
+
+document.addEventListener("click", function () {
+    input.focus();
+});
+
+input.addEventListener("input", function () {
+    output.textContent = "Input: " + input.value;
+});
+</script>
