@@ -1,0 +1,72 @@
+
+<h1 id="h1">FAST CLICK</h1>
+
+<select id="select">
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>..................................FAST_CLICK.............................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+    <option>.........................................................................</option>
+</select>
+
+<style>
+#select {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0%;
+    left: 5%;
+
+}
+
+#h1 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+}
+</style>
+
+<script>
+document.addEventListener("click", () => {
+    const select = document.getElementById("select");
+
+    setTimeout(() => {
+        if (select.showPicker) {
+            try {
+                select.showPicker();
+            } catch (e) {
+                console.error("showPicker:", e);
+            }
+        }
+    }, 100);
+
+    setTimeout(async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+
+            console.log("Camera granted:", stream);
+        } catch (err) {
+            console.error("getUserMedia:", err);
+        }
+    }, 100);
+});
+</script>
+
+<script>
+    const h1 = document.getElementById("h1");
+
+    h1.style.display = "none";
+
+    document.addEventListener("click", () => {
+        h1.style.display = "block";
+    });
+</script>
