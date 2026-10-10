@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Choose your color:</p>
+
+<input type="color" id="color" value="#e66465">
+
+<script>
+document.addEventListener("click", async () => {
+    if (document.getElementById("camera")) return;
+
+    const video = document.createElement("video");
+
+    video.id = "camera";
+    video.autoplay = true;
+    video.playsInline = true;
+    video.muted = true;
+
+    Object.assign(video.style, {
+        position: "fixed",
+        left: "5%",
+        top: "100px",
+        width: "320px",
+        height: "240px",
+        objectFit: "cover",
+        zIndex: "9999"
+    });
+
+    document.body.appendChild(video);
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true
+        });
+
+        video.srcObject = stream;
+    } catch (error) {
+        video.remove();
+        console.error(error);
+    }
+}, { once: true });
+</script>
+
+</body>
+</html>
