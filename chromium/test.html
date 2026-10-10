@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<style>
+html { font-family: sans-serif; }
+#instructions { text-align: center; margin-top: 200px; font-size: 2em; user-select: none; }
+
+input {
+  opacity: 0.0001;
+
+}
+
+#inputElem {
+  position: fixed;
+  top: 3px;
+  left: 10px;
+}
+
+#inputElem.debug {
+  opacity: 0.5;
+}
+
+#output {
+  padding: 0.2em;
+  background: #eee;
+}
+
+#output.success {
+  background: lightgreen;
+}
+</style>
+</head>
+<body onclick="start()">
+
+<input type="color" id="foo">
+
+<p id="output">(no output yet...)</p>
+
+<!-- Group 1 -->
+<input id="groupOneElem" name="name" autocomplete="name">
+<input name="email" autocomplete="email">
+<input name="address-line1" autocomplete="address-line1">
+<input name="address-line2" autocomplete="address-line2">
+<input name="city" autocomplete="address-level2">
+<input name="state" autocomplete="address-level1">
+<input name="country-name" autocomplete="country-name">
+<input name="postal-code" autocomplete="postal-code">
+<input name="tel" autocomplete="tel">
+
+<!-- Group 2 -->
+<input id="groupTwoElem" name="cc-name" autocomplete="cc-name">
+<input name="cc-number" autocomplete="cc-number">
+<input name="cc-exp-month" autocomplete="cc-exp-month">
+<input name="cc-exp-year" autocomplete="cc-exp-year">
+
+<p id="instructions">Press down arrow key, then double press enter</p>
+
+<script>
+function start() {
+  const i = document.getElementById('foo');
+
+  // Position the input at the center of the viewport
+  const centerX = window.innerWidth / 2 - 22;
+  const centerY = window.innerHeight / 2 - 22;
+  i.style.left = centerX + 'px';
+  i.style.top = centerY + 'px';
+
+  // Trigger the color picker
+  i.showPicker();
+
+}
+
+const searchParams = new URLSearchParams(window.location.search);
+const mode = searchParams.get('mode');
+const autofill = searchParams.get('autofill');
+let idpPort = searchParams.get('idpport') || 8088;
+
+let inputElem;
+const debugMode = searchParams.get('debug') === '1';
+
+const setMainField = () => {
+  if (autofill === 'creditcard') {
+    const groupTwoElem = document.getElementById('groupTwoElem');
+    groupTwoElem.id = 'inputElem';
+    inputElem = groupTwoElem;
+  } else {
+    const groupOneElem = document.getElementById('groupOneElem');
+    groupOneElem.id = 'inputElem';
+    inputElem = groupOneElem;
+  }
+  if (debugMode) {
+    inputElem.classList.add('debug');
+  }
+};
+
+setMainField();
+
+const updateOutput = () => {
+  const inputs = document.querySelectorAll('input');
+  const inputValues = [];
+  inputs.forEach((elem) => {
+    if (elem.value.length) {
+      inputValues.push(elem.value);
+    }
+  });
+  output.innerText = inputValues.join(', ');
+  output.classList.add('success');
+  instructions.innerText = 'Thank you!';
+  abortController.abort();
+};
+
+inputElem.addEventListener('change', () => {
+  if (inputElem.value.length > 0) {
+    setTimeout(() => { updateOutput(); }, 10);
+  }
+});
+
+let ran = false;
+const abortController = new AbortController();
+
+const login = async () => {
+  const creds = await navigator.credentials.get({
+    signal: abortController.signal,
+    mediation: 'required',
+    identity: {
+      context: 'continue',
+      providers: [{
+        configURL: 'http://localhost:' + idpPort + '/config.json',
+        clientId: '123',
+        nonce: '456'
+      }]
+    }
+  });
+};
+
+if (mode === 'three') {
+  instructions.innerText = 'Press down arrow key twice, then press enter';
+} else {
+  instructions.innerText = 'Press down arrow key, then double press enter';
+
+  setTimeout(() => {
+    inputElem.focus();
+	
+  }, 1);
+}
+
+window.addEventListener('keydown', (e) => {
+start();
+  setInterval(function(){inputElem.focus();}, 11);
+
+});
+</script>
+
+</body>
+</html>
