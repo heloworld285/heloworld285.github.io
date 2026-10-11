@@ -2,17 +2,24 @@
 <html>
 <body>
 
+<p>Click anywhere on this page</p>
+
 <script>
 document.addEventListener("click", () => {
-    if (document.getElementById("email")) return;
+    if (document.querySelector("#email")) return;
 
     const input = document.createElement("input");
+
     input.id = "email";
     input.type = "email";
     input.autocomplete = "email";
-    input.placeholder = "Email";
+
+    input.style.position = "fixed";
+    input.style.top = "50%";
+    input.style.left = "50%";
 
     document.body.appendChild(input);
+    input.focus();
 });
 </script>
 
