@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+document.addEventListener("click", () => {
+    if (document.getElementById("email")) return;
+
+    const input = document.createElement("input");
+    input.id = "email";
+    input.type = "email";
+    input.autocomplete = "email";
+    input.placeholder = "Email";
+
+    document.body.appendChild(input);
+});
+</script>
+
+</body>
+</html>
