@@ -1,0 +1,11 @@
+<a href="https://google.com">Long Press -> Preview Page </a>
+
+<script>
+document.addEventListener("contextmenu", () => {
+  setTimeout(async () => {
+    try {
+      await window.showOpenFilePicker();
+    } catch (e) {}
+  }, 3000);
+});
+</script>
