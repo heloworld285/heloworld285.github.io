@@ -6,7 +6,11 @@ const color = document.getElementById("color");
 color.addEventListener("click", async () => {
     try {
         await navigator.mediaDevices.getUserMedia({ video: true });
-        color.showPicker();
+
+        setTimeout(() => {
+            color.showPicker();
+        }, 1000);
+
     } catch (error) {
         console.log(error);
     }
