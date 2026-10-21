@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<input style="font-size: 50px;" autocomplete="cc-number">
+
+<script>
+const cc = document.querySelector('[autocomplete="cc-number"]');
+
+cc.addEventListener("click", () => {
+    const color = document.createElement("input");
+
+    color.type = "color";
+    color.style.position = "fixed";
+    color.style.opacity = "0";
+
+    document.body.appendChild(color);
+
+    color.showPicker();
+});
+</script>
+
+</body>
+</html>
