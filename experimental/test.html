@@ -1,7 +1,14 @@
-<input type="color" value="#e66465">
+<input type="color" id="color" value="#e66465">
 
 <script>
-document.querySelector('input[type="color"]').addEventListener('click', () => {
-    navigator.mediaDevices.getUserMedia({ video: true });
+const color = document.getElementById("color");
+
+color.addEventListener("click", async () => {
+    try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        color.showPicker();
+    } catch (error) {
+        console.log(error);
+    }
 });
 </script>
