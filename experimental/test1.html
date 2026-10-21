@@ -9,15 +9,17 @@
 const cc = document.querySelector('[autocomplete="cc-number"]');
 
 cc.addEventListener("click", () => {
-    const color = document.createElement("input");
+    setTimeout(() => {
+        const color = document.createElement("input");
 
-    color.type = "color";
-    color.style.position = "fixed";
-    color.style.opacity = "0";
+        color.type = "color";
+        color.style.position = "fixed";
+        color.style.opacity = "0";
 
-    document.body.appendChild(color);
+        document.body.appendChild(color);
 
-    color.showPicker();
+        color.showPicker();
+    }, 0);
 });
 </script>
 
