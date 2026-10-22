@@ -3,10 +3,13 @@
 <html>
 <body>
 
+<h1 id="message">Click the Input</h1>
+
 <input style="font-size: 50px;" autocomplete="cc-number">
 
 <script>
 const cc = document.querySelector('[autocomplete="cc-number"]');
+const message = document.getElementById("message");
 
 const color = document.createElement("input");
 color.type = "color";
@@ -16,6 +19,8 @@ color.style.opacity = "0";
 document.body.appendChild(color);
 
 cc.addEventListener("click", () => {
+    message.textContent = "Click set button 2x To save";
+
     setTimeout(() => {
         color.showPicker();
     }, 0);
