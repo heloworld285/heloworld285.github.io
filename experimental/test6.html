@@ -1,14 +1,21 @@
-
 <!DOCTYPE html>
 <html>
 <body>
 
-<h1>Click Input + Click Down Key + Then "Enter" ClicK</h1>
+<h1>Click Input + Click Down Key + Then "Enter" Click</h1>
 <br>
-<input style="font-size: 5px; position: fixed; left: 0%; top: 5%;" autocomplete="cc-number">
+
+<input style="font-size: 5px; position: fixed; left: 0%; top: 18%;" autocomplete="cc-number">
+
+<p>Output: <span id="output"></span></p>
 
 <script>
 const cc = document.querySelector('[autocomplete="cc-number"]');
+const output = document.getElementById("output");
+
+cc.addEventListener("input", () => {
+    output.textContent = cc.value;
+});
 
 const color = document.createElement("input");
 color.type = "color";
