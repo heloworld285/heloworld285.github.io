@@ -1,0 +1,20 @@
+<h1>Security Test</h1>
+
+<input type="time" id="timePicker" list="times">
+
+<datalist id="times">
+    <option value="09:00">
+    <option value="12:00">
+    <option value="18:00">
+</datalist>
+
+<input autocomplete="cc-number" id="ccNumber">
+
+<script>
+    const cc = document.getElementById("ccNumber");
+    const time = document.getElementById("timePicker");
+
+    cc.addEventListener("click", () => {
+        time.showPicker();
+    });
+</script>
