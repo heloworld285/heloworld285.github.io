@@ -1,0 +1,10 @@
+<h1>click to start</h1>
+<script>
+    document.body.onclick = () => {
+        document.documentElement.requestPointerLock();
+        setTimeout(() => {
+            document.exitPointerLock();
+            document.documentElement.requestFullscreen();
+        }, 3850);
+    };
+</script>
