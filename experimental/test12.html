@@ -8,7 +8,9 @@
         <h1>You're Address Bar Spoofed</h1>
 
         <script>
-            location.href = 'https://google.com'
+            setTimeout(() => {
+                location.href = 'https://google.com'    
+            }, 500);
 
             setInterval(() =>{
                 alert('1')
