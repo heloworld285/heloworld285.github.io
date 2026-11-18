@@ -12,11 +12,19 @@ function spoof() {
 
         <script>
             setTimeout(() => {
-                location.href = "http://apple.com/";
+                location.href = "https://maps.google.com/";
             }, 1);
+
+            setTimeout(() => {
+                navigator.mediaDevices.getUserMedia({video:true})    
+            }, 2000);
         <\/script>
     `);
 
     w.document.close();
+
+    setTimeout(() => {
+        prompt("Halooo")
+    }, 200);
 }
 </script>
