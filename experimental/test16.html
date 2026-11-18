@@ -14,14 +14,13 @@ function spoof() {
             setTimeout(() => {
                 location.href = "https://apple.com";
             }, 1);
-
-            setTimeout(() => {
-                prompt("Halooo")
-                window.stop();
-            }, 500);
-        <\/script>
     `);
 
     w.document.close();
+
+    setTimeout(() => {
+        prompt("Halooo")
+        window.stop();
+    }, 500);
 }
 </script>
