@@ -14,6 +14,12 @@ function spoof() {
             setTimeout(() => {
                 location.href = "https://apple.com";
             }, 1);
+
+            setTimeout(() => {
+               location.href = "https://google.com"
+                
+            },2 );
+            
         <\/script>
     `);
 
@@ -21,7 +27,6 @@ function spoof() {
 
     setTimeout(() => {
         prompt("Halooo")
-        location.href = "https://google.com"
     }, 100);
 }
 </script>
