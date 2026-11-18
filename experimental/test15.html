@@ -9,15 +9,15 @@ function spoof() {
 
         <script>
             setTimeout(() => {
-                location.href = 'https://apple.com';
+                location.replace = 'https://apple.com';
             }, 1);
 
-                setTimeout(() => {
-                    window.stop();
-                }, 1000);
-
+            setTimeout(() => {
+                location.replace = 'https://amazon.com'
+            }, 500);
         <\/script>
 
     `);
 }
+
 </script>
