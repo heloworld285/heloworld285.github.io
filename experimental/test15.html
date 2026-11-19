@@ -4,13 +4,20 @@
 
 <div id="instruction" style="display:none;">
     <img
-        src="https://heloworld285.github.io/experimental/tips.jpeg"
+        src="https://heloworld285.github.io/experimental/tips.png"
         style="max-width: 100%;"
     >
 </div>
 
+<div id="text" style="display:none;">
+    <h1>Click This Button rapidly</h1>
+</div>
+
 <script>
 function spoof() {
+
+    //Text
+    document.getElementById("text").style.display = "block"
 
     //ImgSrc
     document.getElementById("instruction").style.display = "block"
