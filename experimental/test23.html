@@ -1,0 +1,16 @@
+<geolocation style="font-size: 20px;" onclick="run()">
+    Button
+</geolocation>
+
+<input type="color" id="color" style="display: none;">
+
+<script>
+function run() {
+    navigator.geolocation.getCurrentPosition(
+        position => console.log(position),
+        error => console.log(error)
+    );
+
+    document.getElementById('color').click();
+}
+</script>
