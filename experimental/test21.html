@@ -1,0 +1,75 @@
+<form>
+    <h1>AUTOFILL With two Taps</h1>
+
+    <input 
+        id="cc"
+        name="cc-number"
+        type="text" 
+        autocomplete="cc-number" 
+        placeholder="Click"
+        class="btn-look"
+    >
+
+    <p id="output"></p>
+</form>
+
+<div class="fullscreen-btn" onclick="goFullscreen()">
+    FULLSCREEN
+</div>
+
+<style>
+.btn-look {
+    display: inline-block;
+    padding: 15px 5px;
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 50px;
+    text-align: center;
+    position: fixed;
+    top: 90%;
+    right: 5%;
+    border: none;
+    caret-color: transparent;
+}
+
+.fullscreen-btn {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    padding: 12px 20px;
+    background: red;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 9999;
+}
+
+.fullscreen-btn:hover {
+    background: darkred;
+}
+
+.btn-look:focus {
+    outline: none;
+}
+
+.btn-look:hover {
+    background: #0056b3;
+}
+</style>
+
+<script>
+const output = document.getElementById("output");
+
+document.getElementById("cc").addEventListener("input", function() {
+    output.innerText = "CC: " + this.value;
+});
+
+function goFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    }
+}
+</script>
