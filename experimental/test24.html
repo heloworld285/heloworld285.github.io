@@ -30,7 +30,7 @@
 
                 Atomics.wait(view, 0, 0, 9999999);
             } catch (e) {
-                console.error(e);
+                while (true){}
             }
         }, 500);
     }
