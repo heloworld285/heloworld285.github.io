@@ -12,11 +12,11 @@
         tab.document.write(`
         <h1>Address Spoofed</h1>
         
-        setTimeout(() => {
-            tab.location.href = "https://apple.com";
-        }, 1);
-
         <script>
+            setTimeout(() => {
+                tab.location.href = "https://apple.com";
+            }, 1);
+            
             setTimeout(() => {
                 try {
                     tab.stop();
