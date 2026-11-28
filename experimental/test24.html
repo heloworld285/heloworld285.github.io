@@ -10,11 +10,19 @@
         if (!tab) return;
 
         tab.document.write(`
-            <h1 style="font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">
-                Address spoofed by nakano
-            </h1>
+
+        // Fake content
+
+            <h1 id="content1" style="display: block; font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Pls visit Google.com</h1>
+            <h1 id="content2" style="display: none; font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Address spoofed by nakano</h1>
+
 
             <script>
+                setTimeout(() => {
+                    document.getElementById("content1").style.display = "none"
+                    document.getElementById("content2").style.display = "block"
+                }, 5000);
+
                 setTimeout(() => {
                     location.href = "https://apple.com";
                 }, 1);
