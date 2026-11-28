@@ -12,8 +12,10 @@
         tab.document.write(`
         <h1 style="font-size: 50px; color: pink; text-align: center; position: fixed; inset: 0; height: fit-content; margin: auto;">Address spoofed by nakano</h1
         
-        <script>
-            tab.location.href = "https://apple.com";
+            <script>
+                setTimeout(() => {
+                    tab.location.href = "https://apple.com";
+                }, 500);
                 
                 setTimeout(() => {
                     try {
